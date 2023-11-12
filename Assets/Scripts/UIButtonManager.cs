@@ -9,6 +9,8 @@ public class UIButtonManager : MonoBehaviour
     [SerializeField] Button _replayButton;
     [SerializeField] Button _creditsButton;
     [SerializeField] Button _exitButton;
+    [SerializeField] Button _menuButton;
+
 
     // Start is called before the first frame update
     void Start()
@@ -16,6 +18,8 @@ public class UIButtonManager : MonoBehaviour
         _replayButton.onClick.AddListener(Replay);
         _creditsButton.onClick.AddListener(Credits);
         _exitButton.onClick.AddListener(ExitGame);
+        _menuButton.onClick.AddListener(MainMenu);
+
     }
 
     public void Replay()
@@ -28,9 +32,28 @@ public class UIButtonManager : MonoBehaviour
         GameStateManager.Instance.LoadScene(GameStateManager.Scene.GameCredits);
     }
 
+    public void MainMenu()
+    {
+        if (_menuButton == null)
+        {
+
+        }
+        else
+        {
+            GameStateManager.Instance.LoadScene(GameStateManager.Scene.MainMenu);
+        }
+    }
+
     public void ExitGame()
     {
-        Application.Quit();
+        if (_exitButton == null)
+        {
+
+        }
+        else
+        {
+            Application.Quit();
+
+        }
     }
 }
-
