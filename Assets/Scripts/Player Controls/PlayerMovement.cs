@@ -22,6 +22,8 @@ public class PlayerMovement : MonoBehaviour
     {
         inventory = new Inventory();
         uiInv.SetInventory(inventory);
+
+        
     }
 
     /* Update is called once per frame so we need to check when the player hits certain keys
@@ -64,15 +66,17 @@ public class PlayerMovement : MonoBehaviour
         rb.MovePosition(rb.position + movement * moveSpeed * Time.fixedDeltaTime);
     }
 
-    private void OnCollisionEnter2D(Collision2D collision)
+    private void OnTriggerEnter2D(Collider2D collision)
     {
+        ItemWorld itemWorld = collision.GetComponent<ItemWorld>();
 
-        Debug.Log("On Collision");
+        if(itemWorld != null)
+        {
+            Debug.Log("IM TOUCHING YOUUUU ");
+            inventory.AddItem(itemWorld.GetItem());
+            itemWorld.DestroySelf();
+        }
     }
 
-    private void OnCollisionExit2D(Collision2D collision)
-    {
-        Debug.Log("Left Collision");
-    }
 
 }
