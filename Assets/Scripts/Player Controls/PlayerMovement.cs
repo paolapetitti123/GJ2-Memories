@@ -14,6 +14,15 @@ public class PlayerMovement : MonoBehaviour
 
     Vector2 movement;
 
+    private Inventory inventory;
+
+    [SerializeField] private UI_Inventory uiInv;
+
+    void Start()
+    {
+        inventory = new Inventory();
+        uiInv.SetInventory(inventory);
+    }
 
     /* Update is called once per frame so we need to check when the player hits certain keys
      * the movement for those keys will be handled in FixedUpdate
@@ -38,6 +47,8 @@ public class PlayerMovement : MonoBehaviour
         animator.SetFloat("Vertical", movement.y);
         animator.SetFloat("Speed", movement.sqrMagnitude);
 
+
+       
     }
 
     /* Need to use Fixed Update for movement since the framerate of the game can change
@@ -52,4 +63,16 @@ public class PlayerMovement : MonoBehaviour
          */
         rb.MovePosition(rb.position + movement * moveSpeed * Time.fixedDeltaTime);
     }
+
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+
+        Debug.Log("On Collision");
+    }
+
+    private void OnCollisionExit2D(Collision2D collision)
+    {
+        Debug.Log("Left Collision");
+    }
+
 }
