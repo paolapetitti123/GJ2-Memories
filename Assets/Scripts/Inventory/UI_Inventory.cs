@@ -3,12 +3,18 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using System;
 
 public class UI_Inventory : MonoBehaviour
 {
     private Inventory inventory;
 
     private GameObject[] itemSlot;
+
+    private GameObject[] removeButton;
+    private GameObject[] useButton;
+    private PlayerMovement player;
+
 
     private void Awake()
     {
@@ -17,6 +23,23 @@ public class UI_Inventory : MonoBehaviour
         {
             item.SetActive(false);
         }
+
+        removeButton = GameObject.FindGameObjectsWithTag("removeButton");
+        foreach (GameObject item in removeButton)
+        {
+            item.SetActive(false);
+        }
+
+        useButton = GameObject.FindGameObjectsWithTag("useButton");
+        foreach (GameObject item in useButton)
+        {
+            item.SetActive(false);
+        }
+    }
+
+    public void SetPlayer(PlayerMovement player)
+    {
+        this.player = player;
     }
 
     public void SetInventory(Inventory inventory)
@@ -40,6 +63,11 @@ public class UI_Inventory : MonoBehaviour
             itemSlot[counter].SetActive(true);
             Image img = itemSlot[counter].GetComponent<Image>();
             img.sprite = item.GetSprite();
+
+
+            itemSlot[counter].GetComponent<Button>().onClick.AddListener(() => UseItem(counter -1, item));
+
+
             TextMeshProUGUI uiText = itemSlot[counter].GetComponentInChildren<TextMeshProUGUI>();
             if(item.amount > 1)
             {
@@ -50,8 +78,31 @@ public class UI_Inventory : MonoBehaviour
                 uiText.SetText("");
             }
             
-            counter++;
+            counter = counter + 1;
+
+
+            
         }
     }
+
+
+    public void UseItem(int counter, Item item)
+    {
+        Debug.Log(counter);
+        Debug.Log("USE ITEM");
+        
+        useButton[counter].SetActive(true);
+        removeButton[counter].SetActive(true);
+
+        removeButton[counter].GetComponent<Button>().onClick.AddListener(() =>
+        {
+            inventory.RemoveItem(item);
+            itemSlot[counter].SetActive(false);
+            ItemWorld.DropItem(player.transform.position, item);
+        }
+        );
+
+    }
+
 
 }

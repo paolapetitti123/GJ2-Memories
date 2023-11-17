@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+
 public class ItemWorld : MonoBehaviour
 {
     private Item item;
@@ -36,5 +37,15 @@ public class ItemWorld : MonoBehaviour
     public void DestroySelf()
     {
         Destroy(gameObject);
+    }
+
+    public static ItemWorld DropItem(Vector3 dropPosition, Item item)
+    {
+        Vector3 randomDir = Random.insideUnitCircle.normalized;
+        ItemWorld itemWorld = SpawnItemWorld(dropPosition + randomDir * 5f, item);
+        itemWorld.GetComponent<Rigidbody2D>().AddForce(randomDir );
+
+        return itemWorld;
+
     }
 }

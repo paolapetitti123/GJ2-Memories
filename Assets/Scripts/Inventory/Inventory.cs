@@ -14,8 +14,8 @@ public class Inventory
         itemList = new List<Item>();
 
         /* testing list will delete soon*/
-        AddItem(new Item { itemType = Item.ItemType.Berries, amount = 1 });
-        AddItem(new Item { itemType = Item.ItemType.Mushroom, amount = 1 });/*
+        AddItem(new Item { itemType = Item.ItemType.Berries, amount = 1 });/*
+        AddItem(new Item { itemType = Item.ItemType.Mushroom, amount = 1 });
         AddItem(new Item { itemType = Item.ItemType.Axe, amount = 1 });
         AddItem(new Item { itemType = Item.ItemType.Fish, amount = 1 });
         AddItem(new Item { itemType = Item.ItemType.Water, amount = 1 });
@@ -55,4 +55,32 @@ public class Inventory
     {
         return itemList;
     }
+
+    public void RemoveItem(Item item)
+    {
+        if (item.isStackable())
+        {
+            Item itemInInventory = null;
+            foreach (Item inventoryItem in itemList)
+            {
+                if (inventoryItem.itemType == item.itemType)
+                {
+                    inventoryItem.amount -= item.amount;
+                    itemInInventory = inventoryItem;
+                }
+            }
+            if (itemInInventory != null && itemInInventory.amount <= 0)
+            {
+                itemList.Remove(itemInInventory);
+            }
+        }
+        else
+        {
+            itemList.Remove(item);
+        }
+
+
+        OnItemListChanged?.Invoke(this, EventArgs.Empty);
+    }
+
 }

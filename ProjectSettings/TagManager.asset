@@ -6,6 +6,8 @@ TagManager:
   tags:
   - GameplayStateManagerTag
   - itemImage
+  - removeButton
+  - useButton
   layers:
   - Default
   - TransparentFX

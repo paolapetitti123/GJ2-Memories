@@ -22,7 +22,7 @@ public class PlayerMovement : MonoBehaviour
     {
         inventory = new Inventory();
         uiInv.SetInventory(inventory);
-
+        uiInv.SetPlayer(this);
         
     }
 
