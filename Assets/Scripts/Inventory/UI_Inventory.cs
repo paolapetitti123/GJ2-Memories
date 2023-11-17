@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using CodeMonkey.Utils;
 using TMPro;
 using System;
 
@@ -60,12 +61,54 @@ public class UI_Inventory : MonoBehaviour
         int counter = 0;
         foreach (Item item in inventory.GetItemList())
         {
+            Debug.Log("Item Inventory Count: " + inventory.GetItemList().Count);
+            Debug.Log("refresh inv counter: " + counter);
             itemSlot[counter].SetActive(true);
             Image img = itemSlot[counter].GetComponent<Image>();
             img.sprite = item.GetSprite();
+            
 
 
-            itemSlot[counter].GetComponent<Button>().onClick.AddListener(() => UseItem(counter -1, item));
+            itemSlot[counter].GetComponent<Button_UI>().ClickFunc = () =>
+            {
+               
+                counter = inventory.GetItemList().Count;
+                Debug.Log("refresh inv counter: " + counter);
+
+                /*
+                if (inventory.GetItemList().Count == 0 )
+                {
+                    useButton[counter].SetActive(true);
+                    removeButton[counter].SetActive(true);
+                }
+                else if (inventory.GetItemList().Count == 1)
+                {
+                    useButton[counter - 1].SetActive(true);
+                    removeButton[counter - 1].SetActive(true);
+                }
+                else if (inventory.GetItemList().Count == 2)
+                {
+                    useButton[counter - 2].SetActive(true);
+                    removeButton[counter - 2].SetActive(true);
+                }
+                */
+                useButton[counter-1].SetActive(true);
+                removeButton[counter-1].SetActive(true);
+            };
+
+            removeButton[counter].GetComponent<Button_UI>().ClickFunc = () =>
+            {
+                Item duplicateItem = new Item { itemType = item.itemType, amount = item.amount };
+                inventory.RemoveItem(item);
+                itemSlot[counter-1].SetActive(false);
+                ItemWorld.DropItem(player.transform.position, duplicateItem);
+                useButton[counter-1].SetActive(false);
+                removeButton[counter-1].SetActive(false);
+            };
+
+
+
+            //itemSlot[counter].GetComponent<Button>().onClick.AddListener(() => UseItem(counter -1, item));
 
 
             TextMeshProUGUI uiText = itemSlot[counter].GetComponentInChildren<TextMeshProUGUI>();
@@ -78,7 +121,7 @@ public class UI_Inventory : MonoBehaviour
                 uiText.SetText("");
             }
             
-            counter = counter + 1;
+           counter = counter + 1;
 
 
             
