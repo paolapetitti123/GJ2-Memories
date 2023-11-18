@@ -20,10 +20,13 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private UI_Inventory uiInv;
 
     // For potion use flash
-    [SerializeField] private Color FlashRedColor = Color.red;
-    [SerializeField] private Color FlashOrangeColor = new Color(255,99,0);
-    [SerializeField] private Color FlashGreenColor = Color.green;
-    [SerializeField] private float _flashTime = 0.25f;
+    [ColorUsage(true,true)]
+    [SerializeField] private Color FlashRedColor;
+    [ColorUsage(true, true)]
+    [SerializeField] private Color FlashOrangeColor;
+    [ColorUsage(true, true)]
+    [SerializeField] private Color FlashGreenColor;
+    [SerializeField] private float _flashTime;
     public SpriteRenderer spriteRend;
     public Material characterMat;
 
