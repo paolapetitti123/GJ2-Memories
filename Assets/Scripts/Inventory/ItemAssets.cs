@@ -20,5 +20,7 @@ public class ItemAssets : MonoBehaviour
     public Sprite berriesSprite;
     public Sprite fishingRodSprite;
     public Sprite fishSprite;
-    public Sprite potionSprite;
+    public Sprite potion1Sprite;
+    public Sprite potion2Sprite;
+    public Sprite potion3Sprite;
 }

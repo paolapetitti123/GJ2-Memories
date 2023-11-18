@@ -8,6 +8,7 @@ TagManager:
   - itemImage
   - removeButton
   - useButton
+  - InventoryFullMessage
   layers:
   - Default
   - TransparentFX

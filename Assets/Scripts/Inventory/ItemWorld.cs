@@ -10,6 +10,8 @@ public class ItemWorld : MonoBehaviour
     private SpriteRenderer spriteRend;
     private TextMeshPro txtMshPro;
 
+
+
     public void Awake()
     {
         spriteRend = GetComponent<SpriteRenderer>();
@@ -57,6 +59,9 @@ public class ItemWorld : MonoBehaviour
         ItemWorld itemWorld = SpawnItemWorld(dropPosition + randomDir * 2f, item);
         itemWorld.GetComponent<Rigidbody2D>().AddForce(randomDir * 2f, ForceMode2D.Impulse);
         itemWorld.GetComponent<Rigidbody2D>().Sleep();
+
+        
+
 
         return itemWorld;
 

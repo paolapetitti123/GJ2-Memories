@@ -1,7 +1,8 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using CodeMonkey.Utils;
 
 /* Followed this tutorial for the movement if any of you are interested in the detailed 
  * explanation: https://www.youtube.com/watch?v=whzomFgjT50 
@@ -18,12 +19,23 @@ public class PlayerMovement : MonoBehaviour
 
     [SerializeField] private UI_Inventory uiInv;
 
+    // For potion use flash
+    [SerializeField] private Color FlashRedColor = Color.red;
+    [SerializeField] private Color FlashOrangeColor = new Color(255,99,0);
+    [SerializeField] private Color FlashGreenColor = Color.green;
+    [SerializeField] private float _flashTime = 0.25f;
+    public SpriteRenderer spriteRend;
+    public Material characterMat;
+
+    public GameObject InventoryWarningMessage;
+    private GameObject InventoryWarningButton;
+
     void Start()
     {
-        inventory = new Inventory();
+        inventory = new Inventory(UseItem);
         uiInv.SetInventory(inventory);
         uiInv.SetPlayer(this);
-        
+        InventoryWarningMessage.SetActive(false);
     }
 
     /* Update is called once per frame so we need to check when the player hits certain keys
@@ -45,11 +57,24 @@ public class PlayerMovement : MonoBehaviour
          * 
          * These 3 lines allow for the character to move around the screen
          */
-        animator.SetFloat("Horizontal", movement.x);
-        animator.SetFloat("Vertical", movement.y);
-        animator.SetFloat("Speed", movement.sqrMagnitude);
+        
 
-
+        if (!InventoryWarningMessage.activeInHierarchy)
+        {
+            movement.x = Input.GetAxisRaw("Horizontal");
+            movement.y = Input.GetAxisRaw("Vertical");
+            animator.SetFloat("Horizontal", movement.x);
+            animator.SetFloat("Vertical", movement.y);
+            animator.SetFloat("Speed", movement.sqrMagnitude);
+        }
+        else if (InventoryWarningMessage.activeInHierarchy)
+        {
+            movement.x = 0;
+            movement.y = 0;
+            animator.SetFloat("Horizontal", movement.x);
+            animator.SetFloat("Vertical", movement.y);
+            animator.SetFloat("Speed", movement.sqrMagnitude);
+        }
        
     }
 
@@ -73,10 +98,73 @@ public class PlayerMovement : MonoBehaviour
         if(itemWorld != null)
         {
             Debug.Log("IM TOUCHING YOUUUU ");
-            inventory.AddItem(itemWorld.GetItem());
-            itemWorld.DestroySelf();
+
+            if(inventory.GetItemList().Count < 10)
+            {
+                inventory.AddItem(itemWorld.GetItem());
+                itemWorld.DestroySelf();
+            }
+            else
+            {
+                InventoryWarningMessage.SetActive(true);
+                InventoryWarningButton = GameObject.FindGameObjectWithTag("InventoryFullMessage");
+
+                InventoryWarningButton.GetComponent<Button_UI>().ClickFunc = () =>
+                {
+                    InventoryWarningMessage.SetActive(false);
+                };
+            }
+
+            
         }
     }
 
+    private void UseItem(Item item)
+    {
+        switch (item.itemType)
+        {
+            case Item.ItemType.Potion1:
+                inventory.RemoveItem(new Item { itemType = Item.ItemType.Potion1, amount = 1 });
+                StartCoroutine(FlashColor(FlashOrangeColor));
+                break;
+            case Item.ItemType.Potion2:
+                inventory.RemoveItem(new Item { itemType = Item.ItemType.Potion2, amount = 1 });
+                StartCoroutine(FlashColor(FlashGreenColor));
+                break;
+            case Item.ItemType.Potion3:
+                inventory.RemoveItem(new Item { itemType = Item.ItemType.Potion3, amount = 1 });
+                StartCoroutine(FlashColor(FlashRedColor));
+                break;
+        }
+
+    }
+
+    private IEnumerator FlashColor(Color color)
+    {
+        // set the color
+        characterMat.SetColor("_FlashColor", color);
+
+
+        // lerp the flash amount
+        float currentFlashAmount = 0f;
+        float elapsedTime = 0f;
+
+        while(elapsedTime < _flashTime)
+        {
+            // iterate elapsed time 
+            elapsedTime += Time.deltaTime;
+
+            // lerp flash amount
+            currentFlashAmount = Mathf.Lerp(1f, 0f, (elapsedTime / _flashTime));
+            SetFlashAmount(currentFlashAmount);
+
+            yield return null;
+        }
+    }
+
+    private void SetFlashAmount(float amount)
+    {
+        characterMat.SetFloat("_FlashAmount", amount);
+    }
 
 }

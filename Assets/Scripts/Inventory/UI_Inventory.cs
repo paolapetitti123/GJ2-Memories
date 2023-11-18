@@ -17,10 +17,14 @@ public class UI_Inventory : MonoBehaviour
     private PlayerMovement player;
 
 
+
+
     private void Awake()
     {
+
+
         itemSlot = GameObject.FindGameObjectsWithTag("itemImage");
-        foreach(GameObject item in itemSlot)
+        foreach (GameObject item in itemSlot)
         {
             item.SetActive(false);
         }
@@ -40,6 +44,7 @@ public class UI_Inventory : MonoBehaviour
 
     public void SetPlayer(PlayerMovement player)
     {
+        // gets the current player item that contains info such as the current position 
         this.player = player;
     }
 
@@ -58,61 +63,84 @@ public class UI_Inventory : MonoBehaviour
 
     private void RefreshInventoryItems()
     {
-        int counter = 0;
+        int guiCounter = 0;
         foreach (Item item in inventory.GetItemList())
         {
-            Debug.Log("Item Inventory Count: " + inventory.GetItemList().Count);
-            Debug.Log("refresh inv counter: " + counter);
+            int counter = inventory.GetItemList().IndexOf(item);
+
+
             itemSlot[counter].SetActive(true);
+
+            // assigning the correct image to the item slot
             Image img = itemSlot[counter].GetComponent<Image>();
             img.sprite = item.GetSprite();
-            
 
 
             itemSlot[counter].GetComponent<Button_UI>().ClickFunc = () =>
             {
-               
-                counter = inventory.GetItemList().Count;
-                Debug.Log("refresh inv counter: " + counter);
+                // makes use and drop buttons visible
+                //counter = inventory.GetItemList().Count;
 
-                /*
-                if (inventory.GetItemList().Count == 0 )
+                if (item.isUseable())
                 {
                     useButton[counter].SetActive(true);
                     removeButton[counter].SetActive(true);
                 }
-                else if (inventory.GetItemList().Count == 1)
+                else if (!item.isUseable())
                 {
-                    useButton[counter - 1].SetActive(true);
-                    removeButton[counter - 1].SetActive(true);
+                    removeButton[counter].SetActive(true);
                 }
-                else if (inventory.GetItemList().Count == 2)
-                {
-                    useButton[counter - 2].SetActive(true);
-                    removeButton[counter - 2].SetActive(true);
-                }
-                */
-                useButton[counter-1].SetActive(true);
-                removeButton[counter-1].SetActive(true);
+
+
+
             };
 
+            // deletes/drops the item back into the scene. 
             removeButton[counter].GetComponent<Button_UI>().ClickFunc = () =>
             {
+                /* First create a temporary duplicate of the active item in the inventory (the one that
+                 * currently has the buttons active on it)so that we can use the duplicate to drop into 
+                 * the scene after we delete the item from our List. 
+                 * 
+                 * We can't drop the item itself because then if the item was stackable, when we drop the item,
+                 * the last item in the stack would be deleted so the total # in the item stack would be wrong
+                 * hence the need to make a copy of the item before removing it from the inventory.
+                 */
                 Item duplicateItem = new Item { itemType = item.itemType, amount = item.amount };
                 inventory.RemoveItem(item);
-                itemSlot[counter-1].SetActive(false);
+                itemSlot[counter].SetActive(false);
                 ItemWorld.DropItem(player.transform.position, duplicateItem);
-                useButton[counter-1].SetActive(false);
-                removeButton[counter-1].SetActive(false);
+
+
+                // setting the action buttons back to false 
+                useButton[counter].SetActive(false);
+                removeButton[counter].SetActive(false);
             };
 
 
+            useButton[counter].GetComponent<Button_UI>().ClickFunc = () =>
+            {
+                inventory.UseItem(item);
+                inventory.RemoveItem(item);
+                itemSlot[counter].SetActive(false);
+                useButton[counter].SetActive(false);
+                removeButton[counter].SetActive(false);
+            };
 
-            //itemSlot[counter].GetComponent<Button>().onClick.AddListener(() => UseItem(counter -1, item));
+            /* This code is thanks to the CodeMonkey Utils package I downloaded, it makes detecting
+             * right vs left clicks a lot easier as well as adding the ability for implicit function 
+             * declarations. 
+             * 
+             * Note you can do that with Unity's default button package however it is 
+             * slightly different and does not work the exact same way this does.
+             */
 
 
-            TextMeshProUGUI uiText = itemSlot[counter].GetComponentInChildren<TextMeshProUGUI>();
-            if(item.amount > 1)
+            /* This allows for the text associated to the stackable inventory item to update  
+             * whenever a new item gets added to that item stack. 
+             */
+            TextMeshProUGUI uiText = itemSlot[guiCounter].GetComponentInChildren<TextMeshProUGUI>();
+            if (item.amount > 1)
             {
                 uiText.SetText(item.amount.ToString());
             }
@@ -120,32 +148,10 @@ public class UI_Inventory : MonoBehaviour
             {
                 uiText.SetText("");
             }
-            
-           counter = counter + 1;
 
-
-            
+            guiCounter++;
         }
-    }
-
-
-    public void UseItem(int counter, Item item)
-    {
-        Debug.Log(counter);
-        Debug.Log("USE ITEM");
-        
-        useButton[counter].SetActive(true);
-        removeButton[counter].SetActive(true);
-
-        removeButton[counter].GetComponent<Button>().onClick.AddListener(() =>
-        {
-            inventory.RemoveItem(item);
-            itemSlot[counter].SetActive(false);
-            ItemWorld.DropItem(player.transform.position, item);
-        }
-        );
+    
 
     }
-
-
 }
