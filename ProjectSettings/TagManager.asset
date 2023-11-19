@@ -9,6 +9,11 @@ TagManager:
   - removeButton
   - useButton
   - InventoryFullMessage
+  - DoorOne
+  - DoorTwo
+  - DoorThree
+  - DoorFour
+  - DoorFive
   layers:
   - Default
   - TransparentFX
@@ -16,7 +21,7 @@ TagManager:
   - 
   - Water
   - UI
-  - 
+  - Doors
   - 
   - 
   - 
