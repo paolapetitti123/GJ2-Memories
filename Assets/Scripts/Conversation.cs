@@ -29,10 +29,13 @@ public class Conversation : MonoBehaviour
             // conversation texts
             conversationTexts = new string[]
             {
-            "Hello! First text Azmatttt hiiii",
-            "Second text option",
-             "Second text option siukeeeeee",
-            "Third text option lalalalala."
+                "Good day. What have you come here searching for?",
+                "Ahhhh I see. You desire to recover your memories.",
+                "Potions you will need... Not 1, 2 but 3!",
+                "To unlock the secrets of the mind, you must embark on a quest for ingredients rare and profound.",
+            "First you need the elixir of remembrance!",
+        "The ingredients I need are: a mushroom, an herb, a flower...",
+            "Please bring me back these ingredients to complete the elixir of remembrance ."
             };
 
 
