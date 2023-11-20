@@ -4,50 +4,56 @@ using UnityEngine;
 
 public class DoorsController : MonoBehaviour
 {
-    public Canvas targetRoomCanvas;  // Only one target room for simplicity
-
-    private SpriteRenderer doorSpriteRenderer;
-
     private bool playerInTriggerZone = false;
     private float triggerCooldown = 1f;  // Adjust the cooldown time as needed
     private float lastTriggerTime;
 
-    private void Start()
+    private void OnTriggerEnter2D(Collider2D other)
     {
-        // Get the SpriteRenderer component
-        doorSpriteRenderer = GetComponent<SpriteRenderer>();
-    }
-
-    public void SetDoorSprite(Sprite doorSprite)
-    {
-        // Set the sprite for the door
-        doorSpriteRenderer.sprite = doorSprite;
-    }
-
-   private void OnTriggerEnter2D(Collider2D collision)
-{
-    if (collision.CompareTag("Player") && !playerInTriggerZone && Time.time - lastTriggerTime > triggerCooldown)
-    {
-        playerInTriggerZone = true;
-        lastTriggerTime = Time.time;
-
-        if (RoomsManager.Instance != null)
+        if (other.CompareTag("Player") && !playerInTriggerZone && Time.time - lastTriggerTime > triggerCooldown)
         {
-            RoomsManager.Instance.SwitchCanvas();
-        }
-        else
-        {
-            Debug.LogError("RoomsManager.Instance is null!");
+            playerInTriggerZone = true;
+            lastTriggerTime = Time.time;
+
+            // Player has entered the trigger zone and cooldown has passed
+            HandleDoorCollision();
         }
     }
-}
 
-
-    private void OnTriggerExit2D(Collider2D collision)
+    private void OnTriggerExit2D(Collider2D other)
     {
-        if (collision.CompareTag("Player"))
+        if (other.CompareTag("Player"))
         {
             playerInTriggerZone = false;
+        }
+    }
+
+    private void HandleDoorCollision()
+    {
+        // Differentiate between doors based on their tags
+        if (gameObject.CompareTag("DoorOne"))
+        {
+            // Handle collision with DoorOne
+            CanvasManager.Instance.SwitchCanvas(CanvasManager.Instance.canvases[1]);
+        }
+        else if (gameObject.CompareTag("DoorTwo"))
+        {
+            // Handle collision with DoorTwo
+            CanvasManager.Instance.SwitchCanvas(CanvasManager.Instance.canvases[0]);
+        }
+        else if (gameObject.CompareTag("DoorThree"))
+        {
+            // Handle collision with DoorTwo
+            CanvasManager.Instance.SwitchCanvas(CanvasManager.Instance.canvases[2]);
+        }
+        else if (gameObject.CompareTag("DoorFour"))
+        {
+            // Handle collision with DoorTwo
+            CanvasManager.Instance.SwitchCanvas(CanvasManager.Instance.canvases[1]);
+        }
+        else if (gameObject.CompareTag("DoorFive"))
+        {
+           // Trigger next scene
         }
     }
 }
