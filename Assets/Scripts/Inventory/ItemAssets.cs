@@ -6,6 +6,11 @@ public class ItemAssets : MonoBehaviour
 {
     public static ItemAssets Instance { get; private set; }
     public Transform pfItemWorld;
+    public Transform pfWell;
+    public Transform pfHerbBush;
+    public Transform pfFlowerBush;
+    public Transform pfBerryBush;
+
     private void Awake()
     {
         Instance = this;
@@ -23,4 +28,8 @@ public class ItemAssets : MonoBehaviour
     public Sprite potion1Sprite;
     public Sprite potion2Sprite;
     public Sprite potion3Sprite;
+    public Sprite flowerBush;
+    public Sprite waterWell;
+    public Sprite herbBush;
+    public Sprite berryBush;
 }

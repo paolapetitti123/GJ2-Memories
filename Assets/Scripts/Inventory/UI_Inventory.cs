@@ -20,8 +20,6 @@ public class UI_Inventory : MonoBehaviour
 
     private void Awake()
     {
-
-
         itemSlot = GameObject.FindGameObjectsWithTag("itemImage");
         foreach (GameObject item in itemSlot)
         {
@@ -78,7 +76,6 @@ public class UI_Inventory : MonoBehaviour
             itemSlot[counter].GetComponent<Button_UI>().ClickFunc = () =>
             {
                 // makes use and drop buttons visible
-                //counter = inventory.GetItemList().Count;
 
                 if (item.isUseable())
                 {

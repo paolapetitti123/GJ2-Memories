@@ -20,12 +20,50 @@ public class ItemWorld : MonoBehaviour
 
     public static ItemWorld SpawnItemWorld(Vector3 position, Item item)
     {
-        Transform transform = Instantiate(ItemAssets.Instance.pfItemWorld, position, Quaternion.identity);
+        Debug.Log("Item name: " + item.itemType);
 
-        ItemWorld itemWorld = transform.GetComponent<ItemWorld>();
+        
+       /* Transform wellTrans = ItemAssets.Instance.pfWell;
+        Transform berrybBushTrans = ItemAssets.Instance.pfBerryBush;
+        Transform flowerBushTrans = ItemAssets.Instance.pfFlowerBush;
+        Transform herbBushTrans = ItemAssets.Instance.pfHerbBush; */
+        Transform itemWorldTrans = ItemAssets.Instance.pfItemWorld;
+
+        Transform transform;
+        ItemWorld itemWorld;
+
+
+        /*
+        switch (item.itemType)
+        {
+            default:
+                transform = Instantiate(itemWorldTrans, position, Quaternion.identity);
+                break;
+            case Item.ItemType.WaterWell:
+                transform = Instantiate(wellTrans, position, Quaternion.identity);
+                break;
+            case Item.ItemType.BerryBush:
+                transform = Instantiate(berrybBushTrans, position, Quaternion.identity);
+                break;
+            case Item.ItemType.FlowerBush:
+                transform = Instantiate(flowerBushTrans, position, Quaternion.identity);
+
+                break;
+            case Item.ItemType.HerbBush:
+                transform = Instantiate(herbBushTrans, position, Quaternion.identity);
+
+                break;
+
+        } */
+        transform = Instantiate(itemWorldTrans, position, Quaternion.identity);
+        itemWorld = transform.GetComponent<ItemWorld>();
         itemWorld.SetItem(item);
 
         return itemWorld;
+
+
+
+
     }
 
     public void SetItem(Item item)

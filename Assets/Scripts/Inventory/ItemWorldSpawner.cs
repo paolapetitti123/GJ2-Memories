@@ -8,8 +8,10 @@ public class ItemWorldSpawner : MonoBehaviour
 
     private void Start()
     {
-        ItemWorld.SpawnItemWorld(this.transform.position, item);
-        Destroy(gameObject);
+        
+            ItemWorld.SpawnItemWorld(this.transform.position, item);
+            Destroy(gameObject);
+       
     }
 
 }
