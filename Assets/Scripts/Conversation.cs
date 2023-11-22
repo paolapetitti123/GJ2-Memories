@@ -10,6 +10,10 @@ public class Conversation : MonoBehaviour
     public GameObject Conversation1;
     public GameObject guard;
 
+    public QuestGiver quest;
+
+
+
     void Start()
     {
 
@@ -53,6 +57,7 @@ public class Conversation : MonoBehaviour
         if (currentTextIndex >= conversationTexts.Length)
         {
             Conversation1.SetActive(false);
+            quest.OpenQuestWindow();
         }
 
         // Update the text
@@ -74,6 +79,7 @@ public class Conversation : MonoBehaviour
         if (collision.gameObject == guard)
         {
             Conversation1.SetActive(false);
+            
         }
     }
 }

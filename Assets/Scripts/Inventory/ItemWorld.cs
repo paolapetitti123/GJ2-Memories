@@ -22,41 +22,24 @@ public class ItemWorld : MonoBehaviour
     {
         Debug.Log("Item name: " + item.itemType);
 
-        
-       /* Transform wellTrans = ItemAssets.Instance.pfWell;
-        Transform berrybBushTrans = ItemAssets.Instance.pfBerryBush;
-        Transform flowerBushTrans = ItemAssets.Instance.pfFlowerBush;
-        Transform herbBushTrans = ItemAssets.Instance.pfHerbBush; */
         Transform itemWorldTrans = ItemAssets.Instance.pfItemWorld;
 
         Transform transform;
         ItemWorld itemWorld;
 
-
-        /*
-        switch (item.itemType)
-        {
-            default:
-                transform = Instantiate(itemWorldTrans, position, Quaternion.identity);
-                break;
-            case Item.ItemType.WaterWell:
-                transform = Instantiate(wellTrans, position, Quaternion.identity);
-                break;
-            case Item.ItemType.BerryBush:
-                transform = Instantiate(berrybBushTrans, position, Quaternion.identity);
-                break;
-            case Item.ItemType.FlowerBush:
-                transform = Instantiate(flowerBushTrans, position, Quaternion.identity);
-
-                break;
-            case Item.ItemType.HerbBush:
-                transform = Instantiate(herbBushTrans, position, Quaternion.identity);
-
-                break;
-
-        } */
         transform = Instantiate(itemWorldTrans, position, Quaternion.identity);
         itemWorld = transform.GetComponent<ItemWorld>();
+
+        if (item.IsAWell() || item.IsAnHerbBush())
+        {
+            itemWorld.GetComponent<CircleCollider2D>().radius += 2;
+        }
+        
+        if(item.IsAFlowerBush() || item.IsABerryBush())
+        {
+            itemWorld.GetComponent<CircleCollider2D>().radius += 1;
+        }
+
         itemWorld.SetItem(item);
 
         return itemWorld;
