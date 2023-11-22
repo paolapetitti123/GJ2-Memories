@@ -10,7 +10,9 @@ public class Conversation : MonoBehaviour
     public GameObject Conversation1;
     public GameObject guard;
 
-    public QuestGiver quest;
+    public QuestGiver questGiver;
+
+    public Quest quest;
 
 
 
@@ -25,7 +27,7 @@ public class Conversation : MonoBehaviour
     public void OnTriggerEnter2D(Collider2D other)
     {
         // Check if the collision is with a specific tag or layer if needed
-        if (other.gameObject == guard)
+        if (other.gameObject == guard && !quest.isActive)
         {
             Conversation1.SetActive(true);
             Debug.Log("collision");
@@ -46,22 +48,52 @@ public class Conversation : MonoBehaviour
             // Display the initial text
             UpdateText();
         }
+        else if(other.gameObject == guard && !quest.isActive && !quest.goal.IsReached())
+        {
+            // text that'll show up when you've accepted the quest but haven't completed it yet
+
+            Conversation1.SetActive(true);
+            Debug.Log("collision");
+
+            // conversation texts
+            conversationTexts = new string[]
+            {
+                "I'll be waiting here for those ingredients"
+            };
+
+
+            // Display the initial text
+            UpdateText();
+
+        }
+
     }
 
     public void OnButtonClick()
     {
         // when the button is clicked, it increments the index to display the next text
         currentTextIndex++;
-
+       
         // if we reach the end of the conversation, disable the conversation
         if (currentTextIndex >= conversationTexts.Length)
         {
+            
             Conversation1.SetActive(false);
-            quest.OpenQuestWindow();
+            if (!quest.isActive)
+            {
+                questGiver.OpenQuestWindow();
+                questGiver.AcceptQuest();
+            }
+            else if (quest.isActive)
+            {
+                questGiver.questWindow.SetActive(false);
+            }
         }
 
-        // Update the text
-        UpdateText();
+       
+         
+
+       UpdateText();
     }
 
     void UpdateText()
@@ -71,6 +103,7 @@ public class Conversation : MonoBehaviour
             // Change the text of the Text element based on the current conversation text
             displayText.text = conversationTexts[currentTextIndex];
         }
+        
        
     }
 

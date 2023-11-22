@@ -31,5 +31,15 @@ public class QuestGiver : MonoBehaviour
         titleText.text = quest.title;
         descriptionText.text = quest.description;
         rewardText.text =  quest.potionReward.ToString();
+
+    }
+
+    public void AcceptQuest()
+    {
+        questWindow.SetActive(false);
+        quest.isActive = true;
+
+        // give to player
+        player.quest = quest;
     }
 }

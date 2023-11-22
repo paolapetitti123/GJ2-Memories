@@ -12,4 +12,6 @@ public class Quest
     public string description = "If you want the first of 3 potions, I will need from you a Mushroom, an herb and a flower.";
     public int potionReward = 1;
 
+    public QuestGoal goal;
+
 }

@@ -3009,6 +3009,10 @@ MonoBehaviour:
     description: If you want the first of 3 potions, I will need from you a Mushroom,
       an herb and a flower.
     potionReward: 1
+    goal:
+      goalType: 0
+      requiredAmount: 3
+      currentAmount: 0
   player: {fileID: 1070855184}
   questWindow: {fileID: 995680008}
   titleText: {fileID: 1638240376}
@@ -4189,6 +4193,16 @@ MonoBehaviour:
   spriteRend: {fileID: 1070855186}
   characterMat: {fileID: 2100000, guid: bb5ae661c951f2a48a47d7cc7ff98185, type: 2}
   InventoryWarningMessage: {fileID: 1811855916}
+  quest:
+    isActive: 0
+    title: Ingredient Gathering
+    description: If you want the first of 3 potions, I will need from you a Mushroom,
+      an herb and a flower.
+    potionReward: 1
+    goal:
+      goalType: 0
+      requiredAmount: 0
+      currentAmount: 0
 --- !u!50 &1070855185
 Rigidbody2D:
   serializedVersion: 4
@@ -4323,7 +4337,17 @@ MonoBehaviour:
   displayText: {fileID: 1867038}
   Conversation1: {fileID: 914919446}
   guard: {fileID: 748405937}
-  quest: {fileID: 748405941}
+  questGiver: {fileID: 748405941}
+  quest:
+    isActive: 0
+    title: Ingredient Gathering
+    description: If you want the first of 3 potions, I will need from you a Mushroom,
+      an herb and a flower.
+    potionReward: 1
+    goal:
+      goalType: 0
+      requiredAmount: 0
+      currentAmount: 0
 --- !u!1001 &1074763621
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -4682,7 +4706,7 @@ GameObject:
   - component: {fileID: 1112026784}
   - component: {fileID: 1112026787}
   - component: {fileID: 1112026786}
-  - component: {fileID: 1112026785}
+  - component: {fileID: 1112026788}
   m_Layer: 5
   m_Name: AcceptButton
   m_TagString: InventoryFullMessage
@@ -4710,27 +4734,6 @@ RectTransform:
   m_AnchoredPosition: {x: 5.387085, y: -86.47153}
   m_SizeDelta: {x: 160.2971, y: 65.617}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &1112026785
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1112026783}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 602f74cbbbd80034b96f88091a8e7c1d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  hoverBehaviourType: 0
-  hoverBehaviour_Color_Enter: {r: 0, g: 0, b: 0, a: 0}
-  hoverBehaviour_Color_Exit: {r: 0, g: 0, b: 0, a: 0}
-  hoverBehaviour_Image: {fileID: 0}
-  hoverBehaviour_Sprite_Exit: {fileID: 0}
-  hoverBehaviour_Sprite_Enter: {fileID: 21300000, guid: db903ca7690a7f24a87f2914ef268148, type: 3}
-  hoverBehaviour_Move: 0
-  hoverBehaviour_Move_Amount: {x: 0, y: 0}
-  triggerMouseOutFuncOnClick: 0
 --- !u!114 &1112026786
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4769,6 +4772,62 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1112026783}
   m_CullTransparentMesh: 1
+--- !u!114 &1112026788
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1112026783}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Navigation:
+    m_Mode: 3
+    m_WrapAround: 0
+    m_SelectOnUp: {fileID: 0}
+    m_SelectOnDown: {fileID: 0}
+    m_SelectOnLeft: {fileID: 0}
+    m_SelectOnRight: {fileID: 0}
+  m_Transition: 2
+  m_Colors:
+    m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
+    m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
+    m_PressedColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
+    m_SelectedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
+    m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
+    m_ColorMultiplier: 1
+    m_FadeDuration: 0.1
+  m_SpriteState:
+    m_HighlightedSprite: {fileID: 0}
+    m_PressedSprite: {fileID: 21300000, guid: db903ca7690a7f24a87f2914ef268148, type: 3}
+    m_SelectedSprite: {fileID: 0}
+    m_DisabledSprite: {fileID: 0}
+  m_AnimationTriggers:
+    m_NormalTrigger: Normal
+    m_HighlightedTrigger: Highlighted
+    m_PressedTrigger: Pressed
+    m_SelectedTrigger: Highlighted
+    m_DisabledTrigger: Disabled
+  m_Interactable: 1
+  m_TargetGraphic: {fileID: 1112026786}
+  m_OnClick:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 748405941}
+        m_TargetAssemblyTypeName: QuestGiver, Assembly-CSharp
+        m_MethodName: AcceptQuest
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!4 &1140447708 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 1180636527880037382, guid: 062e7d951a4ff704abfcdfc513b11367, type: 3}
