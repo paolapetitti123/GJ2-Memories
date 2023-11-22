@@ -82,7 +82,7 @@ public class Conversation : MonoBehaviour
             if (!quest.isActive)
             {
                 questGiver.OpenQuestWindow();
-                questGiver.AcceptQuest();
+                
             }
             else if (quest.isActive)
             {
