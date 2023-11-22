@@ -719,7 +719,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &151081944
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1656,7 +1656,10 @@ EdgeCollider2D:
   - {x: -33.907913, y: 208.76321}
   - {x: -56.402695, y: 174.90958}
   - {x: -69.88739, y: 174.93738}
-  - {x: -401.22256, y: 176.2955}
+  - {x: -400.71826, y: 177.04143}
+  - {x: -400.43506, y: -223.40613}
+  - {x: 401.3929, y: -220.84796}
+  - {x: 403.28296, y: 174.69446}
   m_AdjacentStartPoint: {x: 0, y: 0}
   m_AdjacentEndPoint: {x: 0, y: 0}
   m_UseAdjacentStartPoint: 0
@@ -4050,7 +4053,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &1050618144
 MonoBehaviour:
   m_ObjectHideFlags: 0
