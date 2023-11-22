@@ -103,7 +103,7 @@ public class PlayerMovement : MonoBehaviour
     {
         
         ItemWorld itemWorld = collision.GetComponent<ItemWorld>();
-
+       
         if(itemWorld != null)
         {
             Debug.Log("IM TOUCHING YOUUUU ");
@@ -154,59 +154,6 @@ public class PlayerMovement : MonoBehaviour
         
     }
 
-
-    private void OnCollisionEnter2D(Collision2D collision)
-    {
-        ItemWorld itemWorld =  collision.collider.GetComponent<ItemWorld>();
-
-        if (itemWorld != null)
-        {
-            Debug.Log("IM TOUCHING YOUUUU ");
-
-            if (inventory.GetItemList().Count < 10)
-            {
-                if (itemWorld.GetItem().isParent())
-                {
-                    Debug.Log("item sprite: " + itemWorld.GetItem().GetSprite().name);
-                    if (itemWorld.GetItem().GetSprite().name == "well-1")
-                    {
-                        inventory.AddItem(new Item { itemType = Item.ItemType.Water, amount = 1 });
-                    }
-                    else if (itemWorld.GetItem().GetSprite().name == "flowers-3")
-                    {
-                        inventory.AddItem(new Item { itemType = Item.ItemType.Flower, amount = 1 });
-
-                    }
-                    else if (itemWorld.GetItem().GetSprite().name == "herb-plant")
-                    {
-                        inventory.AddItem(new Item { itemType = Item.ItemType.Herb, amount = 1 });
-                    }
-                    else if (itemWorld.GetItem().GetSprite().name == "berry-bush")
-                    {
-                        inventory.AddItem(new Item { itemType = Item.ItemType.Berries, amount = 1 });
-                    }
-                }
-                else if (!itemWorld.GetItem().isParent())
-                {
-                    inventory.AddItem(itemWorld.GetItem());
-                    itemWorld.DestroySelf();
-                }
-
-            }
-            else
-            {
-                InventoryWarningMessage.SetActive(true);
-                InventoryWarningButton = GameObject.FindGameObjectWithTag("InventoryFullMessage");
-
-                InventoryWarningButton.GetComponent<Button_UI>().ClickFunc = () =>
-                {
-                    InventoryWarningMessage.SetActive(false);
-                };
-            }
-
-
-        }
-    }
 
     private void UseItem(Item item)
     {
