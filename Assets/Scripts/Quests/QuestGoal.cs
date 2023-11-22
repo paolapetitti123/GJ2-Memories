@@ -8,15 +8,42 @@ public class QuestGoal
 {
     public GoalType goalType;
 
-    public int requiredAmount;
+    private int requiredAmount = 3;
 
 
     public int currentAmount;
 
+    public bool questCompletion = false;
+
+    public bool itemsCollected;
+
+    Conversation convo;
+
+
     public bool IsReached()
     {
+        if(currentAmount >= requiredAmount)
+        {
+            itemsCollected = true;
+        }
+        else
+        {
+            itemsCollected = false;
+        }
+        return itemsCollected;
+    }
+
+    public bool hasSpokenToAlchemist()
+    {
+        if (convo.questOneComplete)
+        {
+            return questCompletion = true;
+        }
+        else
+        {
+            return questCompletion = false;
+        }
         
-        return (currentAmount >= requiredAmount);
     }
 
     public void IngredientGathered()

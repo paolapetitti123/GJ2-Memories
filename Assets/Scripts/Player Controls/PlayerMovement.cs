@@ -38,6 +38,8 @@ public class PlayerMovement : MonoBehaviour
 
     public Quest quest;
 
+
+
     void Start()
     {
         inventory = new Inventory(UseItem);
@@ -154,10 +156,18 @@ public class PlayerMovement : MonoBehaviour
                     if (quest.goal.IsReached())
                     {
                         // speak to Alchemist again (maybe new pop up telling you to go see them) 
-
-                        // Add in potion1
-                        inventory.AddItem(new Item { itemType = Item.ItemType.Potion1, amount = 1 });
                         
+                        if (quest.goal.questCompletion)
+                        {
+                            // Add in potion1
+                            inventory.AddItem(new Item { itemType = Item.ItemType.Potion1, amount = 1 });
+                        }
+                        else if(quest.goal.questCompletion)
+                        {
+                            Debug.Log("haven't talked to alchemist yet");
+                        }
+                        
+                       
                         // remove mushroom, herb and flower
 
                         // start new quest after potion gets used.

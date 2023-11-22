@@ -13,6 +13,7 @@ public class QuestGiver : MonoBehaviour
     public TMP_Text titleText;
     public TMP_Text descriptionText;
     public TMP_Text rewardText;
+    public Button acceptButton;
 
     private void Start()
     {
@@ -33,6 +34,7 @@ public class QuestGiver : MonoBehaviour
             titleText.text = quest.title;
             descriptionText.text = quest.description;
             rewardText.text = quest.potionReward.ToString();
+            acceptButton.onClick.AddListener(AcceptQuest);
         }
         else if(quest.isActive)
         {
