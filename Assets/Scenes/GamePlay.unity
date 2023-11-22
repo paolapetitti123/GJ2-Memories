@@ -3018,13 +3018,15 @@ MonoBehaviour:
     potionReward: 1
     goal:
       goalType: 0
-      requiredAmount: 3
       currentAmount: 0
+      questCompletion: 0
+      itemsCollected: 0
   player: {fileID: 1070855184}
   questWindow: {fileID: 995680008}
   titleText: {fileID: 1638240376}
   descriptionText: {fileID: 78883087}
   rewardText: {fileID: 459824752}
+  acceptButton: {fileID: 1112026788}
 --- !u!4 &758861973 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 3298585814979375459, guid: 9bd1d9e9644734a4c9217bfdbaed15da, type: 3}
@@ -4124,8 +4126,9 @@ MonoBehaviour:
     potionReward: 1
     goal:
       goalType: 0
-      requiredAmount: 0
       currentAmount: 0
+      questCompletion: 0
+      itemsCollected: 0
 --- !u!50 &1070855185
 Rigidbody2D:
   serializedVersion: 4
@@ -4269,8 +4272,13 @@ MonoBehaviour:
     potionReward: 1
     goal:
       goalType: 0
-      requiredAmount: 0
       currentAmount: 0
+      questCompletion: 0
+      itemsCollected: 0
+  questOneComplete: 0
+  textOneActive: 0
+  textTwoActive: 0
+  textThreeActive: 0
 --- !u!1001 &1074763621
 PrefabInstance:
   m_ObjectHideFlags: 0
