@@ -27,11 +27,18 @@ public class QuestGiver : MonoBehaviour
 
     public void OpenQuestWindow()
     {
-        questWindow.SetActive(true);
-        titleText.text = quest.title;
-        descriptionText.text = quest.description;
-        rewardText.text =  quest.potionReward.ToString();
-
+        if (!quest.isActive)
+        {
+            questWindow.SetActive(true);
+            titleText.text = quest.title;
+            descriptionText.text = quest.description;
+            rewardText.text = quest.potionReward.ToString();
+        }
+        else if(quest.isActive)
+        {
+            questWindow.SetActive(false);
+        }
+        
     }
 
     public void AcceptQuest()
