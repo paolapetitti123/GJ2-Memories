@@ -112,6 +112,7 @@ public class PlayerMovement : MonoBehaviour
             {
                 if (quest.isActive)
                 {
+                    itemWorld.enabled = true;
                     if (itemWorld.GetItem().isParent())
                     {
                         Debug.Log("item sprite: " + itemWorld.GetItem().GetSprite().name);
@@ -141,7 +142,6 @@ public class PlayerMovement : MonoBehaviour
                             inventory.AddItem(itemWorld.GetItem());
                             quest.goal.IngredientGathered();
                             itemWorld.DestroySelf();
-
                         }
                         else
                         {
@@ -155,7 +155,7 @@ public class PlayerMovement : MonoBehaviour
                     {
                         // speak to Alchemist again (maybe new pop up telling you to go see them) 
 
-                        // Add in green potion
+                        // Add in potion1
                         inventory.AddItem(new Item { itemType = Item.ItemType.Potion1, amount = 1 });
                         
                         // remove mushroom, herb and flower
@@ -165,32 +165,8 @@ public class PlayerMovement : MonoBehaviour
                 }
                 else
                 {
-                    if (itemWorld.GetItem().isParent())
-                    {
-                        Debug.Log("item sprite: " + itemWorld.GetItem().GetSprite().name);
-                        if (itemWorld.GetItem().GetSprite().name == "well-1")
-                        {
-                            inventory.AddItem(new Item { itemType = Item.ItemType.Water, amount = 1 });
-                        }
-                        else if (itemWorld.GetItem().GetSprite().name == "flowers-3")
-                        {
-                            inventory.AddItem(new Item { itemType = Item.ItemType.Flower, amount = 1 });
-
-                        }
-                        else if (itemWorld.GetItem().GetSprite().name == "herb-plant")
-                        {
-                            inventory.AddItem(new Item { itemType = Item.ItemType.Herb, amount = 1 });
-                        }
-                        else if (itemWorld.GetItem().GetSprite().name == "berry-bush")
-                        {
-                            inventory.AddItem(new Item { itemType = Item.ItemType.Berries, amount = 1 });
-                        }
-                    }
-                    else if (!itemWorld.GetItem().isParent())
-                    {
-                        inventory.AddItem(itemWorld.GetItem());
-                        itemWorld.DestroySelf();
-                    }
+                    itemWorld.enabled = false;
+                    Debug.Log("Quest not active");
                 }
                 
 

@@ -13,7 +13,6 @@ public class QuestGoal
 
     public int currentAmount;
 
-
     public bool IsReached()
     {
         
@@ -22,10 +21,11 @@ public class QuestGoal
 
     public void IngredientGathered()
     {
+        
+        
         if (goalType == GoalType.Gathering)
         {
-
-            currentAmount++;
+          currentAmount++;
         }
         
     }
