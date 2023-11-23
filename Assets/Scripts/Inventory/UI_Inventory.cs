@@ -17,6 +17,9 @@ public class UI_Inventory : MonoBehaviour
     private PlayerMovement player;
     public Quest quest;
 
+    public bool questComplete;
+    private Conversation convo;
+
 
     private void Awake()
     {
@@ -38,6 +41,8 @@ public class UI_Inventory : MonoBehaviour
             item.SetActive(false);
         }
     }
+
+
 
     public void SetPlayer(PlayerMovement player)
     {
@@ -61,9 +66,10 @@ public class UI_Inventory : MonoBehaviour
     private void RefreshInventoryItems()
     {
         int guiCounter = 0;
+        int counter = 0;
         foreach (Item item in inventory.GetItemList())
         {
-            int counter = inventory.GetItemList().IndexOf(item);
+            //int counter = inventory.GetItemList().IndexOf(item);
 
 
             itemSlot[counter].SetActive(true);
@@ -147,21 +153,41 @@ public class UI_Inventory : MonoBehaviour
 
             guiCounter++;
 
-            if (quest.goal.HasSpoken())
+            if (questComplete)
             {
-                Debug.Log("in UI Inventory has spoken");
-                if (item.GetSprite().name == "Square")
+                int count = 0;
+                while(count < 9)
                 {
-                    Debug.Log("in UI Inventory has spoken where items should be removed");
-                    inventory.RemoveItem(item);
-                    itemSlot[counter].SetActive(false);
+                    if (itemSlot[count].activeInHierarchy && itemSlot[count] != null)
+                    {
+                        itemSlot[count].SetActive(false);
+                        count++;
+                       
+                    }
+                    else
+                        break;
+                    Debug.Log("counte"+ count);
                 }
+               
+                //inventory = null;
+
+                inventory.AddItem(new Item { itemType = Item.ItemType.Potion1, amount = 1 });
+
+                Debug.Log("in UI Inventory has spoken"); 
+
             }
 
-            
 
+            counter++;
         }
     
 
+    }
+
+    public void RemoveCall()
+    {
+        questComplete = true;
+        RefreshInventoryItems();
+        
     }
 }

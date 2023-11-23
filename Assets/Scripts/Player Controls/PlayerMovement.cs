@@ -72,6 +72,13 @@ public class PlayerMovement : MonoBehaviour
      */
     void Update()
     {
+        if(inventory == null)
+        {
+            inventory = new Inventory(UseItem);
+            uiInv.SetInventory(inventory);
+            uiInv.SetPlayer(this);
+        }
+
         convoActive = Conversation1.activeInHierarchy;
         // gives value between -1 and 1 depending on horizontal input, i.e pressing the Left arrow key give -1 and Right gives 1
         // (WASD + arrow keys work)
@@ -223,9 +230,12 @@ public class PlayerMovement : MonoBehaviour
                 
                 if (quest.goal.HasSpoken())
                 {
+                    //uiInv.questComplete = true;
+                    uiInv.RemoveCall();
                     Debug.Log("I HAVE MADE IT IN HERE WOOO " );
-
-                     inventory.AddItem(new Item { itemType = Item.ItemType.Potion1, amount = 1 });
+                    
+                    
+                    // inventory.AddItem(new Item { itemType = Item.ItemType.Potion1, amount = 1 });
                 }
             }
         }
