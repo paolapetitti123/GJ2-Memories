@@ -35,9 +35,20 @@ public class PlayerMovement : MonoBehaviour
 
     private Item item;
 
-
+    //public Conversation convo;
     public Quest quest;
 
+    public GameObject Conversation1;
+
+
+    private int mushroomCounter = 0;
+    private int flowerCounter = 0;
+    private int herbCounter = 0;
+
+
+    public bool convoActive;
+    public GameObject Alchemist;
+    public GameObject[] itemSlot;
 
 
     void Start()
@@ -46,6 +57,14 @@ public class PlayerMovement : MonoBehaviour
         uiInv.SetInventory(inventory);
         uiInv.SetPlayer(this);
         InventoryWarningMessage.SetActive(false);
+        convoActive = false;
+
+        itemSlot = GameObject.FindGameObjectsWithTag("itemImage");
+        foreach (GameObject item in itemSlot)
+        {
+            item.SetActive(false);
+
+        }
     }
 
     /* Update is called once per frame so we need to check when the player hits certain keys
@@ -53,6 +72,7 @@ public class PlayerMovement : MonoBehaviour
      */
     void Update()
     {
+        convoActive = Conversation1.activeInHierarchy;
         // gives value between -1 and 1 depending on horizontal input, i.e pressing the Left arrow key give -1 and Right gives 1
         // (WASD + arrow keys work)
         movement.x = Input.GetAxisRaw("Horizontal");
@@ -108,8 +128,6 @@ public class PlayerMovement : MonoBehaviour
        
         if(itemWorld != null)
         {
-            Debug.Log("IM TOUCHING YOUUUU ");
-
             if(inventory.GetItemList().Count < 10)
             {
                 if (quest.isActive)
@@ -117,7 +135,7 @@ public class PlayerMovement : MonoBehaviour
                     itemWorld.enabled = true;
                     if (itemWorld.GetItem().isParent())
                     {
-                        Debug.Log("item sprite: " + itemWorld.GetItem().GetSprite().name);
+
                         if (itemWorld.GetItem().GetSprite().name == "well-1")
                         {
                             inventory.AddItem(new Item { itemType = Item.ItemType.Water, amount = 1 });
@@ -125,12 +143,22 @@ public class PlayerMovement : MonoBehaviour
                         else if (itemWorld.GetItem().GetSprite().name == "flowers-3")
                         {
                             inventory.AddItem(new Item { itemType = Item.ItemType.Flower, amount = 1 });
-                            quest.goal.IngredientGathered();
+                            if (flowerCounter == 0) // doing this so the ingredientsgathered is only ever called once
+                            {
+                                quest.goal.IngredientGathered();
+                                flowerCounter++;
+                            }
+                            
                         }
                         else if (itemWorld.GetItem().GetSprite().name == "herb-plant")
                         {
                             inventory.AddItem(new Item { itemType = Item.ItemType.Herb, amount = 1 });
-                            quest.goal.IngredientGathered();
+                            if(herbCounter == 0)  // doing this so the ingredientsgathered is only ever called once
+                            {
+                                quest.goal.IngredientGathered();
+                                herbCounter++;
+                            }
+                            
                         }
                         else if (itemWorld.GetItem().GetSprite().name == "berry-bush")
                         {
@@ -139,10 +167,11 @@ public class PlayerMovement : MonoBehaviour
                     }
                     else if (!itemWorld.GetItem().isParent())
                     {
-                        if (itemWorld.GetItem().IsAMushroom())
+                        if (itemWorld.GetItem().IsAMushroom() && mushroomCounter == 0) // doing this so the ingredientsgathered is only ever called once
                         {
                             inventory.AddItem(itemWorld.GetItem());
                             quest.goal.IngredientGathered();
+                            mushroomCounter++;
                             itemWorld.DestroySelf();
                         }
                         else
@@ -153,25 +182,8 @@ public class PlayerMovement : MonoBehaviour
                         
                     }
 
-                    if (quest.goal.IsReached())
-                    {
-                        // speak to Alchemist again (maybe new pop up telling you to go see them) 
-                        
-                        if (quest.goal.questCompletion)
-                        {
-                            // Add in potion1
-                            inventory.AddItem(new Item { itemType = Item.ItemType.Potion1, amount = 1 });
-                        }
-                        else if(quest.goal.questCompletion)
-                        {
-                            Debug.Log("haven't talked to alchemist yet");
-                        }
-                        
-                       
-                        // remove mushroom, herb and flower
-
-                        // start new quest after potion gets used.
-                    }
+                    
+                   
                 }
                 else
                 {
@@ -195,7 +207,29 @@ public class PlayerMovement : MonoBehaviour
 
             
         }
-        
+
+        if (quest.goal.IsReached())
+        {
+            gameObject.GetComponent<Conversation>().questFinished = true;
+            //quest.goal.count = 1;
+
+            Debug.Log("in Player Movement quest one complete goal count 0");
+  
+            // remove mushroom, herb and flower
+            if (collision.gameObject == Alchemist)
+            {
+                Debug.Log("hitting alchemist");
+                quest.goal.TalkingCounter();
+                
+                if (quest.goal.HasSpoken())
+                {
+                    Debug.Log("I HAVE MADE IT IN HERE WOOO " );
+
+                     inventory.AddItem(new Item { itemType = Item.ItemType.Potion1, amount = 1 });
+                }
+            }
+        }
+
     }
 
 

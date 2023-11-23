@@ -14,4 +14,5 @@ public class Quest
 
     public QuestGoal goal;
 
+   
 }

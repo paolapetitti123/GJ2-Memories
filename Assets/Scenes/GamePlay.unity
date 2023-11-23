@@ -3018,9 +3018,11 @@ MonoBehaviour:
     potionReward: 1
     goal:
       goalType: 0
+      requiredAmount: 3
       currentAmount: 0
-      questCompletion: 0
       itemsCollected: 0
+      count: 0
+      hasSpokenFinish: 0
   player: {fileID: 1070855184}
   questWindow: {fileID: 995680008}
   titleText: {fileID: 1638240376}
@@ -4126,9 +4128,15 @@ MonoBehaviour:
     potionReward: 1
     goal:
       goalType: 0
+      requiredAmount: 3
       currentAmount: 0
-      questCompletion: 0
       itemsCollected: 0
+      count: 0
+      hasSpokenFinish: 0
+  Conversation1: {fileID: 914919446}
+  convoActive: 0
+  Alchemist: {fileID: 748405937}
+  itemSlot: []
 --- !u!50 &1070855185
 Rigidbody2D:
   serializedVersion: 4
@@ -4232,7 +4240,7 @@ BoxCollider2D:
   m_Enabled: 1
   m_Density: 1
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
@@ -4272,13 +4280,16 @@ MonoBehaviour:
     potionReward: 1
     goal:
       goalType: 0
+      requiredAmount: 3
       currentAmount: 0
-      questCompletion: 0
       itemsCollected: 0
+      count: 0
+      hasSpokenFinish: 0
   questOneComplete: 0
   textOneActive: 0
   textTwoActive: 0
   textThreeActive: 0
+  questFinished: 0
 --- !u!1001 &1074763621
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -6693,6 +6704,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aef8c8b94455a3c42830722b2cb26177, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  itemSlot: []
+  quest:
+    isActive: 0
+    title: Ingredient Gathering
+    description: If you want the first of 3 potions, I will need from you a Mushroom,
+      an herb and a flower.
+    potionReward: 1
+    goal:
+      goalType: 0
+      requiredAmount: 3
+      currentAmount: 0
+      itemsCollected: 0
+      count: 0
+      hasSpokenFinish: 0
 --- !u!1 &1775000225
 GameObject:
   m_ObjectHideFlags: 0

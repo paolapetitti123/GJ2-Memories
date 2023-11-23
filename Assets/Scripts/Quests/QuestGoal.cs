@@ -8,54 +8,42 @@ public class QuestGoal
 {
     public GoalType goalType;
 
-    private int requiredAmount = 3;
+    public int requiredAmount = 3;
+    public int currentAmount = 0;
 
 
-    public int currentAmount;
-
-    public bool questCompletion = false;
 
     public bool itemsCollected;
 
-    Conversation convo;
+    public int count = 0;
+    public bool hasSpokenFinish;
 
 
     public bool IsReached()
     {
-        if(currentAmount >= requiredAmount)
-        {
-            itemsCollected = true;
-        }
-        else
-        {
-            itemsCollected = false;
-        }
-        return itemsCollected;
+        if (currentAmount >= requiredAmount)
+            return itemsCollected = true;
+        else return itemsCollected= false;
     }
 
-    public bool hasSpokenToAlchemist()
+    public bool HasSpoken()
     {
-        if (convo.questOneComplete)
-        {
-            return questCompletion = true;
-        }
-        else
-        {
-            return questCompletion = false;
-        }
-        
+        if (count >= 1)
+            return hasSpokenFinish = true;
+        else return hasSpokenFinish = false;
+    }
+
+    public void TalkingCounter()
+    {
+        count++;
     }
 
     public void IngredientGathered()
     {
-        
-        
-        if (goalType == GoalType.Gathering)
-        {
-          currentAmount++;
-        }
-        
+        currentAmount++;
     }
+
+
 }
 
 public enum GoalType

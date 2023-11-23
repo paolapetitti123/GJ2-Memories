@@ -17,9 +17,6 @@ public class QuestGiver : MonoBehaviour
 
     private void Start()
     {
-       // titleText = GameObject.Find("QuestTitle").GetComponent<TextMeshPro>();
-        //descriptionText = GameObject.Find("QuestDescription").GetComponent<TextMeshPro>();
-        // rewardText = GameObject.Find("QuestReward").GetComponent<TextMeshPro>();
 
         questWindow.SetActive(false);
 
@@ -33,7 +30,7 @@ public class QuestGiver : MonoBehaviour
             questWindow.SetActive(true);
             titleText.text = quest.title;
             descriptionText.text = quest.description;
-            rewardText.text = quest.potionReward.ToString();
+            rewardText.text = "Reward: " + quest.potionReward.ToString() + " Elixir of Rememberance";
             acceptButton.onClick.AddListener(AcceptQuest);
         }
         else if(quest.isActive)
@@ -51,4 +48,5 @@ public class QuestGiver : MonoBehaviour
         // give to player
         player.quest = quest;
     }
+
 }

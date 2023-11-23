@@ -9,18 +9,23 @@ public class Conversation : MonoBehaviour
     private string[] conversationTextReturn;
     private string[] conversationTextComplete;
     private int currentTextIndex = 0;
+
+
     public GameObject Conversation1;
     public GameObject guard;
 
-    public QuestGiver questGiver;
 
+    public QuestGiver questGiver;
     public Quest quest;
 
-    public bool questOneComplete = false;
+    public bool questOneComplete;
 
     public bool textOneActive;
     public bool textTwoActive;
     public bool textThreeActive;
+
+    public bool questFinished;
+
 
     void Start()
     {
@@ -28,20 +33,31 @@ public class Conversation : MonoBehaviour
         textOneActive = true;
         textTwoActive = false;
         textThreeActive = false;
+
+        questFinished = false;
     }
 
 
     public void OnTriggerEnter2D(Collider2D other)
     {
-        // Check if the collision is with a specific tag or layer if needed
-        if (other.gameObject == guard && !quest.isActive)
+        if(other.gameObject == guard)
         {
-            Conversation1.SetActive(true);
-            Debug.Log("collision");
-
-            // conversation texts
-            conversationTexts = new string[]
+            if (questFinished)
             {
+                textThreeActive = true;
+                textTwoActive = false;
+                textOneActive = false;
+                currentTextIndex = 0;
+            }
+            // Check if the collision is with a specific tag or layer if needed
+            if (!quest.isActive)
+            {
+                Conversation1.SetActive(true);
+                Debug.Log("collision");
+
+                // conversation texts
+                conversationTexts = new string[]
+                {
                 "Good day. What have you come here searching for?",
                 "Ahhhh I see. You desire to recover your memories.",
                 "Potions you will need... Not 1, 2 but 3!",
@@ -49,50 +65,51 @@ public class Conversation : MonoBehaviour
             "First you need the elixir of remembrance!",
         "The ingredients I need are: a mushroom, an herb, a flower...",
             "Please bring me the ingredients to complete the elixir of remembrance ."
-            };
+                };
 
 
-            // Display the initial text
-            UpdateText(conversationTexts);
-        }
-        
-        if (other.gameObject == guard && quest.isActive && textTwoActive)
-        {
-            // text that'll show up when you've accepted the quest but haven't completed it yet
-
-            Conversation1.SetActive(true);
-            Debug.Log("collision 2nd text");
-
-            // conversation texts
-            conversationTextReturn = new string[]
+                // Display the initial text
+                UpdateText(conversationTexts);
+            }
+            else if (quest.isActive && !questFinished)
             {
-                "Well what are you waiting for..?", 
+                // text that'll show up when you've accepted the quest but haven't completed it yet
+
+                Conversation1.SetActive(true);
+                Debug.Log("collision 2nd text");
+
+                // conversation texts
+                conversationTextReturn = new string[]
+                {
+                "Well what are you waiting for..?",
                 "I'll be waiting here for those ingredients"
-            };
+                };
 
 
-            // Display the initial text
-            UpdateText(conversationTextReturn);
+                // Display the initial text
+                UpdateText(conversationTextReturn);
 
-        }
-        
-        if (other.gameObject == guard && quest.isActive && textThreeActive)
-        {
-            // text that'll show up when you've accepted the quest but haven't completed it yet
-            questOneComplete = true;
-            Conversation1.SetActive(true);
-            Debug.Log("collision 3rd text");
-
-            // conversation texts
-            conversationTextComplete = new string[]
+            }
+            else if (quest.isActive && questFinished)
             {
+                // text that'll show up when you've accepted the quest but haven't completed it yet
+                Conversation1.SetActive(true);
+                Debug.Log("collision 3rd text");
+                currentTextIndex = 0;
+                // conversation texts
+                conversationTextComplete = new string[]
+                {
                 "I see you have brought me the ingredients for the exlir of rememberance.",
-                "Here you go, one elixir of rememberance, as promised.", 
+                "Here you go, one elixir of rememberance, as promised.",
                 "Come see me once you're ready to gather ingredients for the next elixir."
-            };
-            // Display the initial text
-            UpdateText(conversationTextComplete);
+                };
+                // Display the initial text
+                UpdateText(conversationTextComplete);
+            }
         }
+
+
+       
 
     }
 
@@ -130,44 +147,36 @@ public class Conversation : MonoBehaviour
             if (currentTextIndex >= conversationTextReturn.Length)
             {
                 Conversation1.SetActive(false);
-                if (quest.isActive && !quest.goal.IsReached())
-                {
-                    questGiver.questWindow.SetActive(false);
-                    currentTextIndex = 0;
-                }
-                else if (quest.isActive && quest.goal.IsReached())
+                if (quest.isActive && !questFinished)
                 {
                     currentTextIndex = 0;
                     textThreeActive = true;
                     textTwoActive = false;
                     questGiver.questWindow.SetActive(false);
                 }
-
+                currentTextIndex = 0;
             }
             UpdateText(conversationTextReturn);
         }
-        else if (textThreeActive && !textOneActive && !textTwoActive)
+        else if (textThreeActive)
         {
-            Conversation1.SetActive(false);
-
-            if (currentTextIndex >= conversationTextReturn.Length)
+            if (currentTextIndex >= conversationTextComplete.Length)
             {
-                if (quest.isActive && !quest.goal.IsReached())
+                Conversation1.SetActive(false);
+                questOneComplete = true;
+                quest.goal.hasSpokenFinish = true;
+                if (quest.isActive && questFinished)
                 {
-                    questGiver.questWindow.SetActive(false);
-
-                }
-                else if (quest.isActive && quest.goal.IsReached())
-                {
-                    questGiver.questWindow.SetActive(false);
                     questOneComplete = true;
+                    questGiver.questWindow.SetActive(false);
+                    quest.goal.hasSpokenFinish = true;
                 }
                
             }
             UpdateText(conversationTextComplete);
         }
 
-        Debug.Log(currentTextIndex);
+    
     }
 
     void UpdateText(string[] conversationTexts)

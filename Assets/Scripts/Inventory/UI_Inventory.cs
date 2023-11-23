@@ -10,12 +10,12 @@ public class UI_Inventory : MonoBehaviour
 {
     private Inventory inventory;
 
-    private GameObject[] itemSlot;
+    public GameObject[] itemSlot;
 
     private GameObject[] removeButton;
     private GameObject[] useButton;
     private PlayerMovement player;
-
+    public Quest quest;
 
 
     private void Awake()
@@ -146,6 +146,20 @@ public class UI_Inventory : MonoBehaviour
             }
 
             guiCounter++;
+
+            if (quest.goal.HasSpoken())
+            {
+                Debug.Log("in UI Inventory has spoken");
+                if (item.GetSprite().name == "Square")
+                {
+                    Debug.Log("in UI Inventory has spoken where items should be removed");
+                    inventory.RemoveItem(item);
+                    itemSlot[counter].SetActive(false);
+                }
+            }
+
+            
+
         }
     
 
