@@ -8,7 +8,7 @@ public class QuestGiver : MonoBehaviour
 {
     public Quest quest;
     public PlayerMovement player;
-
+    public GameObject questIcon;
     public GameObject questWindow;
     public TMP_Text titleText;
     public TMP_Text descriptionText;
@@ -19,15 +19,29 @@ public class QuestGiver : MonoBehaviour
     {
 
         questWindow.SetActive(false);
+        questIcon.SetActive(false);
+        questIcon.GetComponent<Button>().onClick.AddListener(OnQuestIconClick);
+
 
     }
 
+    public void OnQuestIconClick()
+    {
+        Debug.Log("Quest Icon Clicked");
+
+        questWindow.SetActive(true);
+        titleText.text = quest.title;
+        descriptionText.text = quest.description;
+        rewardText.text = "Reward: " + quest.potionReward.ToString() + " Elixir of Rememberance";
+        acceptButton.onClick.AddListener(AcceptQuest);
+    }
 
     public void OpenQuestWindow()
     {
         if (!quest.isActive)
         {
             questWindow.SetActive(true);
+            questIcon.SetActive(true);
             titleText.text = quest.title;
             descriptionText.text = quest.description;
             rewardText.text = "Reward: " + quest.potionReward.ToString() + " Elixir of Rememberance";
