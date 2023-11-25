@@ -2,6 +2,8 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
+
 using CodeMonkey.Utils;
 
 /* Followed this tutorial for the movement if any of you are interested in the detailed 
@@ -234,7 +236,43 @@ public class PlayerMovement : MonoBehaviour
                     //uiInv.RemoveCall();
                     Debug.Log("I HAVE MADE IT IN HERE WOOO " );
 
+                    int count = 1;
+                    foreach (Item item in inventory.itemList)
+                    {
+                        // Access the 'GetSprite().name' property of each item's sprite and print it
+                        Debug.Log(count + item.GetSprite().name);
+                    
+                        itemSlot = GameObject.FindGameObjectsWithTag("itemImage");
+                        foreach (GameObject specificItem in itemSlot)
+                        {
+                            specificItem.SetActive(false);
+                            Debug.Log(count + item.GetSprite().name + "setting to false");
+
+                        }
+
+                        count++;
+                    }
                     inventory.itemList.Clear();
+
+                  
+                    //int count = 0;
+                    //while (count < 9)
+                    //{
+                    //    Debug.Log(inventory.itemList);
+
+                    //    Debug.Log("item!" + itemSlot[count]);
+                    //    if (itemSlot[count].activeInHierarchy && itemSlot[count] != null)
+                    //    {
+                    //        Debug.Log("count!");
+
+                    //        itemSlot[count].SetActive(false);
+                    //        count++;
+
+                    //    }
+                    //    else
+                    //        break;
+                    //    Debug.Log("counte" + count);
+                    //}
                     // inventory.AddItem(new Item { itemType = Item.ItemType.Potion1, amount = 1 });
                 }
             }
