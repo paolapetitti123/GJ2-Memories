@@ -231,10 +231,10 @@ public class PlayerMovement : MonoBehaviour
                 if (quest.goal.HasSpoken())
                 {
                     //uiInv.questComplete = true;
-                    uiInv.RemoveCall();
+                    //uiInv.RemoveCall();
                     Debug.Log("I HAVE MADE IT IN HERE WOOO " );
-                    
-                    
+
+                    inventory.itemList.Clear();
                     // inventory.AddItem(new Item { itemType = Item.ItemType.Potion1, amount = 1 });
                 }
             }
