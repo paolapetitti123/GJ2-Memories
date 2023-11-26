@@ -18,14 +18,19 @@ public class DoorsController : MonoBehaviour
     public GameObject alchemist;
     public GameObject kitchen;
 
+    public GameObject mainCamera;
+    public GameObject kitchenCamera;
+    public GameObject alchemistCamera;
 
     private void Start()
     {
         outside.SetActive(true);
-        alchemist.SetActive(false);
-        kitchen.SetActive(false);
+        alchemist.SetActive(true);
+        kitchen.SetActive(true);
 
-
+        mainCamera.SetActive(true);
+        kitchenCamera.SetActive(false);
+        alchemistCamera.SetActive(false);
     }
     //private void OnTriggerEnter2D(Collider2D other)
     //{
@@ -54,15 +59,20 @@ public class DoorsController : MonoBehaviour
         {
             Debug.Log("hit door one");
             // Handle collision with DoorOne
-            outside.SetActive(false);
-            kitchen.SetActive(false);
-            alchemist.SetActive(true);
+            //outside.SetActive(false);
+           // kitchen.SetActive(false);
+           // alchemist.SetActive(true);
+
+            mainCamera.SetActive(false);
+            kitchenCamera.SetActive(false);
+            alchemistCamera.SetActive(true);
+
             // Assuming your player's GameObject has a Transform component (if not, adjust accordingly)
             Transform playerTransform = gameObject.GetComponent<Transform>();
 
             // Set the player's y-position to its negative value
-            playerTransform.position = new Vector3(playerTransform.position.x, -Mathf.Abs(playerTransform.position.y), playerTransform.position.z);
-
+            playerTransform.position = new Vector3(playerTransform.position.x, 22.51f, playerTransform.position.z);
+            Debug.Log(playerTransform.position);
             //CanvasManager.Instance.SwitchCanvas(CanvasManager.Instance.canvases[1]);
 
             // Trigger the alchemist background sounds
@@ -73,14 +83,18 @@ public class DoorsController : MonoBehaviour
         {
             Debug.Log("hit door two");
             // Handle collision with DoorOne
-            outside.SetActive(false);
-            kitchen.SetActive(true);
-            alchemist.SetActive(false);
+           // outside.SetActive(false);
+           // kitchen.SetActive(true);
+            //alchemist.SetActive(false);
             Transform playerTransform = gameObject.GetComponent<Transform>();
 
-            // Set the player's y-position to its negative value
-            playerTransform.position = new Vector3(playerTransform.position.x, Mathf.Abs(playerTransform.position.y + 2f), playerTransform.position.z);
+            mainCamera.SetActive(false);
+            kitchenCamera.SetActive(true);
+            alchemistCamera.SetActive(false);
 
+            // Set the player's y-position to its negative value
+            playerTransform.position = new Vector3(playerTransform.position.x, -23.63f, playerTransform.position.z);
+            Debug.Log(playerTransform.position);
 
             //CanvasManager.Instance.SwitchCanvas(CanvasManager.Instance.canvases[0]);
 
@@ -94,14 +108,19 @@ public class DoorsController : MonoBehaviour
         {
             Debug.Log("hit door three");
             // Handle collision with DoorOne
-            outside.SetActive(true);
-            kitchen.SetActive(false);
-            alchemist.SetActive(false);
+           // outside.SetActive(true);
+          //  kitchen.SetActive(false);
+          //  alchemist.SetActive(false);
             Transform playerTransform = gameObject.GetComponent<Transform>();
 
-            // Set the player's y-position to its negative value
-            playerTransform.position = new Vector3(playerTransform.position.x, Mathf.Abs(playerTransform.position.y + 2f), playerTransform.position.z);
+            mainCamera.SetActive(true);
+            kitchenCamera.SetActive(false);
+            alchemistCamera.SetActive(false);
 
+            // Set the player's y-position to its negative value
+            playerTransform.position = new Vector3(playerTransform.position.x, 4.87f, playerTransform.position.z);
+
+            Debug.Log(playerTransform.position);
             //CanvasManager.Instance.SwitchCanvas(CanvasManager.Instance.canvases[2]);
 
             // Trigger the outside river background audio
@@ -111,13 +130,18 @@ public class DoorsController : MonoBehaviour
         {
             Debug.Log("hit door four");
             // Handle collision with DoorOne
-            outside.SetActive(true);
-            kitchen.SetActive(false);
-            alchemist.SetActive(false);
+            //outside.SetActive(true);
+           // kitchen.SetActive(false);
+           // alchemist.SetActive(false);
             Transform playerTransform = gameObject.GetComponent<Transform>();
 
+            mainCamera.SetActive(true);
+            kitchenCamera.SetActive(false);
+            alchemistCamera.SetActive(false);
+
             // Set the player's y-position to its negative value
-            playerTransform.position = new Vector3(playerTransform.position.x, -Mathf.Abs(playerTransform.position.y -2f), playerTransform.position.z);
+            playerTransform.position = new Vector3(playerTransform.position.x, -4.79f, playerTransform.position.z);
+            Debug.Log(playerTransform.position);
 
             //CanvasManager.Instance.SwitchCanvas(CanvasManager.Instance.canvases[2]);
 

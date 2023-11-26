@@ -27,6 +27,8 @@ public class ItemWorld : MonoBehaviour
         Transform transform;
         ItemWorld itemWorld;
 
+        
+
         transform = Instantiate(itemWorldTrans, position, Quaternion.identity);
         itemWorld = transform.GetComponent<ItemWorld>();
 
