@@ -31,7 +31,6 @@ public class AudioController : MonoBehaviour
         if (Instance == null)
         {
             Instance = this;
-            DontDestroyOnLoad(gameObject);
 
             if (!isInitialized && audioClipsGameplay != null)
             {
@@ -72,43 +71,43 @@ public class AudioController : MonoBehaviour
         }
     }
 
-    private void Update()
-    {
-        // Check if the scene has changed
-        string newSceneName = SceneManager.GetActiveScene().name;
-        if (newSceneName != currentSceneName)
-        {
-            currentSceneName = newSceneName;
+    // private void Update()
+    // {
+    //     // Check if the scene has changed
+    //     string newSceneName = SceneManager.GetActiveScene().name;
+    //     if (newSceneName != currentSceneName)
+    //     {
+    //         currentSceneName = newSceneName;
 
-            // Use this switch setup to play sounds in specifics scenes from the audio controller.
-            switch (currentSceneName)
-            {
-                case "MainMenu":
+    //         // Use this switch setup to play sounds in specifics scenes from the audio controller.
+    //         switch (currentSceneName)
+    //         {
+    //             case "MainMenu":
                    
-                    break;
+    //                 break;
 
-                case "GamePlay":
+    //             case "GamePlay":
            
-                    break;
+    //                 break;
 
-                case "GameWin":
+    //             case "GameWin":
             
-                    break;
+    //                 break;
 
-                case "GameOver":
+    //             case "GameOver":
           
-                    break;
+    //                 break;
 
-                case "GameCredits":
+    //             case "GameCredits":
                 
-                    break;
+    //                 break;
 
-                default:
-                    Debug.LogWarning("Unknown scene: " + currentSceneName);
-                    break;
-            }
-        }
-    }
+    //             default:
+    //                 Debug.LogWarning("Unknown scene: " + currentSceneName);
+    //                 break;
+    //         }
+    //     }
+    // }
 
     // Method for playing sound
     public void PlaySoundGameplay(string sourceName)

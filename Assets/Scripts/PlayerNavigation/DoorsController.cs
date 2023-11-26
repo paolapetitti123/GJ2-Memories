@@ -64,6 +64,10 @@ public class DoorsController : MonoBehaviour
             playerTransform.position = new Vector3(playerTransform.position.x, -Mathf.Abs(playerTransform.position.y), playerTransform.position.z);
 
             //CanvasManager.Instance.SwitchCanvas(CanvasManager.Instance.canvases[1]);
+
+            // Trigger the alchemist background sounds
+            AudioBackgroundController.Instance.PlayBgAudio("alchemist_bg_1");
+
         }
         else if (other.gameObject == DoorTwo)
         {
@@ -79,6 +83,12 @@ public class DoorsController : MonoBehaviour
 
 
             //CanvasManager.Instance.SwitchCanvas(CanvasManager.Instance.canvases[0]);
+
+            // Stop background audio
+            AudioBackgroundController.Instance.StopAllBackgroundAudio();
+            // Trigger door opening sound
+            AudioController.Instance.PlaySoundGameplay("door_open_1");
+
         }
         else if (other.gameObject == DoorThree)
         {
@@ -93,6 +103,9 @@ public class DoorsController : MonoBehaviour
             playerTransform.position = new Vector3(playerTransform.position.x, Mathf.Abs(playerTransform.position.y + 2f), playerTransform.position.z);
 
             //CanvasManager.Instance.SwitchCanvas(CanvasManager.Instance.canvases[2]);
+
+            // Trigger the outside river background audio
+            AudioBackgroundController.Instance.PlayBgAudio("wind_bg_1", "river_stream_bg_1");
         }
         else if (other.gameObject == DoorFour)
         {
@@ -107,6 +120,9 @@ public class DoorsController : MonoBehaviour
             playerTransform.position = new Vector3(playerTransform.position.x, -Mathf.Abs(playerTransform.position.y -2f), playerTransform.position.z);
 
             //CanvasManager.Instance.SwitchCanvas(CanvasManager.Instance.canvases[2]);
+
+            // Trigger the outside river background audio
+            AudioBackgroundController.Instance.PlayBgAudio("wind_bg_1", "river_stream_bg_1");
         }
         else if (gameObject.CompareTag("DoorFive"))
         {
