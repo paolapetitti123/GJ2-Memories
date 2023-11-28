@@ -218,7 +218,6 @@ public class PlayerMovement : MonoBehaviour
         if (quest.goal.IsReached())
         {
             gameObject.GetComponent<Conversation>().questFinished = true;
-            //quest.goal.count = 1;
 
             Debug.Log("in Player Movement quest one complete goal count 0");
   
@@ -230,8 +229,7 @@ public class PlayerMovement : MonoBehaviour
                 
                 if (quest.goal.HasSpoken())
                 {
-                    //uiInv.questComplete = true;
-                    //uiInv.RemoveCall();
+
                     Debug.Log("I HAVE MADE IT IN HERE WOOO " );
 
                     int count = 1;
@@ -246,6 +244,7 @@ public class PlayerMovement : MonoBehaviour
                             if (item.IsAMushroom() || item.IsAFlower() || item.IsAnHerb())
                             {
                                 specificItem.SetActive(false);
+                                
                                 Debug.Log(count + item.GetSprite().name + "setting to false");
                             }
                             
@@ -258,25 +257,7 @@ public class PlayerMovement : MonoBehaviour
                     inventory.AddItem(new Item { itemType = Item.ItemType.Potion1, amount = 1 });
                 }
 
-                //int count = 0;
-                //while (count < 9)
-                //{
-                //    Debug.Log(inventory.itemList);
-
-                //    Debug.Log("item!" + itemSlot[count]);
-                //    if (itemSlot[count].activeInHierarchy && itemSlot[count] != null)
-                //    {
-                //        Debug.Log("count!");
-
-                //        itemSlot[count].SetActive(false);
-                //        count++;
-
-                //    }
-                //    else
-                //        break;
-                //    Debug.Log("counte" + count);
-                //}
-                // 
+               
             }
         }
 
