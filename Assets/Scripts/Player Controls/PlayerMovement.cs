@@ -74,12 +74,7 @@ public class PlayerMovement : MonoBehaviour
      */
     void Update()
     {
-        if(inventory == null)
-        {
-            inventory = new Inventory(UseItem);
-            uiInv.SetInventory(inventory);
-            uiInv.SetPlayer(this);
-        }
+      
 
         convoActive = Conversation1.activeInHierarchy;
         // gives value between -1 and 1 depending on horizontal input, i.e pressing the Left arrow key give -1 and Right gives 1
@@ -244,40 +239,44 @@ public class PlayerMovement : MonoBehaviour
                     {
                         // Access the 'GetSprite().name' property of each item's sprite and print it
                         Debug.Log(count + item.GetSprite().name);
-                    
+
                         itemSlot = GameObject.FindGameObjectsWithTag("itemImage");
                         foreach (GameObject specificItem in itemSlot)
                         {
-                            specificItem.SetActive(false);
-                            Debug.Log(count + item.GetSprite().name + "setting to false");
+                            if (item.IsAMushroom() || item.IsAFlower() || item.IsAnHerb())
+                            {
+                                specificItem.SetActive(false);
+                                Debug.Log(count + item.GetSprite().name + "setting to false");
+                            }
+                            
 
                         }
 
                         count++;
                     }
                     inventory.itemList.Clear();
-
-                  
-                    //int count = 0;
-                    //while (count < 9)
-                    //{
-                    //    Debug.Log(inventory.itemList);
-
-                    //    Debug.Log("item!" + itemSlot[count]);
-                    //    if (itemSlot[count].activeInHierarchy && itemSlot[count] != null)
-                    //    {
-                    //        Debug.Log("count!");
-
-                    //        itemSlot[count].SetActive(false);
-                    //        count++;
-
-                    //    }
-                    //    else
-                    //        break;
-                    //    Debug.Log("counte" + count);
-                    //}
-                    // inventory.AddItem(new Item { itemType = Item.ItemType.Potion1, amount = 1 });
+                    inventory.AddItem(new Item { itemType = Item.ItemType.Potion1, amount = 1 });
                 }
+
+                //int count = 0;
+                //while (count < 9)
+                //{
+                //    Debug.Log(inventory.itemList);
+
+                //    Debug.Log("item!" + itemSlot[count]);
+                //    if (itemSlot[count].activeInHierarchy && itemSlot[count] != null)
+                //    {
+                //        Debug.Log("count!");
+
+                //        itemSlot[count].SetActive(false);
+                //        count++;
+
+                //    }
+                //    else
+                //        break;
+                //    Debug.Log("counte" + count);
+                //}
+                // 
             }
         }
 

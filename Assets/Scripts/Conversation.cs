@@ -98,8 +98,11 @@ public class Conversation : MonoBehaviour
                 {
                 "I see you have brought me the ingredients for the elixir of rememberance.",
                 "Here you go, one elixir of rememberance, as promised.",
-                "Come see me once you're ready to gather ingredients for the next elixir."
+                "Drink up"
                 };
+
+
+                // "Come see me once you're ready to gather ingredients for the next elixir."
                 // Display the initial text
                 UpdateText(conversationTextComplete);
             }
