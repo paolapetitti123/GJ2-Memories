@@ -118,7 +118,7 @@ public class DoorsController : MonoBehaviour
             alchemistCamera.SetActive(false);
 
             // Set the player's y-position to its negative value
-            playerTransform.position = new Vector3(playerTransform.position.x, 4.8f, playerTransform.position.z);
+            playerTransform.position = new Vector3(playerTransform.position.x, 3.16f, playerTransform.position.z);
 
             Debug.Log(playerTransform.position);
             //CanvasManager.Instance.SwitchCanvas(CanvasManager.Instance.canvases[2]);
