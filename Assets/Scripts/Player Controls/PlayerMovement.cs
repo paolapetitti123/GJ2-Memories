@@ -141,6 +141,9 @@ public class PlayerMovement : MonoBehaviour
             {
                 if (quest.isActive)
                 {
+                    // Trigger pick up item audio
+                    AudioController.Instance.PlaySoundGameplay("pickup_item_1");
+
                     itemWorld.enabled = true;
                     if (itemWorld.GetItem().isParent())
                     {

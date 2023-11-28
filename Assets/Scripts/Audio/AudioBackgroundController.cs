@@ -40,9 +40,10 @@ public class AudioBackgroundController : MonoBehaviour
     {
 
             // Trigger the outside river background music
-            AudioBackgroundController.Instance.PlayBgAudio("outside_river_bg_1");
+            // AudioBackgroundController.Instance.PlayBgAudio("outside_river_bg_1");
 
             }
+            
     private void InitializeBackgroundAudioSourcesDynamically()
     {
         Transform audioClipsTransform = audioClipsBackground.transform;

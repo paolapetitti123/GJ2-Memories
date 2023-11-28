@@ -76,7 +76,7 @@ public class DoorsController : MonoBehaviour
             //CanvasManager.Instance.SwitchCanvas(CanvasManager.Instance.canvases[1]);
 
             // Trigger the alchemist background sounds
-            AudioBackgroundController.Instance.PlayBgAudio("alchemist_bg_1");
+            AudioBackgroundController.Instance.PlayBgAudio("alchemist_bg_1", "bubbling_cauldron_1");
 
         }
         else if (other.gameObject == DoorTwo)
