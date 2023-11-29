@@ -15,6 +15,7 @@ TagManager:
   - DoorFour
   - DoorFive
   - InventorySlots
+  - DoorSix
   layers:
   - Default
   - TransparentFX
