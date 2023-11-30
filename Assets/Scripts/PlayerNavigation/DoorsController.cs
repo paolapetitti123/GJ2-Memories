@@ -11,6 +11,8 @@ public class DoorsController : MonoBehaviour
     public GameObject DoorTwo;
     public GameObject DoorThree;
     public GameObject DoorFour;
+    public GameObject DoorFive;
+    public GameObject DoorSix;
 
 
 
@@ -21,6 +23,7 @@ public class DoorsController : MonoBehaviour
     public GameObject mainCamera;
     public GameObject kitchenCamera;
     public GameObject alchemistCamera;
+    public GameObject outsideLeftCamera;
 
     private void Start()
     {
@@ -31,26 +34,9 @@ public class DoorsController : MonoBehaviour
         mainCamera.SetActive(true);
         kitchenCamera.SetActive(false);
         alchemistCamera.SetActive(false);
+        outsideLeftCamera.SetActive(false);
     }
-    //private void OnTriggerEnter2D(Collider2D other)
-    //{
-    //    if (other.CompareTag("Player") && !playerInTriggerZone && Time.time - lastTriggerTime > triggerCooldown)
-    //    {
-    //        playerInTriggerZone = true;
-    //        lastTriggerTime = Time.time;
 
-    //        // Player has entered the trigger zone and cooldown has passed
-    //        HandleDoorCollision();
-    //    }
-    //}
-
-    //private void OnTriggerExit2D(Collider2D other)
-    //{
-    //    if (other.CompareTag("Player"))
-    //    {
-    //        playerInTriggerZone = false;
-    //    }
-    //}
 
     public void OnTriggerEnter2D(Collider2D other)
     {
@@ -66,6 +52,7 @@ public class DoorsController : MonoBehaviour
             mainCamera.SetActive(false);
             kitchenCamera.SetActive(false);
             alchemistCamera.SetActive(true);
+            outsideLeftCamera.SetActive(false);
 
             // Assuming your player's GameObject has a Transform component (if not, adjust accordingly)
             Transform playerTransform = gameObject.GetComponent<Transform>();
@@ -91,6 +78,7 @@ public class DoorsController : MonoBehaviour
             mainCamera.SetActive(false);
             kitchenCamera.SetActive(true);
             alchemistCamera.SetActive(false);
+            outsideLeftCamera.SetActive(false);
 
             // Set the player's y-position to its negative value
             playerTransform.position = new Vector3(playerTransform.position.x, -23.63f, playerTransform.position.z);
@@ -116,6 +104,7 @@ public class DoorsController : MonoBehaviour
             mainCamera.SetActive(true);
             kitchenCamera.SetActive(false);
             alchemistCamera.SetActive(false);
+            outsideLeftCamera.SetActive(false);
 
             // Set the player's y-position to its negative value
             playerTransform.position = new Vector3(playerTransform.position.x, 3.16f, playerTransform.position.z);
@@ -138,6 +127,7 @@ public class DoorsController : MonoBehaviour
             mainCamera.SetActive(true);
             kitchenCamera.SetActive(false);
             alchemistCamera.SetActive(false);
+            outsideLeftCamera.SetActive(false);
 
             // Set the player's y-position to its negative value
             playerTransform.position = new Vector3(playerTransform.position.x, -4.79f, playerTransform.position.z);
@@ -148,9 +138,43 @@ public class DoorsController : MonoBehaviour
             // Trigger the outside river background audio
             AudioBackgroundController.Instance.PlayBgAudio("wind_bg_1", "river_stream_bg_1");
         }
-        else if (gameObject.CompareTag("DoorFive"))
+        else if (other.gameObject == DoorFive)
         {
-           // Trigger next scene
+            Transform playerTransform = gameObject.GetComponent<Transform>();
+
+
+            mainCamera.SetActive(false);
+            kitchenCamera.SetActive(false);
+            alchemistCamera.SetActive(false);
+            outsideLeftCamera.SetActive(true);
+
+            // Set the player's y-position to its negative value
+            playerTransform.position = new Vector3(-29.26f, playerTransform.position.y, playerTransform.position.z);
+            Debug.Log(playerTransform.position);
+
+            //CanvasManager.Instance.SwitchCanvas(CanvasManager.Instance.canvases[2]);
+
+            // Trigger the outside river background audio
+            AudioBackgroundController.Instance.PlayBgAudio("wind_bg_1", "river_stream_bg_1");
+        }
+        else if (other.gameObject == DoorSix)
+        {
+            Transform playerTransform = gameObject.GetComponent<Transform>();
+
+
+            mainCamera.SetActive(true);
+            kitchenCamera.SetActive(false);
+            alchemistCamera.SetActive(false);
+            outsideLeftCamera.SetActive(false);
+
+            // Set the player's y-position to its negative value
+            playerTransform.position = new Vector3(-8.71f, playerTransform.position.y, playerTransform.position.z);
+            Debug.Log(playerTransform.position);
+
+            //CanvasManager.Instance.SwitchCanvas(CanvasManager.Instance.canvases[2]);
+
+            // Trigger the outside river background audio
+            AudioBackgroundController.Instance.PlayBgAudio("wind_bg_1", "river_stream_bg_1");
         }
     }
 }
