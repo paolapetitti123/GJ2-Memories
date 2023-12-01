@@ -66,7 +66,7 @@ public class Item
             case ItemType.Flower:       return true;
             case ItemType.Wood:         return true;
             case ItemType.Berries:      return true;
-            case ItemType.Water:        return false;
+            case ItemType.Water:        return true;
             case ItemType.FishingRod:   return false;
             case ItemType.Fish:         return true;
         }
