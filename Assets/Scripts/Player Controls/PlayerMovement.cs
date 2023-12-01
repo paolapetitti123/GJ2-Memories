@@ -46,6 +46,7 @@ public class PlayerMovement : MonoBehaviour
     private int mushroomCounter = 0;
     private int flowerCounter = 0;
     private int herbCounter = 0;
+    private int waterCounter = 0;
 
 
     public bool convoActive;
@@ -132,6 +133,7 @@ public class PlayerMovement : MonoBehaviour
        
         if(itemWorld != null)
         {
+            Debug.Log("collision item");
             if(inventory.GetItemList().Count < 10)
             {
                 if (quest.isActive)
@@ -145,14 +147,21 @@ public class PlayerMovement : MonoBehaviour
 
                         if (itemWorld.GetItem().GetSprite().name == "well-1")
                         {
+                            Debug.Log("well collision");
                             inventory.AddItem(new Item { itemType = Item.ItemType.Water, amount = 1 });
 
                              // Trigger pick up item audio
                             AudioController.Instance.PlaySoundGameplayNoRepeat("pickup_well_2");
+
+                              if (waterCounter == 0) // doing this so the ingredientsgathered is only ever called once
+                            {
+                                quest.goal.IngredientGathered();
+                                waterCounter++;
+                            }
                         }
                         else if (itemWorld.GetItem().GetSprite().name == "flowers-3")
                         {
-
+                            Debug.Log("flower collision");
                             inventory.AddItem(new Item { itemType = Item.ItemType.Flower, amount = 1 });
 
                              // Trigger pick up item audio
@@ -188,7 +197,9 @@ public class PlayerMovement : MonoBehaviour
                     else if (!itemWorld.GetItem().isParent())
                     {                      
                         if (itemWorld.GetItem().IsAMushroom() && mushroomCounter == 0) // doing this so the ingredientsgathered is only ever called once
-                        {                          
+                        {            
+                            // Trigger pick up item audio
+                            AudioController.Instance.PlaySoundGameplayNoRepeat("pickup_mushroom_1");              
                             inventory.AddItem(itemWorld.GetItem());
                             quest.goal.IngredientGathered();
                             mushroomCounter++;
@@ -196,6 +207,8 @@ public class PlayerMovement : MonoBehaviour
                         }
                         else
                         {
+                            // Trigger pick up item audio
+                            AudioController.Instance.PlaySoundGameplayNoRepeat("pickup_mushroom_1");
                             inventory.AddItem(itemWorld.GetItem());
                             itemWorld.DestroySelf();
                         }
