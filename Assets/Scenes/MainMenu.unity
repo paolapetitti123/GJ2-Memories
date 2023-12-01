@@ -1094,6 +1094,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _replayButton: {fileID: 1219965324}
+  _introButton: {fileID: 1219965324}
   _creditsButton: {fileID: 43968219}
   _exitButton: {fileID: 1179863325}
   _menuButton: {fileID: 131903239}

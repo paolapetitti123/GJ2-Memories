@@ -16,6 +16,7 @@ public class GameStateManager : MonoBehaviour
     public enum Scene
     {
         MainMenu,
+        Intro,
         GamePlay,
         GameWin,
         GameLose,

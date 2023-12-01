@@ -7,6 +7,8 @@ public class UIButtonManager : MonoBehaviour
 {
 
     [SerializeField] Button _replayButton;
+    [SerializeField] Button _introButton;
+
     [SerializeField] Button _creditsButton;
     [SerializeField] Button _exitButton;
     [SerializeField] Button _menuButton;
@@ -16,6 +18,8 @@ public class UIButtonManager : MonoBehaviour
     void Start()
     {
         _replayButton.onClick.AddListener(Replay);
+        _introButton.onClick.AddListener(Intro);
+
         _creditsButton.onClick.AddListener(Credits);
         _exitButton.onClick.AddListener(ExitGame);
         _menuButton.onClick.AddListener(MainMenu);
@@ -32,6 +36,11 @@ public class UIButtonManager : MonoBehaviour
         GameStateManager.Instance.LoadScene(GameStateManager.Scene.GameCredits);
     }
 
+
+    public void Intro()
+    {
+        GameStateManager.Instance.LoadScene(GameStateManager.Scene.Intro);
+    }
     public void MainMenu()
     {
         if (_menuButton == null)

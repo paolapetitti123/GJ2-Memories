@@ -60,7 +60,7 @@ public class IntroManager : MonoBehaviour
             }
 
             // Check if we are in scene5 and load the gameplay scene
-            if (currentCanvasIndex == 4) // scene5
+            if (currentCanvasIndex == 5) // scene5
             {
                 LoadGameplayScene();
             }
