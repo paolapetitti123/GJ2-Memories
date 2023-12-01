@@ -10,10 +10,10 @@ public class QuestGiver : MonoBehaviour
     public PlayerMovement player;
     public GameObject questIcon;
     public GameObject questWindow;
-    public TMP_Text titleText;
-    public TMP_Text descriptionText;
-    public TMP_Text rewardText;
-    public Button acceptButton;
+    //public TMP_Text titleText;
+    //public TMP_Text descriptionText;
+    //public TMP_Text rewardText;
+    public Button exitButton;
 
     private void Start()
     {
@@ -30,10 +30,10 @@ public class QuestGiver : MonoBehaviour
         Debug.Log("Quest Icon Clicked");
 
         questWindow.SetActive(true);
-        titleText.text = quest.title;
-        descriptionText.text = quest.description;
-        rewardText.text = "Reward: " + quest.potionReward.ToString() + " Elixir of Rememberance";
-        acceptButton.onClick.AddListener(AcceptQuest);
+        //titleText.text = quest.title;
+        //descriptionText.text = quest.description;
+        //rewardText.text = "Reward: " + quest.potionReward.ToString() + " Elixir of Rememberance";
+        exitButton.onClick.AddListener(AcceptQuest);
     }
 
     public void OpenQuestWindow()
@@ -42,10 +42,10 @@ public class QuestGiver : MonoBehaviour
         {
             questWindow.SetActive(true);
             questIcon.SetActive(true);
-            titleText.text = quest.title;
-            descriptionText.text = quest.description;
-            rewardText.text = "Reward: " + quest.potionReward.ToString() + " Elixir of Rememberance";
-            acceptButton.onClick.AddListener(AcceptQuest);
+            //titleText.text = quest.title;
+            //descriptionText.text = quest.description;
+            //rewardText.text = "Reward: " + quest.potionReward.ToString() + " Elixir of Rememberance";
+            exitButton.onClick.AddListener(AcceptQuest);
         }
         else if(quest.isActive)
         {

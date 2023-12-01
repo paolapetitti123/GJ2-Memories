@@ -63,8 +63,7 @@ public class Conversation : MonoBehaviour
                 {
                 "Good day. I see you desire to recover your memories.",
                 "To unlock the secrets of the mind, you must embark on a quest for ingredients rare and profound.",
-                "You will need these ingredients to complete 3 potions.",
-                "Please bring me the ingredients... Good luck!"
+                "You will need these ingredients so I can craft my potion... Good luck!"
                 };
 
 

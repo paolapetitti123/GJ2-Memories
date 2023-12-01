@@ -21,9 +21,38 @@ public class UI_Inventory : MonoBehaviour
     private Conversation convo;
 
 
+    public GameObject check1;
+    public GameObject check2;
+    public GameObject check3;
+    public GameObject check4;
+    public GameObject check5;
+    public GameObject check6;
+    public GameObject check7;
+
+    // Start is called before the first frame update
+    void Start()
+    {
+        check1.SetActive(false);
+        check2.SetActive(false);
+        check3.SetActive(false);
+        check4.SetActive(false);
+        check5.SetActive(false);
+        check6.SetActive(false);
+        check7.SetActive(false);
+    }
+
 
     private void Awake()
     {
+
+        check1 = GameObject.FindWithTag("check1");
+        check2 = GameObject.FindWithTag("check2");
+        check3 = GameObject.FindWithTag("check3");
+        check4 = GameObject.FindWithTag("check4");
+        check5 = GameObject.FindWithTag("check5");
+        check6 = GameObject.FindWithTag("check6");
+        check7 = GameObject.FindWithTag("check7");
+
         itemSlot = GameObject.FindGameObjectsWithTag("itemImage");
         foreach (GameObject item in itemSlot)
         {
@@ -95,7 +124,52 @@ public class UI_Inventory : MonoBehaviour
             img.sprite = item.GetSprite();
             img.enabled = true;
 
+   
+           
 
+
+            // Compare itemType with the enum value
+            if (img.sprite.name  == "Mushroom" && img.enabled == true)
+            {
+                check1.SetActive(true);
+                Debug.Log(item.itemType + "checked off");
+            }
+            // Compare itemType with the enum value
+            if (img.sprite.name == "Herb" && img.enabled == true)
+            {
+                check2.SetActive(true);
+                Debug.Log(item.itemType + "checked off");
+            }
+            // Compare itemType with the enum value
+            if (img.sprite.name == "Flower" && img.enabled == true)
+            {
+                check3.SetActive(true);
+                Debug.Log(item.itemType + "checked off");
+            }
+            // Compare itemType with the enum value
+            if (img.sprite.name == "Wood" && img.enabled == true)
+            {
+                check4.SetActive(true);
+                Debug.Log(item.itemType + "checked off");
+            }
+            // Compare itemType with the enum value
+            if (img.sprite.name == "Berries" && img.enabled == true)
+            {
+                check5.SetActive(true);
+                Debug.Log(item.itemType + "checked off");
+            }
+            // Compare itemType with the enum value
+            if (img.sprite.name == "Fish" && img.enabled == true)
+            {
+                check6.SetActive(true);
+                Debug.Log(item.itemType + "checked off");
+            }
+            // Compare itemType with the enum value
+            if (img.sprite.name == "Water" && img.enabled == true)
+            {
+                check7.SetActive(true);
+                Debug.Log(item.itemType + "checked off");
+            }
             itemSlot[index].GetComponent<Button_UI>().ClickFunc = () => {
 
                 if (item.isUseable())

@@ -43,9 +43,13 @@ public class PlayerMovement : MonoBehaviour
     public GameObject Conversation1;
 
 
-    private int mushroomCounter = 0;
-    private int flowerCounter = 0;
-    private int herbCounter = 0;
+    public int mushroomCounter = 0;
+    public int flowerCounter = 0;
+    public int herbCounter = 0;
+    public int berryCounter = 0;
+    public int woodCounter = 0;
+    public int fishCounter = 0;
+    public int waterCounter = 0;
 
 
     public bool convoActive;
@@ -125,7 +129,7 @@ public class PlayerMovement : MonoBehaviour
         rb.MovePosition(rb.position + movement * moveSpeed * Time.fixedDeltaTime);
     }
 
-    private void OnTriggerEnter2D(Collider2D collision)
+    public void OnTriggerEnter2D(Collider2D collision)
     {
         
         ItemWorld itemWorld = collision.GetComponent<ItemWorld>();
@@ -149,6 +153,13 @@ public class PlayerMovement : MonoBehaviour
 
                              // Trigger pick up item audio
                             AudioController.Instance.PlaySoundGameplayNoRepeat("pickup_well_2");
+
+                            if (waterCounter == 0)  // doing this so the ingredientsgathered is only ever called once
+                            {
+                                quest.goal.IngredientGathered();
+                                waterCounter++;
+                            }
+
                         }
                         else if (itemWorld.GetItem().GetSprite().name == "flowers-3")
                         {
@@ -162,6 +173,7 @@ public class PlayerMovement : MonoBehaviour
                             {
                                 quest.goal.IngredientGathered();
                                 flowerCounter++;
+                                Debug.Log("f count = " + flowerCounter);
                             }
                             
                         }
@@ -183,6 +195,12 @@ public class PlayerMovement : MonoBehaviour
                             // Trigger pick up item audio
                             AudioController.Instance.PlaySoundGameplayNoRepeat("pickup_berry_2");
                             inventory.AddItem(new Item { itemType = Item.ItemType.Berries, amount = 1 });
+                            if (berryCounter == 0)  // doing this so the ingredientsgathered is only ever called once
+                            {
+                                quest.goal.IngredientGathered();
+                                berryCounter++;
+                            }
+
                         }
                     }
                     else if (!itemWorld.GetItem().isParent())
