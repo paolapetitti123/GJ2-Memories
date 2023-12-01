@@ -137,7 +137,7 @@ public class PlayerMovement : MonoBehaviour
                 if (quest.isActive)
                 {
                     // Trigger pick up item audio
-                    AudioController.Instance.PlaySoundGameplay("pickup_item_1");
+                    // AudioController.Instance.PlaySoundGameplayNoRepeat("pickup_item_1");
 
                     itemWorld.enabled = true;
                     if (itemWorld.GetItem().isParent())
@@ -146,10 +146,18 @@ public class PlayerMovement : MonoBehaviour
                         if (itemWorld.GetItem().GetSprite().name == "well-1")
                         {
                             inventory.AddItem(new Item { itemType = Item.ItemType.Water, amount = 1 });
+
+                             // Trigger pick up item audio
+                            AudioController.Instance.PlaySoundGameplayNoRepeat("pickup_well_2");
                         }
                         else if (itemWorld.GetItem().GetSprite().name == "flowers-3")
                         {
+
                             inventory.AddItem(new Item { itemType = Item.ItemType.Flower, amount = 1 });
+
+                             // Trigger pick up item audio
+                            AudioController.Instance.PlaySoundGameplayNoRepeat("pickup_flowers_1");
+
                             if (flowerCounter == 0) // doing this so the ingredientsgathered is only ever called once
                             {
                                 quest.goal.IngredientGathered();
@@ -160,6 +168,9 @@ public class PlayerMovement : MonoBehaviour
                         else if (itemWorld.GetItem().GetSprite().name == "herb-plant")
                         {
                             inventory.AddItem(new Item { itemType = Item.ItemType.Herb, amount = 1 });
+                            // Trigger pick up item audio
+                            AudioController.Instance.PlaySoundGameplayNoRepeat("pickup_herb_2");
+
                             if(herbCounter == 0)  // doing this so the ingredientsgathered is only ever called once
                             {
                                 quest.goal.IngredientGathered();
@@ -169,13 +180,15 @@ public class PlayerMovement : MonoBehaviour
                         }
                         else if (itemWorld.GetItem().GetSprite().name == "berry-bush")
                         {
+                            // Trigger pick up item audio
+                            AudioController.Instance.PlaySoundGameplayNoRepeat("pickup_berry_2");
                             inventory.AddItem(new Item { itemType = Item.ItemType.Berries, amount = 1 });
                         }
                     }
                     else if (!itemWorld.GetItem().isParent())
-                    {
+                    {                      
                         if (itemWorld.GetItem().IsAMushroom() && mushroomCounter == 0) // doing this so the ingredientsgathered is only ever called once
-                        {
+                        {                          
                             inventory.AddItem(itemWorld.GetItem());
                             quest.goal.IngredientGathered();
                             mushroomCounter++;
@@ -256,11 +269,9 @@ public class PlayerMovement : MonoBehaviour
                     inventory.itemList.Clear();
                     inventory.AddItem(new Item { itemType = Item.ItemType.Potion1, amount = 1 });
                 }
-
                
             }
         }
-
     }
 
 
@@ -271,6 +282,8 @@ public class PlayerMovement : MonoBehaviour
             case Item.ItemType.Potion1:
                 inventory.RemoveItem(new Item { itemType = Item.ItemType.Potion1, amount = 1 });
                 StartCoroutine(FlashColor(FlashOrangeColor));
+                // Trigger pick up item audio
+                AudioController.Instance.PlaySoundGameplayNoRepeat("potion_drink_1");
                 break;
             case Item.ItemType.Potion2:
                 inventory.RemoveItem(new Item { itemType = Item.ItemType.Potion2, amount = 1 });

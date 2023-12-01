@@ -51,7 +51,10 @@ public class Conversation : MonoBehaviour
             }
             // Check if the collision is with a specific tag or layer if needed
             if (!quest.isActive)
-            {
+            {   
+                // Trigger convo audio
+                AudioController.Instance.PlaySoundGameplayNoRepeat("alchemist_convo_1");
+
                 Conversation1.SetActive(true);
                 Debug.Log("collision");
 

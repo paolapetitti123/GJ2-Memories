@@ -25,6 +25,11 @@ public class AudioController : MonoBehaviour
     // Store the current scene name
     private string currentSceneName; 
 
+
+    // Variable to track audio playing intervals
+    // private static float lastPlayTime;
+    // private static float minTimeBetweenPlays = 1f;
+
     private void Awake()
     {
         // Verify for nulls
@@ -122,23 +127,67 @@ public class AudioController : MonoBehaviour
         }
     }
 
-    // Method for playing sounds with delay
-    public void PlayDelayedSoundGameplay(string sourceName, float delay)
+
+    // Method for playing sound which does not repeat
+public void PlaySoundGameplayNoRepeat(string sourceName)
+{
+    if (audioSourceDictionaryGameplay.ContainsKey(sourceName))
     {
-        StartCoroutine(PlayDelayedSoundCoroutine(sourceName, delay));
+        AudioSource audioSource = audioSourceDictionaryGameplay[sourceName];
+
+        StartCoroutine(CheckAndPlay(audioSource));
     }
-
-    private IEnumerator PlayDelayedSoundCoroutine(string sourceName, float delay)
+    else
     {
-        yield return new WaitForSeconds(delay);
+        Debug.LogWarning("Audio source not found: " + sourceName);
+    }
+}
 
-        if (audioSourceDictionaryGameplay.ContainsKey(sourceName))
+private System.Collections.IEnumerator CheckAndPlay(AudioSource audioSource)
+{
+    yield return new WaitForSeconds(0.1f); // Adjust this delay as needed
+
+    // Check if the audio is not already playing
+    if (!audioSource.isPlaying)
+    {
+        audioSource.Play();
+    }
+    else
+    {
+        Debug.Log("Sound is already playing: " + audioSource.clip.name);
+    }
+}
+
+
+
+
+// Method for playing sounds with delay
+public void PlayDelayedSoundGameplay(string sourceName, float delay)
+{
+    StartCoroutine(PlayDelayedSoundCoroutine(sourceName, delay));
+}
+
+private IEnumerator PlayDelayedSoundCoroutine(string sourceName, float delay)
+{
+    yield return new WaitForSeconds(delay);
+
+    if (audioSourceDictionaryGameplay.ContainsKey(sourceName))
+    {
+        AudioSource audioSource = audioSourceDictionaryGameplay[sourceName];
+
+        if (!audioSource.isPlaying)
         {
-            audioSourceDictionaryGameplay[sourceName].Play();
+            audioSource.Play();
         }
         else
         {
-            Debug.LogWarning("Audio source not found: " + sourceName);
+            Debug.LogWarning("Audio source is already playing: " + sourceName);
         }
     }
+    else
+    {
+        Debug.LogWarning("Audio source not found: " + sourceName);
+    }
+}
+
 }

@@ -62,6 +62,8 @@ public class DoorsController : MonoBehaviour
             Debug.Log(playerTransform.position);
             //CanvasManager.Instance.SwitchCanvas(CanvasManager.Instance.canvases[1]);
 
+            // Trigger gate opening sound
+            AudioController.Instance.PlaySoundGameplay("gate_opening_1");
             // Trigger the alchemist background sounds
             AudioBackgroundController.Instance.PlayBgAudio("alchemist_bg_1", "bubbling_cauldron_1");
 
@@ -90,6 +92,8 @@ public class DoorsController : MonoBehaviour
             AudioBackgroundController.Instance.StopAllBackgroundAudio();
             // Trigger door opening sound
             AudioController.Instance.PlaySoundGameplay("door_open_1");
+            // Background audio for kitchen
+            AudioBackgroundController.Instance.PlayBgAudio("guard_fire_1");
 
         }
         else if (other.gameObject == DoorThree)
@@ -155,7 +159,7 @@ public class DoorsController : MonoBehaviour
             //CanvasManager.Instance.SwitchCanvas(CanvasManager.Instance.canvases[2]);
 
             // Trigger the outside river background audio
-            AudioBackgroundController.Instance.PlayBgAudio("wind_bg_1", "river_stream_bg_1");
+            AudioBackgroundController.Instance.PlayBgAudio("wind_leaves_1", "birds_chirping_1");
         }
         else if (other.gameObject == DoorSix)
         {
