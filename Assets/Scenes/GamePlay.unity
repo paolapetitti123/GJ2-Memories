@@ -12481,7 +12481,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1070855182}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -2.15, y: 0, z: -65.55599}
+  m_LocalPosition: {x: -1.41, y: 0, z: -65.55599}
   m_LocalScale: {x: 0.5, y: 0.5, z: 0.5}
   m_ConstrainProportionsScale: 1
   m_Children:
@@ -12684,6 +12684,7 @@ MonoBehaviour:
   speed: 5
   ChefConversation: {fileID: 1641368126}
   Chef: {fileID: 780040987}
+  chefsTable: {fileID: 1080874666}
   questGiver: {fileID: 748405941}
   quest:
     isActive: 0
@@ -12705,6 +12706,7 @@ MonoBehaviour:
   questFinished: 0
   GuardConvoActive: 0
   guardConvoCount: 0
+  ChefConvoCount: 0
 --- !u!114 &1070855190
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -12840,8 +12842,8 @@ GameObject:
   - component: {fileID: 1080874669}
   - component: {fileID: 1080874668}
   m_Layer: 0
-  m_Name: table
-  m_TagString: Untagged
+  m_Name: chefTable
+  m_TagString: kitchenTable
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -12854,7 +12856,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1080874666}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -343.62897, y: 51.90001, z: -52.57}
+  m_LocalPosition: {x: -343.62897, y: 51.90001, z: -14.77}
   m_LocalScale: {x: 34.8, y: 34.8, z: 34.8}
   m_ConstrainProportionsScale: 1
   m_Children: []
@@ -12874,7 +12876,7 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0.040905, y: 0.28398317}
+  m_Offset: {x: 0.040905, y: 0.53}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
@@ -12885,8 +12887,8 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 4.400447, y: 2.0376968}
-  m_EdgeRadius: 0
+  m_Size: {x: 4.400447, y: 1.62}
+  m_EdgeRadius: 0.03
 --- !u!212 &1080874669
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -13880,7 +13882,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1172407370}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -262, y: -143, z: -21.6}
+  m_LocalPosition: {x: -262, y: -143, z: -15}
   m_LocalScale: {x: 66.82, y: 32.7, z: 28.08161}
   m_ConstrainProportionsScale: 0
   m_Children: []

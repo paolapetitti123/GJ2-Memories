@@ -26,6 +26,7 @@ TagManager:
   - Axe
   - FishingRod
   - guard
+  - kitchenTable
   layers:
   - Default
   - TransparentFX

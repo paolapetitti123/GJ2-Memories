@@ -36,6 +36,7 @@ public class Conversation : MonoBehaviour
 
     public GameObject ChefConversation;
     public GameObject Chef;
+    public GameObject chefsTable;
 
     public QuestGiver questGiver;
     public Quest quest;
@@ -50,6 +51,7 @@ public class Conversation : MonoBehaviour
 
     public bool GuardConvoActive;
     public int guardConvoCount;
+    public  int ChefConvoCount;
 
     void Start()
     {
@@ -61,6 +63,7 @@ public class Conversation : MonoBehaviour
 
         questFinished = false;
         guardConvoCount = 0;
+        ChefConvoCount = 0;
     }
 
 
@@ -264,6 +267,9 @@ public class Conversation : MonoBehaviour
             if(currentChefTextIndex >= conversationChefTexts.Length)
             {
                 ChefConversation.SetActive(false);
+                ChefConvoCount = 1;
+                chefsTable.GetComponent<BoxCollider2D>().size = new Vector2(4.4f, 1.1f);
+                chefsTable.GetComponent<BoxCollider2D>().offset = new Vector2(0.04f, 0.96f);
             }
             UpdateChefText(conversationChefTexts);
         }

@@ -9,8 +9,7 @@ public class ItemWorld : MonoBehaviour
     private Item item;
     private SpriteRenderer spriteRend;
     private TextMeshPro txtMshPro;
-
-
+    public Conversation convo;
 
     public void Awake()
     {
@@ -27,6 +26,7 @@ public class ItemWorld : MonoBehaviour
         Transform transform;
         ItemWorld itemWorld;
 
+  
         
 
         transform = Instantiate(itemWorldTrans, position, Quaternion.identity);
@@ -51,6 +51,8 @@ public class ItemWorld : MonoBehaviour
         {
             itemWorld.GetComponent<CircleCollider2D>().radius += 2;
         }
+
+
 
         itemWorld.SetItem(item);
 
@@ -99,4 +101,6 @@ public class ItemWorld : MonoBehaviour
         return itemWorld;
 
     }
+
+
 }
