@@ -156,7 +156,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _replayButton: {fileID: 2129857595}
-  _introButton: {fileID: 0}
+  _introButton: {fileID: 2129857595}
   _creditsButton: {fileID: 2129857595}
   _exitButton: {fileID: 2129857595}
   _menuButton: {fileID: 1408311805}
@@ -1475,7 +1475,7 @@ MonoBehaviour:
   m_Transition: 1
   m_Colors:
     m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
-    m_HighlightedColor: {r: 0.0040494935, g: 0.55120784, b: 0.8584906, a: 1}
+    m_HighlightedColor: {r: 0.8396226, g: 0.8396226, b: 0.8396226, a: 1}
     m_PressedColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
     m_SelectedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
     m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}

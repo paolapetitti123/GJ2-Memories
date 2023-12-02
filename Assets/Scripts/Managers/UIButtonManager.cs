@@ -19,7 +19,6 @@ public class UIButtonManager : MonoBehaviour
     {
         _replayButton.onClick.AddListener(Replay);
         _introButton.onClick.AddListener(Intro);
-
         _creditsButton.onClick.AddListener(Credits);
         _exitButton.onClick.AddListener(ExitGame);
         _menuButton.onClick.AddListener(MainMenu);
