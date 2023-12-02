@@ -41,6 +41,10 @@ public class ItemWorld : MonoBehaviour
         {
             itemWorld.GetComponent<CircleCollider2D>().radius += 1;
         }
+        if (item.IsAFishingSpot())
+        {
+            itemWorld.GetComponent<Transform>().localScale = new Vector3(0.4f,0.4f,0.4f);
+        }
 
         itemWorld.SetItem(item);
 

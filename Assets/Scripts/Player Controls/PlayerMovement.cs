@@ -51,6 +51,12 @@ public class PlayerMovement : MonoBehaviour
     public int fishCounter = 0;
     public int waterCounter = 0;
 
+    public bool axeCollected = false;
+    public bool fishingRodCollected = false;
+
+    public GameObject axe;
+    public GameObject fishingRod;
+    public GameObject treeStump;
 
     public bool convoActive;
     public GameObject Alchemist;
@@ -62,7 +68,7 @@ public class PlayerMovement : MonoBehaviour
         inventory = new Inventory(UseItem);
         uiInv.SetInventory(inventory);
         uiInv.SetPlayer(this);
-        InventoryWarningMessage.SetActive(false);
+        
         convoActive = false;
 
         itemSlot = GameObject.FindGameObjectsWithTag("itemImage");
@@ -71,6 +77,8 @@ public class PlayerMovement : MonoBehaviour
             item.SetActive(false);
 
         }
+
+        treeStump.SetActive(false);
     }
 
     /* Update is called once per frame so we need to check when the player hits certain keys
@@ -202,6 +210,80 @@ public class PlayerMovement : MonoBehaviour
                             }
 
                         }
+                        // Tree
+                        else if (itemWorld.GetItem().GetSprite().name == "tree-1")
+                        {
+                            // Trigger pick up item audio
+                            //AudioController.Instance.PlaySoundGameplayNoRepeat("pickup_berry_2");
+
+                            // First check if axe is in inventory + active 
+                            if (axe.activeInHierarchy)
+                            {
+                                inventory.AddItem(new Item { itemType = Item.ItemType.Wood, amount = 1 });
+                                if (woodCounter == 0)  // doing this so the ingredientsgathered is only ever called once
+                                {
+                                    quest.goal.IngredientGathered();
+                                    itemWorld.DestroySelf(); // destroying the tree to reveal the tree stump hidden underneath it
+                                    treeStump.SetActive(true);
+                                    axe.SetActive(false);
+                                   // inventory.AddItem(new Item { itemType = Item.ItemType.Axe, amount = 1 });
+                                    woodCounter++;
+                                }
+                            }
+
+                            // if it's not active but in inventory
+                            else if(!axe.activeInHierarchy && axeCollected)
+                            {
+                                // do other thing
+                                Debug.Log("USE THE AXE");
+                            }
+                            
+                            // if its not in inventory
+                            else if (!axeCollected)
+                            {
+                                // do last thing
+                                Debug.Log("GET THE AXE");
+                            }
+
+                        }
+
+                        // Fish
+                        else if (itemWorld.GetItem().GetSprite().name == "fish-poster")
+                        {
+                            // Trigger pick up item audio
+                            //AudioController.Instance.PlaySoundGameplayNoRepeat("pickup_berry_2");
+
+                            // First check if axe is in inventory + active 
+                            if (fishingRod.activeInHierarchy)
+                            {
+                                inventory.AddItem(new Item { itemType = Item.ItemType.Fish, amount = 1 });
+                                if (fishCounter == 0)  // doing this so the ingredientsgathered is only ever called once
+                                {
+                                    quest.goal.IngredientGathered();
+                                   
+                                    fishingRod.SetActive(false);
+                                   // inventory.AddItem(new Item { itemType = Item.ItemType.FishingRod, amount = 1 });
+                                    fishCounter++;
+                                    
+                                }
+                            }
+
+                            // if it's not active but in inventory
+                            else if (!fishingRod.activeInHierarchy && fishingRodCollected)
+                            {
+                                // do other thing
+                                Debug.Log("USE THE FISHING ROD");
+                            }
+
+                            // if its not in inventory
+                            else if (!fishingRodCollected)
+                            {
+                                // do last thing
+                                Debug.Log("GET THE FISHING ROD");
+                            }
+
+                        }
+
                     }
                     else if (!itemWorld.GetItem().isParent())
                     {                      
@@ -210,6 +292,18 @@ public class PlayerMovement : MonoBehaviour
                             inventory.AddItem(itemWorld.GetItem());
                             quest.goal.IngredientGathered();
                             mushroomCounter++;
+                            itemWorld.DestroySelf();
+                        }
+                        else if (itemWorld.GetItem().IsAnAxe())
+                        {
+                            inventory.AddItem(itemWorld.GetItem());
+                            axeCollected = true;
+                            itemWorld.DestroySelf();
+                        }
+                        else if (itemWorld.GetItem().IsAFishingRod())
+                        {
+                            inventory.AddItem(itemWorld.GetItem());
+                            fishingRodCollected = true;
                             itemWorld.DestroySelf();
                         }
                         else
@@ -234,13 +328,7 @@ public class PlayerMovement : MonoBehaviour
             }
             else
             {
-                InventoryWarningMessage.SetActive(true);
-                InventoryWarningButton = GameObject.FindGameObjectWithTag("InventoryFullMessage");
-
-                InventoryWarningButton.GetComponent<Button_UI>().ClickFunc = () =>
-                {
-                    InventoryWarningMessage.SetActive(false);
-                };
+                Debug.Log("inventory full");
             }
 
             
@@ -311,6 +399,12 @@ public class PlayerMovement : MonoBehaviour
                 inventory.RemoveItem(new Item { itemType = Item.ItemType.Potion3, amount = 1 });
                 StartCoroutine(FlashColor(FlashRedColor));
                 break;
+            case Item.ItemType.Axe:
+                inventory.RemoveItem(new Item { itemType = Item.ItemType.Axe, amount = 1 });
+                break;
+            case Item.ItemType.FishingRod:
+                inventory.RemoveItem(new Item { itemType = Item.ItemType.FishingRod, amount = 1 });
+                break; 
         }
 
     }

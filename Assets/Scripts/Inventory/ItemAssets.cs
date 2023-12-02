@@ -32,4 +32,6 @@ public class ItemAssets : MonoBehaviour
     public Sprite waterWell;
     public Sprite herbBush;
     public Sprite berryBush;
+    public Sprite treeSprite;
+    public Sprite fishingSignSprite;
 }

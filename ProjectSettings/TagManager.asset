@@ -23,6 +23,8 @@ TagManager:
   - check5
   - check6
   - check7
+  - Axe
+  - FishingRod
   layers:
   - Default
   - TransparentFX

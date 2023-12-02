@@ -5,6 +5,7 @@ using UnityEngine.UI;
 using CodeMonkey.Utils;
 using TMPro;
 using System;
+using System.Linq;
 
 public class UI_Inventory : MonoBehaviour
 {
@@ -29,6 +30,14 @@ public class UI_Inventory : MonoBehaviour
     public GameObject check6;
     public GameObject check7;
 
+
+    public GameObject axe;
+    public GameObject fishingRod;
+
+    public GameObject InventoryWarningMessage;
+    private GameObject InventoryWarningButton;
+
+    int itemListCounter = 0;
     // Start is called before the first frame update
     void Start()
     {
@@ -39,6 +48,7 @@ public class UI_Inventory : MonoBehaviour
         check5.SetActive(false);
         check6.SetActive(false);
         check7.SetActive(false);
+        InventoryWarningMessage.SetActive(false);
     }
 
 
@@ -104,7 +114,9 @@ public class UI_Inventory : MonoBehaviour
 
     private void Inventory_OnItemListChanged(object sender, System.EventArgs e)
     {
-        RefreshInventoryItems(0);
+        itemListCounter++;
+        RefreshInventoryItems(itemListCounter);
+        
     }
 
     private void RefreshInventoryItems(int index)
@@ -170,6 +182,8 @@ public class UI_Inventory : MonoBehaviour
                 check7.SetActive(true);
                 Debug.Log(item.itemType + "checked off");
             }
+
+
             itemSlot[index].GetComponent<Button_UI>().ClickFunc = () => {
 
                 if (item.isUseable())
@@ -214,31 +228,52 @@ public class UI_Inventory : MonoBehaviour
 
             };
 
-            
-                useButton[index].GetComponent<Button_UI>().ClickFunc = () => {
+            useButton[index].GetComponent<Button_UI>().ClickFunc = () => {
+                Debug.Log("use button index: " + index);
 
-                    if (item.IsPotionOne())
+                if (item.IsPotionOne())
+                {
+                    Debug.Log("Potion Clicked");
+                    inventory.UseItem(item);
+                    inventory.RemoveItem(item);
+                    itemSlot[index].SetActive(false);
+                    useButton[index].SetActive(false);
+                    removeButton[index].SetActive(false);
+                    StartCoroutine(PotionDrink()); 
+                }
+                if(!axe.activeInHierarchy && !fishingRod.activeInHierarchy)
+                {
+                    if (item.IsAnAxe())
                     {
-                        Debug.Log("Potion Clicked");
-                        inventory.UseItem(item);
+                        axe.SetActive(true);
                         inventory.RemoveItem(item);
                         itemSlot[index].SetActive(false);
                         useButton[index].SetActive(false);
                         removeButton[index].SetActive(false);
-                        StartCoroutine(PotionDrink());
                     }
-                    else
+                    else if (item.IsAFishingRod())
                     {
-                        inventory.UseItem(item);
+                        
+                        fishingRod.SetActive(true);
                         inventory.RemoveItem(item);
                         itemSlot[index].SetActive(false);
                         useButton[index].SetActive(false);
                         removeButton[index].SetActive(false);
                     }
-                    
+                }
+                else if(axe.activeInHierarchy && !fishingRod.activeInHierarchy || !axe.activeInHierarchy && fishingRod.activeInHierarchy)
+                {
+                    InventoryWarningMessage.SetActive(true);
+                    InventoryWarningButton = GameObject.FindGameObjectWithTag("InventoryFullMessage");
 
-                    
-                };
+                    InventoryWarningButton.GetComponent<Button_UI>().ClickFunc = () =>
+                    {
+                        InventoryWarningMessage.SetActive(false);
+                    };
+
+
+                }
+            };
             
        
 
