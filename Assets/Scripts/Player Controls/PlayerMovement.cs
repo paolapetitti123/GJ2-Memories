@@ -373,7 +373,7 @@ public class PlayerMovement : MonoBehaviour
                         count++;
                     }
                     inventory.itemList.Clear();
-                    inventory.AddItem(new Item { itemType = Item.ItemType.Potion1, amount = 1 });
+                    inventory.AddItem(new Item { itemType = Item.ItemType.Potion3, amount = 1 });
                 }
                
             }
@@ -386,7 +386,7 @@ public class PlayerMovement : MonoBehaviour
         switch (item.itemType)
         {
             case Item.ItemType.Potion1:
-                inventory.RemoveItem(new Item { itemType = Item.ItemType.Potion1, amount = 1 });
+                inventory.RemoveItem(new Item { itemType = Item.ItemType.Potion3, amount = 1 });
                 StartCoroutine(FlashColor(FlashOrangeColor));
                 // Trigger pick up item audio
                 AudioController.Instance.PlaySoundGameplayNoRepeat("potion_drink_1");

@@ -481,7 +481,7 @@ public class Item
             case ItemType.Fish:        return false;
             case ItemType.Potion1:     return true;
             case ItemType.Potion2:     return false;
-            case ItemType.Potion3:     return false;
+            case ItemType.Potion3:     return true;
             case ItemType.FlowerBush:  return false;
             case ItemType.WaterWell:   return false;
             case ItemType.HerbBush:    return false;
