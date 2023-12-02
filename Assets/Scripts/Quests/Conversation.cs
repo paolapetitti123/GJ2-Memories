@@ -1,19 +1,28 @@
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using System.Collections;
 
 public class Conversation : MonoBehaviour
 {
     public TMP_Text displayText;
+    public TMP_Text guardText;
     private string[] conversationTexts;
+    private string[] conversationAlchemistTexts;
+    private string[] conversationGuardTexts;
     private string[] conversationTextReturn;
     private string[] conversationTextComplete;
     private int currentTextIndex = 0;
+    private int currentGuardTextIndex = 0;
 
 
     public GameObject Conversation1;
-    public GameObject guard;
+    public GameObject alchemist;
 
+    public GameObject ConversationGuard;
+    public GameObject Guard;
+    public Transform targetPosition;
+    public float speed = 5f;
 
     public QuestGiver questGiver;
     public Quest quest;
@@ -26,6 +35,8 @@ public class Conversation : MonoBehaviour
 
     public bool questFinished;
 
+    public bool GuardConvoActive;
+    public int guardConvoCount;
 
     void Start()
     {
@@ -35,12 +46,13 @@ public class Conversation : MonoBehaviour
         textThreeActive = false;
 
         questFinished = false;
+        guardConvoCount = 0;
     }
 
 
     public void OnTriggerEnter2D(Collider2D other)
     {
-        if(other.gameObject == guard)
+        if(other.gameObject == alchemist)
         {
             if (questFinished)
             {
@@ -51,7 +63,7 @@ public class Conversation : MonoBehaviour
             }
             // Check if the collision is with a specific tag or layer if needed
             if (!quest.isActive)
-            {   
+            {
                 // Trigger convo audio
                 AudioController.Instance.PlaySoundGameplayNoRepeat("alchemist_convo_1");
 
@@ -59,16 +71,17 @@ public class Conversation : MonoBehaviour
                 Debug.Log("collision");
 
                 // conversation texts
-                conversationTexts = new string[]
+                conversationAlchemistTexts = new string[]
                 {
                 "Good day. I see you desire to recover your memories.",
                 "To unlock the secrets of the mind, you must embark on a quest for ingredients rare and profound.",
                 "You will need these ingredients so I can craft my potion... Good luck!"
                 };
 
+                Debug.Log(conversationAlchemistTexts.ToString());
 
                 // Display the initial text
-                UpdateText(conversationTexts);
+                UpdateText(conversationAlchemistTexts);
             }
             else if (quest.isActive && !questFinished)
             {
@@ -110,7 +123,22 @@ public class Conversation : MonoBehaviour
             }
         }
 
+        if(other.gameObject == Guard && guardConvoCount == 0)
+        {
+            GuardConvoActive = true;
 
+            ConversationGuard.SetActive(true);
+            conversationGuardTexts = new string[]
+            {
+                "Your Highness, something's terrible has happened.",
+                "I'm afraid you've lost your memories.",
+                "The town alchemist might hold the key to restoring them.",
+                "You must go north and find them!"
+            };
+
+            // Display the initial text
+            UpdateGuardText(conversationGuardTexts);
+        }
        
 
     }
@@ -118,71 +146,109 @@ public class Conversation : MonoBehaviour
     public void OnButtonClick()
     {
         // when the button is clicked, it increments the index to display the next text
-        currentTextIndex++;
-        
-        // if we reach the end of the conversation, disable the conversation
-        if (textOneActive)
+        if (guardConvoCount == 1)
         {
-            if (currentTextIndex >= conversationTexts.Length)
+            currentTextIndex++;
+            if (textOneActive)
             {
-                Conversation1.SetActive(false);
-                if (!quest.isActive)
+                //currentTextIndex = 0;
+                Debug.Log(currentTextIndex);
+                if (currentTextIndex >= conversationAlchemistTexts.Length)
                 {
-                    questGiver.OpenQuestWindow();
+                    Conversation1.SetActive(false);
+                    if (!quest.isActive)
+                    {
+                        questGiver.OpenQuestWindow();
+                        currentTextIndex = 0;
+                        quest.isActive = true;
+                        textTwoActive = true;
+                        textOneActive = false;
+                    }
+                    else if (quest.isActive)
+                    {
+                        textTwoActive = true;
+                        textOneActive = false;
+                        questGiver.questWindow.SetActive(false);
+                    }
+
+                }
+                UpdateText(conversationAlchemistTexts);
+            }
+            else if (textTwoActive)
+            {
+                if (currentTextIndex >= conversationTextReturn.Length)
+                {
+                    Conversation1.SetActive(false);
+                    if (quest.isActive && !questFinished)
+                    {
+                        currentTextIndex = 0;
+                        textThreeActive = true;
+                        textTwoActive = false;
+                        questGiver.questWindow.SetActive(false);
+                    }
                     currentTextIndex = 0;
-                    quest.isActive = true;
-                    textTwoActive = true;
-                    textOneActive = false;
                 }
-                else if (quest.isActive)
+                UpdateText(conversationTextReturn);
+            }
+            else if (textThreeActive)
+            {
+                if (currentTextIndex >= conversationTextComplete.Length)
                 {
-                    textTwoActive = true;
-                    textOneActive = false;
-                    questGiver.questWindow.SetActive(false);
+                    Conversation1.SetActive(false);
+                    questOneComplete = true;
+                    quest.goal.hasSpokenFinish = true;
+                    if (quest.isActive && questFinished)
+                    {
+                        questOneComplete = true;
+                        questGiver.questWindow.SetActive(false);
+                        quest.goal.hasSpokenFinish = true;
+                    }
+
                 }
+                UpdateText(conversationTextComplete);
+            }
+
+        }
+        // if we reach the end of the conversation, disable the conversation
+        else if (guardConvoCount == 0)
+        {
+            currentGuardTextIndex++;
+
+            if (currentGuardTextIndex >= conversationGuardTexts.Length)
+            {
+                ConversationGuard.SetActive(false);
+                Animator guardWalk = Guard.GetComponent<Animator>();
+                guardConvoCount = 1;
+                guardWalk.Play("Guard-walk-anim");
                 
             }
-            UpdateText(conversationTexts);
-        }
-        else if (textTwoActive)
-        {
-            if (currentTextIndex >= conversationTextReturn.Length)
-            {
-                Conversation1.SetActive(false);
-                if (quest.isActive && !questFinished)
-                {
-                    currentTextIndex = 0;
-                    textThreeActive = true;
-                    textTwoActive = false;
-                    questGiver.questWindow.SetActive(false);
-                }
-                currentTextIndex = 0;
-            }
-            UpdateText(conversationTextReturn);
-        }
-        else if (textThreeActive)
-        {
-            if (currentTextIndex >= conversationTextComplete.Length)
-            {
-                Conversation1.SetActive(false);
-                questOneComplete = true;
-                quest.goal.hasSpokenFinish = true;
-                if (quest.isActive && questFinished)
-                {
-                    questOneComplete = true;
-                    questGiver.questWindow.SetActive(false);
-                    quest.goal.hasSpokenFinish = true;
-                }
-               
-            }
-            UpdateText(conversationTextComplete);
+            UpdateGuardText(conversationGuardTexts);
         }
 
-    
+    }
+
+    private void Update()
+    {
+        if(guardConvoCount == 1)
+        {
+            float distance = Vector3.Distance(Guard.transform.position, targetPosition.position);
+
+            if (distance > 0.1f)
+            {
+                // Calculate the direction towards the target position
+                Vector3 direction = (targetPosition.position - Guard.transform.position).normalized;
+
+                // Move the object towards the target position
+                Guard.transform.Translate(direction * speed * Time.deltaTime);
+                StartCoroutine(DisableGuard());
+            }
+
+        }
     }
 
     void UpdateText(string[] conversationTexts)
     {
+        Debug.Log(conversationTexts.ToString());
         if (currentTextIndex < conversationTexts.Length)
         {
             // Change the text of the Text element based on the current conversation text
@@ -190,12 +256,34 @@ public class Conversation : MonoBehaviour
         }
     }
 
+
+    void UpdateGuardText(string[] currentGuardText)
+    {
+        if (currentGuardTextIndex < currentGuardText.Length)
+        {
+            // Change the text of the Text element based on the current conversation text
+            guardText.text = currentGuardText[currentGuardTextIndex];
+        }
+    }
+
     public void OnTriggerExit2D(Collider2D collision)
     {
-        if (collision.gameObject == guard)
+        if (collision.gameObject == alchemist)
         {
             Conversation1.SetActive(false);
-          
         }
+
+        else if (collision.gameObject == Guard)
+        {
+            ConversationGuard.SetActive(false);
+        }
+    }
+
+
+    private IEnumerator DisableGuard()
+    {
+        yield return new WaitForSeconds(3f);
+
+        Guard.SetActive(false);
     }
 }

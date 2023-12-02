@@ -25,6 +25,7 @@ TagManager:
   - check7
   - Axe
   - FishingRod
+  - guard
   layers:
   - Default
   - TransparentFX
