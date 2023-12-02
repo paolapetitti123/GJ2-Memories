@@ -44,6 +44,11 @@ public class ItemWorld : MonoBehaviour
         if (item.IsAFishingSpot())
         {
             itemWorld.GetComponent<Transform>().localScale = new Vector3(0.4f,0.4f,0.4f);
+            itemWorld.GetComponent<CircleCollider2D>().radius += 12;
+            itemWorld.GetComponent<CircleCollider2D>().offset = new Vector2(2f, 2f);
+        }
+        if (item.IsATree())
+        {
             itemWorld.GetComponent<CircleCollider2D>().radius += 2;
         }
 

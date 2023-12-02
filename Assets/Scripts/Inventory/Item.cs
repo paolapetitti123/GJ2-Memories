@@ -465,6 +465,32 @@ public class Item
         }
     }
 
+    public bool IsATree()
+    {
+        switch (itemType)
+        {
+            default:
+            case ItemType.Axe:         return false;
+            case ItemType.Mushroom:    return false;
+            case ItemType.Herb:        return false;
+            case ItemType.Flower:      return false;
+            case ItemType.Wood:        return false;
+            case ItemType.Berries:     return false;
+            case ItemType.Water:       return false;
+            case ItemType.FishingRod:  return false;
+            case ItemType.Fish:        return false;
+            case ItemType.Potion1:     return false;
+            case ItemType.Potion2:     return false;
+            case ItemType.Potion3:     return false;
+            case ItemType.FlowerBush:  return false;
+            case ItemType.WaterWell:   return false;
+            case ItemType.HerbBush:    return false;
+            case ItemType.BerryBush:   return false;
+            case ItemType.Tree:        return true;
+            case ItemType.FishingSpot: return false;
+        }
+    }
+
     public bool IsPotionOne()
     {
         switch (itemType)

@@ -211,7 +211,7 @@ public class PlayerMovement : MonoBehaviour
 
                         }
                         // Tree
-                        else if (itemWorld.GetItem().GetSprite().name == "tree-1")
+                        else if (itemWorld.GetItem().GetSprite().name == "special-tree")
                         {
                             // Trigger pick up item audio
                             //AudioController.Instance.PlaySoundGameplayNoRepeat("pickup_berry_2");
@@ -219,15 +219,13 @@ public class PlayerMovement : MonoBehaviour
                             // First check if axe is in inventory + active 
                             if (axe.activeInHierarchy)
                             {
-                                inventory.AddItem(new Item { itemType = Item.ItemType.Wood, amount = 1 });
+                                
                                 if (woodCounter == 0)  // doing this so the ingredientsgathered is only ever called once
                                 {
-                                    quest.goal.IngredientGathered();
-                                    itemWorld.DestroySelf(); // destroying the tree to reveal the tree stump hidden underneath it
-                                    treeStump.SetActive(true);
-                                    axe.SetActive(false);
-                                   // inventory.AddItem(new Item { itemType = Item.ItemType.Axe, amount = 1 });
-                                    woodCounter++;
+                                    StartCoroutine(ChopWood(itemWorld));
+                                /*
+                                 *      ADD SOUND HERE!
+                                 */
                                 }
                             }
 
@@ -256,15 +254,13 @@ public class PlayerMovement : MonoBehaviour
                             // First check if axe is in inventory + active 
                             if (fishingRod.activeInHierarchy)
                             {
-                                inventory.AddItem(new Item { itemType = Item.ItemType.Fish, amount = 1 });
+                                
                                 if (fishCounter == 0)  // doing this so the ingredientsgathered is only ever called once
                                 {
-                                    quest.goal.IngredientGathered();
-                                   
-                                    fishingRod.SetActive(false);
-                                   // inventory.AddItem(new Item { itemType = Item.ItemType.FishingRod, amount = 1 });
-                                    fishCounter++;
-                                    
+                                    StartCoroutine(Fishing());
+                                 /*
+                                 *      ADD SOUND HERE!
+                                 */
                                 }
                             }
 
@@ -437,6 +433,31 @@ public class PlayerMovement : MonoBehaviour
     private void SetFlashAmount(float amount)
     {
         characterMat.SetFloat("_FlashAmount", amount);
+    }
+
+
+    private IEnumerator ChopWood(ItemWorld itemWorld)
+    {
+        yield return new WaitForSeconds(2f);
+        quest.goal.IngredientGathered();
+        treeStump.SetActive(true);
+        axe.SetActive(false);
+        itemWorld.DestroySelf();
+        inventory.AddItem(new Item { itemType = Item.ItemType.Wood, amount = 1 });
+        woodCounter++;
+    }
+
+    private IEnumerator Fishing()
+    {
+        yield return new WaitForSeconds(3f);
+
+        quest.goal.IngredientGathered();
+
+        fishingRod.SetActive(false);
+        inventory.AddItem(new Item { itemType = Item.ItemType.Fish, amount = 1 });
+        // inventory.AddItem(new Item { itemType = Item.ItemType.FishingRod, amount = 1 });
+        fishCounter++;
+
     }
 
 }

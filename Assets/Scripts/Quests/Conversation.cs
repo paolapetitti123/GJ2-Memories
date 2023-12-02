@@ -152,7 +152,7 @@ public class Conversation : MonoBehaviour
             if (textOneActive)
             {
                 //currentTextIndex = 0;
-                Debug.Log(currentTextIndex);
+
                 if (currentTextIndex >= conversationAlchemistTexts.Length)
                 {
                     Conversation1.SetActive(false);

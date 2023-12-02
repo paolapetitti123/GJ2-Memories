@@ -13,7 +13,7 @@ public class UI_Inventory : MonoBehaviour
 
     public GameObject[] itemSlot;
 
-    public GameObject[] removeButton;
+    
     public GameObject[] useButton;
     private PlayerMovement player;
     public Quest quest;
@@ -58,11 +58,7 @@ public class UI_Inventory : MonoBehaviour
             
         }*/
 
-        //removeButton = GameObject.FindGameObjectsWithTag("removeButton");
-        foreach (GameObject item in removeButton)
-        {
-            item.SetActive(false);
-        }
+
 
         //useButton = GameObject.FindGameObjectsWithTag("useButton");
         foreach (GameObject item in useButton)
@@ -192,13 +188,11 @@ public class UI_Inventory : MonoBehaviour
                 if (currItem.isUseable())
                 {
                     useButton[index].SetActive(true);
-                    removeButton[index].SetActive(true);
                     StartCoroutine(InventorySlotTimer(index));
 
                 }
                 else if (!currItem.isUseable())
                 {
-                    removeButton[index].SetActive(true);
                     StartCoroutine(InventorySlotTimer(index));
 
                 }
@@ -213,7 +207,7 @@ public class UI_Inventory : MonoBehaviour
               * the last item in the stack would be deleted so the total # in the item stack would be wrong
               * hence the need to make a copy of the item before removing it from the inventory.
               */
-
+              /*
             removeButton[index].GetComponent<Button_UI>().ClickFunc = () =>
             {
                 Item duplicateItem = new Item { itemType = item.itemType, amount = item.amount };
@@ -228,9 +222,10 @@ public class UI_Inventory : MonoBehaviour
 
                 // setting the action buttons back to false 
                 useButton[index].SetActive(false);
-                removeButton[index].SetActive(false);
 
             };
+            */ 
+
 
             useButton[index].GetComponent<Button_UI>().ClickFunc = () => {
                 Debug.Log("use button index: " + index);
@@ -244,7 +239,6 @@ public class UI_Inventory : MonoBehaviour
                     inventory.RemoveItem(currItem);
                     itemSlot[index].SetActive(false);
                     useButton[index].SetActive(false);
-                    removeButton[index].SetActive(false);
                     StartCoroutine(PotionDrink());
                 }
                 if (!axe.activeInHierarchy && !fishingRod.activeInHierarchy)
@@ -256,7 +250,6 @@ public class UI_Inventory : MonoBehaviour
                         itemSlot[index].SetActive(false);
                         itemSlot[inventory.GetItemList().Count ].SetActive(false);
                         useButton[index].SetActive(false);
-                        removeButton[index].SetActive(false);
                     }
                     else if (currItem.IsAFishingRod())
                     {
@@ -266,7 +259,6 @@ public class UI_Inventory : MonoBehaviour
                         itemSlot[index].SetActive(false);
                         itemSlot[inventory.GetItemList().Count ].SetActive(false);
                         useButton[index].SetActive(false);
-                        removeButton[index].SetActive(false);
                     }
                 }
                 else if (axe.activeInHierarchy && !fishingRod.activeInHierarchy || !axe.activeInHierarchy && fishingRod.activeInHierarchy)
@@ -336,7 +328,6 @@ public class UI_Inventory : MonoBehaviour
         yield return new WaitForSeconds(3f);
   
             useButton[counterTest].SetActive(false);
-            removeButton[counterTest].SetActive(false);
     }
 
 
