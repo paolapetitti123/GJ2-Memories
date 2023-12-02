@@ -13,8 +13,8 @@ public class UI_Inventory : MonoBehaviour
 
     public GameObject[] itemSlot;
 
-    private GameObject[] removeButton;
-    private GameObject[] useButton;
+    public GameObject[] removeButton;
+    public GameObject[] useButton;
     private PlayerMovement player;
     public Quest quest;
 
@@ -49,6 +49,27 @@ public class UI_Inventory : MonoBehaviour
         check6.SetActive(false);
         check7.SetActive(false);
         InventoryWarningMessage.SetActive(false);
+        
+        /*
+        itemSlot = GameObject.FindGameObjectsWithTag("itemImage");
+        foreach (GameObject item in itemSlot)
+        {
+            item.SetActive(false);
+            
+        }*/
+
+        removeButton = GameObject.FindGameObjectsWithTag("removeButton");
+        foreach (GameObject item in removeButton)
+        {
+            item.SetActive(false);
+        }
+
+        useButton = GameObject.FindGameObjectsWithTag("useButton");
+        foreach (GameObject item in useButton)
+        {
+            item.SetActive(false);
+        }
+
     }
 
 
@@ -63,24 +84,7 @@ public class UI_Inventory : MonoBehaviour
         check6 = GameObject.FindWithTag("check6");
         check7 = GameObject.FindWithTag("check7");
 
-        itemSlot = GameObject.FindGameObjectsWithTag("itemImage");
-        foreach (GameObject item in itemSlot)
-        {
-            item.SetActive(false);
-            
-        }
-
-        removeButton = GameObject.FindGameObjectsWithTag("removeButton");
-        foreach (GameObject item in removeButton)
-        {
-            item.SetActive(false);
-        }
-
-        useButton = GameObject.FindGameObjectsWithTag("useButton");
-        foreach (GameObject item in useButton)
-        {
-            item.SetActive(false);
-        }
+        
 
         
     }
@@ -144,56 +148,56 @@ public class UI_Inventory : MonoBehaviour
             if (img.sprite.name  == "Mushroom" && img.enabled == true)
             {
                 check1.SetActive(true);
-                Debug.Log(item.itemType + "checked off");
+                //Debug.Log(item.itemType + "checked off");
             }
             // Compare itemType with the enum value
             if (img.sprite.name == "Herb" && img.enabled == true)
             {
                 check2.SetActive(true);
-                Debug.Log(item.itemType + "checked off");
+               // Debug.Log(item.itemType + "checked off");
             }
             // Compare itemType with the enum value
             if (img.sprite.name == "Flower" && img.enabled == true)
             {
                 check3.SetActive(true);
-                Debug.Log(item.itemType + "checked off");
+               // Debug.Log(item.itemType + "checked off");
             }
             // Compare itemType with the enum value
             if (img.sprite.name == "Wood" && img.enabled == true)
             {
                 check4.SetActive(true);
-                Debug.Log(item.itemType + "checked off");
+                //Debug.Log(item.itemType + "checked off");
             }
             // Compare itemType with the enum value
             if (img.sprite.name == "Berries" && img.enabled == true)
             {
                 check5.SetActive(true);
-                Debug.Log(item.itemType + "checked off");
+                //Debug.Log(item.itemType + "checked off");
             }
             // Compare itemType with the enum value
             if (img.sprite.name == "Fish" && img.enabled == true)
             {
                 check6.SetActive(true);
-                Debug.Log(item.itemType + "checked off");
+               // Debug.Log(item.itemType + "checked off");
             }
             // Compare itemType with the enum value
             if (img.sprite.name == "Water" && img.enabled == true)
             {
                 check7.SetActive(true);
-                Debug.Log(item.itemType + "checked off");
+                //Debug.Log(item.itemType + "checked off");
             }
 
 
             itemSlot[index].GetComponent<Button_UI>().ClickFunc = () => {
-
-                if (item.isUseable())
+                Item currItem = inventory.GetItemList()[index];
+                if (currItem.isUseable())
                 {
                     useButton[index].SetActive(true);
                     removeButton[index].SetActive(true);
                     StartCoroutine(InventorySlotTimer(index));
 
                 }
-                else if (!item.isUseable())
+                else if (!currItem.isUseable())
                 {
                     removeButton[index].SetActive(true);
                     StartCoroutine(InventorySlotTimer(index));
@@ -214,13 +218,15 @@ public class UI_Inventory : MonoBehaviour
             removeButton[index].GetComponent<Button_UI>().ClickFunc = () =>
             {
                 Item duplicateItem = new Item { itemType = item.itemType, amount = item.amount };
+                Item currItem = inventory.GetItemList()[index];
 
-                inventory.RemoveItem(item);
+                inventory.RemoveItem(currItem);
 
                 ItemWorld.DropItem(player.transform.position, duplicateItem);
                 Image img = itemSlot[index].GetComponent<Image>();
                 img.enabled = false;
-                //itemSlot[index].SetActive(false);
+                itemSlot[index].SetActive(false);
+                itemSlot[inventory.GetItemList().Count ].SetActive(false);
 
                 // setting the action buttons back to false 
                 useButton[index].SetActive(false);
@@ -230,38 +236,43 @@ public class UI_Inventory : MonoBehaviour
 
             useButton[index].GetComponent<Button_UI>().ClickFunc = () => {
                 Debug.Log("use button index: " + index);
+                Item currItem = inventory.GetItemList()[index];
+                Debug.Log("Inventory Size: " + (inventory.GetItemList().Count - 1));
 
-                if (item.IsPotionOne())
+                if (currItem.IsPotionOne())
                 {
                     Debug.Log("Potion Clicked");
-                    inventory.UseItem(item);
-                    inventory.RemoveItem(item);
+                    inventory.UseItem(currItem);
+                    inventory.RemoveItem(currItem);
                     itemSlot[index].SetActive(false);
+                    itemSlot[inventory.GetItemList().Count ].SetActive(false);
                     useButton[index].SetActive(false);
                     removeButton[index].SetActive(false);
-                    StartCoroutine(PotionDrink()); 
+                    StartCoroutine(PotionDrink());
                 }
-                if(!axe.activeInHierarchy && !fishingRod.activeInHierarchy)
+                if (!axe.activeInHierarchy && !fishingRod.activeInHierarchy)
                 {
-                    if (item.IsAnAxe())
+                    if (currItem.IsAnAxe())
                     {
                         axe.SetActive(true);
-                        inventory.RemoveItem(item);
+                        inventory.RemoveItem(currItem);
                         itemSlot[index].SetActive(false);
+                        itemSlot[inventory.GetItemList().Count ].SetActive(false);
                         useButton[index].SetActive(false);
                         removeButton[index].SetActive(false);
                     }
-                    else if (item.IsAFishingRod())
+                    else if (currItem.IsAFishingRod())
                     {
-                        
+
                         fishingRod.SetActive(true);
-                        inventory.RemoveItem(item);
+                        inventory.RemoveItem(currItem);
                         itemSlot[index].SetActive(false);
+                        itemSlot[inventory.GetItemList().Count ].SetActive(false);
                         useButton[index].SetActive(false);
                         removeButton[index].SetActive(false);
                     }
                 }
-                else if(axe.activeInHierarchy && !fishingRod.activeInHierarchy || !axe.activeInHierarchy && fishingRod.activeInHierarchy)
+                else if (axe.activeInHierarchy && !fishingRod.activeInHierarchy || !axe.activeInHierarchy && fishingRod.activeInHierarchy)
                 {
                     InventoryWarningMessage.SetActive(true);
                     InventoryWarningButton = GameObject.FindGameObjectWithTag("InventoryFullMessage");
