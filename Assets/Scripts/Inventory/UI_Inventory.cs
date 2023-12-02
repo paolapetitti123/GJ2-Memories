@@ -37,7 +37,7 @@ public class UI_Inventory : MonoBehaviour
     public GameObject InventoryWarningMessage;
     private GameObject InventoryWarningButton;
 
-    int itemListCounter = 0;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -58,17 +58,19 @@ public class UI_Inventory : MonoBehaviour
             
         }*/
 
-        removeButton = GameObject.FindGameObjectsWithTag("removeButton");
+        //removeButton = GameObject.FindGameObjectsWithTag("removeButton");
         foreach (GameObject item in removeButton)
         {
             item.SetActive(false);
         }
 
-        useButton = GameObject.FindGameObjectsWithTag("useButton");
+        //useButton = GameObject.FindGameObjectsWithTag("useButton");
         foreach (GameObject item in useButton)
         {
             item.SetActive(false);
         }
+
+       
 
     }
 
@@ -84,7 +86,6 @@ public class UI_Inventory : MonoBehaviour
         check6 = GameObject.FindWithTag("check6");
         check7 = GameObject.FindWithTag("check7");
 
-        
 
         
     }
@@ -96,8 +97,6 @@ public class UI_Inventory : MonoBehaviour
         {
             int index = i;
             RefreshInventoryItems(index);
-           
-
         }
     }
 
@@ -118,8 +117,8 @@ public class UI_Inventory : MonoBehaviour
 
     private void Inventory_OnItemListChanged(object sender, System.EventArgs e)
     {
-        itemListCounter++;
-        RefreshInventoryItems(itemListCounter);
+        
+        RefreshInventoryItems(0);
         
     }
 
@@ -187,8 +186,8 @@ public class UI_Inventory : MonoBehaviour
                 //Debug.Log(item.itemType + "checked off");
             }
 
-
             itemSlot[index].GetComponent<Button_UI>().ClickFunc = () => {
+
                 Item currItem = inventory.GetItemList()[index];
                 if (currItem.isUseable())
                 {
@@ -226,7 +225,6 @@ public class UI_Inventory : MonoBehaviour
                 Image img = itemSlot[index].GetComponent<Image>();
                 img.enabled = false;
                 itemSlot[index].SetActive(false);
-                itemSlot[inventory.GetItemList().Count ].SetActive(false);
 
                 // setting the action buttons back to false 
                 useButton[index].SetActive(false);
@@ -245,7 +243,6 @@ public class UI_Inventory : MonoBehaviour
                     inventory.UseItem(currItem);
                     inventory.RemoveItem(currItem);
                     itemSlot[index].SetActive(false);
-                    itemSlot[inventory.GetItemList().Count ].SetActive(false);
                     useButton[index].SetActive(false);
                     removeButton[index].SetActive(false);
                     StartCoroutine(PotionDrink());
