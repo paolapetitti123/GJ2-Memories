@@ -7,13 +7,22 @@ public class Conversation : MonoBehaviour
 {
     public TMP_Text displayText;
     public TMP_Text guardText;
-    private string[] conversationTexts;
+    public TMP_Text chefText;
+
+
+    //private string[] conversationTexts;
     private string[] conversationAlchemistTexts;
-    private string[] conversationGuardTexts;
     private string[] conversationTextReturn;
     private string[] conversationTextComplete;
+
+
+   
+    private string[] conversationGuardTexts;
+    private string[] conversationChefTexts;
+
     private int currentTextIndex = 0;
     private int currentGuardTextIndex = 0;
+    private int currentChefTextIndex = 0;
 
 
     public GameObject Conversation1;
@@ -23,6 +32,10 @@ public class Conversation : MonoBehaviour
     public GameObject Guard;
     public Transform targetPosition;
     public float speed = 5f;
+
+
+    public GameObject ChefConversation;
+    public GameObject Chef;
 
     public QuestGiver questGiver;
     public Quest quest;
@@ -41,6 +54,7 @@ public class Conversation : MonoBehaviour
     void Start()
     {
         Conversation1.SetActive(false);
+        ChefConversation.SetActive(false);
         textOneActive = true;
         textTwoActive = false;
         textThreeActive = false;
@@ -73,9 +87,9 @@ public class Conversation : MonoBehaviour
                 // conversation texts
                 conversationAlchemistTexts = new string[]
                 {
-                "Good day. I see you desire to recover your memories.",
-                "To unlock the secrets of the mind, you must embark on a quest for ingredients rare and profound.",
-                "You will need these ingredients so I can craft my potion... Good luck!"
+                "Ah, Prince, I've been expecting you. In search of the Elixir of Remembrance, aren't you?",
+                "To unlock the secrets of the mind, you must embark on a quest for ingredients rare and profound for me.",
+                "Bring these to me and only then shall I create what you seek."
                 };
 
                 Debug.Log(conversationAlchemistTexts.ToString());
@@ -130,23 +144,40 @@ public class Conversation : MonoBehaviour
             ConversationGuard.SetActive(true);
             conversationGuardTexts = new string[]
             {
-                "Your Highness, something's terrible has happened.",
+                "Your Royal Highness, something terrible has happened.",
                 "I'm afraid you've lost your memories.",
                 "The town alchemist might hold the key to restoring them.",
-                "You must go north and find them!"
+                "The coronation is tomorrow and without your memories you've been deemed unfit for king!",
+                "You must go north and find the alchemist before sunset!",
+                "I must be getting back to my post now, so I won't be of much help",
+                "I wish you the best of luck!"
+
             };
 
             // Display the initial text
             UpdateGuardText(conversationGuardTexts);
         }
        
+        if(other.gameObject == Chef)
+        {
+            ChefConversation.SetActive(true);
+
+            conversationChefTexts = new string[]
+            {
+                "Your Highness, take any tool you need from my stash.",
+                "But fair warning, they're old and may might not survive more than one use.",
+                "I hope they will serve you well, even just for a moment."
+            };
+
+            UpdateChefText(conversationChefTexts);
+        }
 
     }
 
     public void OnButtonClick()
     {
         // when the button is clicked, it increments the index to display the next text
-        if (guardConvoCount == 1)
+        if (guardConvoCount == 1 && Conversation1.activeInHierarchy)
         {
             currentTextIndex++;
             if (textOneActive)
@@ -155,7 +186,7 @@ public class Conversation : MonoBehaviour
 
                 if (currentTextIndex >= conversationAlchemistTexts.Length)
                 {
-                    Conversation1.SetActive(false);
+                   
                     if (!quest.isActive)
                     {
                         questGiver.OpenQuestWindow();
@@ -170,6 +201,7 @@ public class Conversation : MonoBehaviour
                         textOneActive = false;
                         questGiver.questWindow.SetActive(false);
                     }
+                    Conversation1.SetActive(false);
 
                 }
                 UpdateText(conversationAlchemistTexts);
@@ -217,6 +249,7 @@ public class Conversation : MonoBehaviour
             if (currentGuardTextIndex >= conversationGuardTexts.Length)
             {
                 ConversationGuard.SetActive(false);
+                GuardConvoActive = false;
                 Animator guardWalk = Guard.GetComponent<Animator>();
                 guardConvoCount = 1;
                 guardWalk.Play("Guard-walk-anim");
@@ -225,6 +258,15 @@ public class Conversation : MonoBehaviour
             UpdateGuardText(conversationGuardTexts);
         }
 
+        else if (guardConvoCount == 1 && ChefConversation.activeInHierarchy)
+        {
+            currentChefTextIndex++;
+            if(currentChefTextIndex >= conversationChefTexts.Length)
+            {
+                ChefConversation.SetActive(false);
+            }
+            UpdateChefText(conversationChefTexts);
+        }
     }
 
     private void Update()
@@ -266,6 +308,15 @@ public class Conversation : MonoBehaviour
         }
     }
 
+    void UpdateChefText(string[] currentChefText)
+    {
+        if (currentChefTextIndex < currentChefText.Length)
+        {
+            // Change the text of the Text element based on the current conversation text
+            chefText.text = currentChefText[currentChefTextIndex];
+        }
+    }
+
     public void OnTriggerExit2D(Collider2D collision)
     {
         if (collision.gameObject == alchemist)
@@ -276,6 +327,11 @@ public class Conversation : MonoBehaviour
         else if (collision.gameObject == Guard)
         {
             ConversationGuard.SetActive(false);
+        }
+
+        else if (collision.gameObject == Chef)
+        {
+            ChefConversation.SetActive(false);
         }
     }
 
