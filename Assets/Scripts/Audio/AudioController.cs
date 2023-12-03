@@ -76,43 +76,7 @@ public class AudioController : MonoBehaviour
         }
     }
 
-    // private void Update()
-    // {
-    //     // Check if the scene has changed
-    //     string newSceneName = SceneManager.GetActiveScene().name;
-    //     if (newSceneName != currentSceneName)
-    //     {
-    //         currentSceneName = newSceneName;
-
-    //         // Use this switch setup to play sounds in specifics scenes from the audio controller.
-    //         switch (currentSceneName)
-    //         {
-    //             case "MainMenu":
-                   
-    //                 break;
-
-    //             case "GamePlay":
-           
-    //                 break;
-
-    //             case "GameWin":
-            
-    //                 break;
-
-    //             case "GameOver":
-          
-    //                 break;
-
-    //             case "GameCredits":
-                
-    //                 break;
-
-    //             default:
-    //                 Debug.LogWarning("Unknown scene: " + currentSceneName);
-    //                 break;
-    //         }
-    //     }
-    // }
+ 
 
     // Method for playing sound
     public void PlaySoundGameplay(string sourceName)

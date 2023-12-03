@@ -226,6 +226,9 @@ public class PlayerMovement : MonoBehaviour
                                 /*
                                  *      ADD SOUND HERE!
                                  */
+
+                                // Trigger pick up item audio
+                                AudioController.Instance.PlaySoundGameplayNoRepeat("chop-wood-1");
                                 }
                             }
 
@@ -248,8 +251,6 @@ public class PlayerMovement : MonoBehaviour
                         // Fish
                         else if (itemWorld.GetItem().GetSprite().name == "fish-poster")
                         {
-                            // Trigger pick up item audio
-                            //AudioController.Instance.PlaySoundGameplayNoRepeat("pickup_berry_2");
 
                             // First check if axe is in inventory + active 
                             if (fishingRod.activeInHierarchy)
@@ -259,8 +260,12 @@ public class PlayerMovement : MonoBehaviour
                                 {
                                     StartCoroutine(Fishing());
                                  /*
-                                 *      ADD SOUND HERE!
+                                 *      ADD SOUND HERE! 
                                  */
+
+                                     // Trigger pick up item audio
+                                     AudioController.Instance.PlaySoundGameplay("catch-fish-1");
+
                                 }
                             }
 
@@ -282,22 +287,37 @@ public class PlayerMovement : MonoBehaviour
 
                     }
                     else if (!itemWorld.GetItem().isParent())
-                    {                      
+                    {
+                        // Added this to track collision with every mushroom
+                        if (itemWorld.GetItem().IsAMushroom()) {
+                            // Trigger pick up item audio
+                            AudioController.Instance.PlaySoundGameplay("pickup_mushroom_1");  
+                        }
+                        
                         if (itemWorld.GetItem().IsAMushroom() && mushroomCounter == 0) // doing this so the ingredientsgathered is only ever called once
-                        {                          
+                        {    
+
+                  
                             inventory.AddItem(itemWorld.GetItem());
                             quest.goal.IngredientGathered();
                             mushroomCounter++;
                             itemWorld.DestroySelf();
+
+                
                         }
                         else if (itemWorld.GetItem().IsAnAxe())
                         {
                             inventory.AddItem(itemWorld.GetItem());
                             axeCollected = true;
                             itemWorld.DestroySelf();
+
+                            // Trigger pick up item audio
+                            AudioController.Instance.PlaySoundGameplay("pickup_item_1");
                         }
                         else if (itemWorld.GetItem().IsAFishingRod())
                         {
+                             // Trigger pick up item audio
+                            AudioController.Instance.PlaySoundGameplay("pickup_item_1");
                             inventory.AddItem(itemWorld.GetItem());
                             fishingRodCollected = true;
                             itemWorld.DestroySelf();
@@ -385,9 +405,9 @@ public class PlayerMovement : MonoBehaviour
         {
             case Item.ItemType.Potion1:
                 inventory.RemoveItem(new Item { itemType = Item.ItemType.Potion3, amount = 1 });
+                // Trigger item audio
+                AudioController.Instance.PlaySoundGameplay("drink-potion-1");
                 StartCoroutine(FlashColor(FlashOrangeColor));
-                // Trigger pick up item audio
-                AudioController.Instance.PlaySoundGameplayNoRepeat("potion_drink_1");
                 break;
             case Item.ItemType.Potion2:
                 inventory.RemoveItem(new Item { itemType = Item.ItemType.Potion2, amount = 1 });

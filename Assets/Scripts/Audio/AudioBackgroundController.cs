@@ -65,57 +65,7 @@ public class AudioBackgroundController : MonoBehaviour
         }
     }
 
-    void Update()
-    {
-    //     // Check if the scene has changed
-    //     string newSceneName = SceneManager.GetActiveScene().name;
-    //     if (newSceneName != currentSceneName)
-    //     {
-    //         currentSceneName = newSceneName;
-
-    //         // Use switch or any logic to perform actions based on the current scene
-    //         switch (currentSceneName)
-    //         {
-    //             case "MainMenu":
-    //                 PlayBackgroundSound("main_menu_bg_music_1", 1f, 1f, 0.5f);
-    
-    //             // Debug.Log("The currentSceneName " + currentSceneName + " and the music that should be playing is main_menu_bg_music_1");
-                  
-
-    //                 break;
-
-    //             case "GamePlay":       
-    //                 // PlayBackgroundSound("gameplay_bg_music_1", 1f, 1f, 0.5f);
-    //                 // StopBackgroundSound("main_menu_bg_music_1");
-    //                 break;
-
-    //             case "GameWin":
-    //                 PlayBackgroundSound("game_win_bg_music_1", 1.0f, 2.0f, 1f);
-           
-                   
-    //                 break;
-
-    //             case "GameOver":
-    //                 PlayBackgroundSound("game_over_bg_music_1", 1.0f, 2.0f, 1f);
-             
-
-    //                 break;
-
-    //             case "GameCredits":
-    //                 PlayBackgroundSound("credits_bg_music_1", 1.0f, 2.0f, 1f);
-
-    // // Debug.Log("The currentSceneName " + currentSceneName + " and the music that should be playing is credits_bg_music_1");
-
-    //                 break;
-
-    //             default:
-    //                 Debug.LogWarning("Unknown scene: " + currentSceneName);
-    //                 break;
-    //         }
-    //     }
-    }
-
-
+   
 
     // Method to play background audio with overlap support
     public void PlayBgAudio(params string[] sourceNames)

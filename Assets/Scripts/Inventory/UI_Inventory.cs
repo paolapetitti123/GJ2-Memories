@@ -235,11 +235,15 @@ public class UI_Inventory : MonoBehaviour
                 if (currItem.IsPotionOne())
                 {
                     Debug.Log("Potion Clicked");
+
+
                     inventory.UseItem(currItem);
                     inventory.RemoveItem(currItem);
                     itemSlot[index].SetActive(false);
                     useButton[index].SetActive(false);
                     StartCoroutine(PotionDrink());
+
+                   
                 }
                 if (!axe.activeInHierarchy && !fishingRod.activeInHierarchy)
                 {
@@ -250,6 +254,10 @@ public class UI_Inventory : MonoBehaviour
                         itemSlot[index].SetActive(false);
                         itemSlot[inventory.GetItemList().Count ].SetActive(false);
                         useButton[index].SetActive(false);
+
+
+                        // Trigger item audio
+                        AudioController.Instance.PlaySoundGameplay("axe-1");
                     }
                     else if (currItem.IsAFishingRod())
                     {
@@ -259,6 +267,9 @@ public class UI_Inventory : MonoBehaviour
                         itemSlot[index].SetActive(false);
                         itemSlot[inventory.GetItemList().Count ].SetActive(false);
                         useButton[index].SetActive(false);
+
+                        // Trigger item audio
+                        AudioController.Instance.PlaySoundGameplay("fishing-rod-1");
                     }
                 }
                 else if (axe.activeInHierarchy && !fishingRod.activeInHierarchy || !axe.activeInHierarchy && fishingRod.activeInHierarchy)
@@ -311,7 +322,6 @@ public class UI_Inventory : MonoBehaviour
                 inventory.AddItem(new Item { itemType = Item.ItemType.Potion1, amount = 1 });
 
                 Debug.Log("in UI Inventory has spoken");
-               
 
 
             }
