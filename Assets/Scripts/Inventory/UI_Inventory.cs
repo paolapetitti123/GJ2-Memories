@@ -43,7 +43,8 @@ public class UI_Inventory : MonoBehaviour
     public GameObject portal;
     public GameObject DoorThree;
 
-
+    public Texture2D pointerCursor; // Assign your pointer cursor texture in the inspector
+    public Texture2D defaultCursor; // Assign your default cursor texture in the inspector
 
     // Start is called before the first frame update
     void Start()
@@ -57,13 +58,6 @@ public class UI_Inventory : MonoBehaviour
         check7.SetActive(false);
         InventoryWarningMessage.SetActive(false);
 
-        /*
-        itemSlot = GameObject.FindGameObjectsWithTag("itemImage");
-        foreach (GameObject item in itemSlot)
-        {
-            item.SetActive(false);
-            
-        }*/
 
         portal.SetActive(false);
 
@@ -74,7 +68,7 @@ public class UI_Inventory : MonoBehaviour
             item.SetActive(false);
         }
 
-        
+        Cursor.SetCursor(defaultCursor, Vector2.zero, CursorMode.Auto);
 
     }
 
@@ -128,6 +122,27 @@ public class UI_Inventory : MonoBehaviour
 
     private void RefreshInventoryItems(int index)
     {
+        EventTrigger trigger = itemSlot[index].GetComponent<EventTrigger>();
+
+        if(trigger == null)
+        {
+            trigger = itemSlot[index].AddComponent<EventTrigger>();
+        }
+
+        trigger.triggers.Clear();
+
+        // Add OnPointerEnter event
+        EventTrigger.Entry entryEnter = new EventTrigger.Entry();
+        entryEnter.eventID = EventTriggerType.PointerEnter;
+        entryEnter.callback.AddListener((data) => { OnPointerEnter(index); });
+        trigger.triggers.Add(entryEnter);
+
+        // Add OnPointerExit event
+        EventTrigger.Entry entryExit = new EventTrigger.Entry();
+        entryExit.eventID = EventTriggerType.PointerExit;
+        entryExit.callback.AddListener((data) => { OnPointerExit(index); });
+        trigger.triggers.Add(entryExit);
+
 
         int guiCounter = 0;
         //int counterTest = 0;
@@ -203,35 +218,6 @@ public class UI_Inventory : MonoBehaviour
 
                 }
             };
-            
-
-            /* First create a temporary duplicate of the active item in the inventory (the one that
-              * currently has the buttons active on it)so that we can use the duplicate to drop into 
-              * the scene after we delete the item from our List. 
-              * 
-              * We can't drop the item itself because then if the item was stackable, when we drop the item,
-              * the last item in the stack would be deleted so the total # in the item stack would be wrong
-              * hence the need to make a copy of the item before removing it from the inventory.
-              */
-              /*
-            removeButton[index].GetComponent<Button_UI>().ClickFunc = () =>
-            {
-                Item duplicateItem = new Item { itemType = item.itemType, amount = item.amount };
-                Item currItem = inventory.GetItemList()[index];
-
-                inventory.RemoveItem(currItem);
-
-                ItemWorld.DropItem(player.transform.position, duplicateItem);
-                Image img = itemSlot[index].GetComponent<Image>();
-                img.enabled = false;
-                itemSlot[index].SetActive(false);
-
-                // setting the action buttons back to false 
-                useButton[index].SetActive(false);
-
-            };
-            */ 
-
 
             useButton[index].GetComponent<Button_UI>().ClickFunc = () => {
                 Debug.Log("use button index: " + index);
@@ -337,6 +323,22 @@ public class UI_Inventory : MonoBehaviour
         }
     
 
+    }
+
+    private void OnPointerEnter(int index)
+    {
+        Image img = itemSlot[index].GetComponent<Image>();
+
+        if(img != null && (img.sprite.name == "Axe" || img.sprite.name == "Square"))
+        {
+            Cursor.SetCursor(pointerCursor, Vector2.zero, CursorMode.Auto);
+        }
+        
+    }
+
+    private void OnPointerExit(int index)
+    {
+        Cursor.SetCursor(defaultCursor, Vector2.zero, CursorMode.Auto);
     }
 
     private IEnumerator InventorySlotTimer(int counterTest)
