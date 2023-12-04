@@ -6,6 +6,7 @@ using CodeMonkey.Utils;
 using TMPro;
 using System;
 using System.Linq;
+using UnityEngine.EventSystems;
 
 public class UI_Inventory : MonoBehaviour
 {
@@ -38,6 +39,12 @@ public class UI_Inventory : MonoBehaviour
     private GameObject InventoryWarningButton;
 
 
+    public bool potionDrankStatus = false;
+    public GameObject portal;
+    public GameObject DoorThree;
+
+
+
     // Start is called before the first frame update
     void Start()
     {
@@ -49,7 +56,7 @@ public class UI_Inventory : MonoBehaviour
         check6.SetActive(false);
         check7.SetActive(false);
         InventoryWarningMessage.SetActive(false);
-        
+
         /*
         itemSlot = GameObject.FindGameObjectsWithTag("itemImage");
         foreach (GameObject item in itemSlot)
@@ -58,6 +65,7 @@ public class UI_Inventory : MonoBehaviour
             
         }*/
 
+        portal.SetActive(false);
 
 
         //useButton = GameObject.FindGameObjectsWithTag("useButton");
@@ -66,7 +74,7 @@ public class UI_Inventory : MonoBehaviour
             item.SetActive(false);
         }
 
-       
+        
 
     }
 
@@ -135,9 +143,6 @@ public class UI_Inventory : MonoBehaviour
             img.sprite = item.GetSprite();
             img.enabled = true;
 
-   
-           
-
 
             // Compare itemType with the enum value
             if (img.sprite.name  == "Mushroom" && img.enabled == true)
@@ -189,6 +194,7 @@ public class UI_Inventory : MonoBehaviour
                 {
                     useButton[index].SetActive(true);
                     StartCoroutine(InventorySlotTimer(index));
+                    
 
                 }
                 else if (!currItem.isUseable())
@@ -345,6 +351,20 @@ public class UI_Inventory : MonoBehaviour
     {
         yield return new WaitForSeconds(1f);
 
-        GameStateManager.Instance.LoadScene(GameStateManager.Scene.GameWin);
+        potionDrankStatus = true;
+
+        if (potionDrankStatus)
+        {
+            Debug.Log("Portal open sesame");
+            // Open Portal
+            portal.SetActive(true);
+            portal.GetComponent<Animator>().Play("portal-open");
+
+
+            // Disable door to leave
+            DoorThree.SetActive(false);
+        }
     }
+
+
 }

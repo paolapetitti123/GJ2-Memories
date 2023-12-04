@@ -16,12 +16,16 @@ public class TimeManager : MonoBehaviour
 
     public GameObject guardConvo;
 
+
     // Start is called before the first frame update
     void Start()
     {
         Minute = 0;
         Hour = 10;
         timer = minuteToRealTime;
+
+        
+   
     }
 
     // Update is called once per frame

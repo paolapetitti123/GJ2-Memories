@@ -12,6 +12,7 @@ public class Conversation : MonoBehaviour
 
     //private string[] conversationTexts;
     private string[] conversationAlchemistTexts;
+    private string[] conversationAlchemistFinalTexts;
     private string[] conversationTextReturn;
     private string[] conversationTextComplete;
 
@@ -46,6 +47,7 @@ public class Conversation : MonoBehaviour
     public bool textOneActive;
     public bool textTwoActive;
     public bool textThreeActive;
+    public bool textFourActive;
 
     public bool questFinished;
 
@@ -53,6 +55,14 @@ public class Conversation : MonoBehaviour
     public int guardConvoCount;
     public  int ChefConvoCount;
 
+
+    public bool potionDrank;
+    public UI_Inventory uiInv;
+
+    public GameObject chefBubble;
+    public GameObject alchemistBubble;
+
+    public bool firstTalkAlchemist;
     void Start()
     {
         Conversation1.SetActive(false);
@@ -60,10 +70,15 @@ public class Conversation : MonoBehaviour
         textOneActive = true;
         textTwoActive = false;
         textThreeActive = false;
+        textFourActive = false;
 
         questFinished = false;
         guardConvoCount = 0;
         ChefConvoCount = 0;
+
+        alchemistBubble.SetActive(true);
+        chefBubble.SetActive(false);
+        firstTalkAlchemist = false;
     }
 
 
@@ -83,8 +98,10 @@ public class Conversation : MonoBehaviour
             {
                 // Trigger convo audio
                 AudioController.Instance.PlaySoundGameplayNoRepeat("alchemist_convo_1");
-
+                alchemistBubble.SetActive(false);
+                chefBubble.SetActive(true);
                 Conversation1.SetActive(true);
+                firstTalkAlchemist = true;
                 Debug.Log("collision");
 
                 // conversation texts
@@ -119,10 +136,11 @@ public class Conversation : MonoBehaviour
                 UpdateText(conversationTextReturn);
 
             }
-            else if (quest.isActive && questFinished)
+            else if (quest.isActive && questFinished && potionDrank == false)
             {
                 // text that'll show up when you've accepted the quest but haven't completed it yet
                 Conversation1.SetActive(true);
+                alchemistBubble.SetActive(false);
                 Debug.Log("collision 3rd text");
                 currentTextIndex = 0;
                 // conversation texts
@@ -137,6 +155,26 @@ public class Conversation : MonoBehaviour
                 // "Come see me once you're ready to gather ingredients for the next elixir."
                 // Display the initial text
                 UpdateText(conversationTextComplete);
+            }
+            else if (quest.isActive && questFinished && potionDrank )
+            {
+                Debug.Log("potion drank in Conversation");
+                // Alchemist last words pop up
+                Conversation1.SetActive(true);
+                AudioController.Instance.PlaySoundGameplayNoRepeat("alchemist_convo_1");
+
+                Debug.Log("collision");
+
+                // conversation texts
+                conversationAlchemistFinalTexts = new string[]
+                {
+                        "By mixing the essence of celestial energies and earthly elements,",
+                        "I've crafted a portal to lead you to your destiny – the throne awaits your rightful claim"
+                };
+
+
+                // Display the initial text
+                UpdateText(conversationAlchemistTexts);
             }
         }
 
@@ -161,9 +199,10 @@ public class Conversation : MonoBehaviour
             UpdateGuardText(conversationGuardTexts);
         }
        
-        if(other.gameObject == Chef)
+        if(other.gameObject == Chef && firstTalkAlchemist)
         {
             ChefConversation.SetActive(true);
+            chefBubble.SetActive(false);
 
             conversationChefTexts = new string[]
             {
@@ -203,6 +242,7 @@ public class Conversation : MonoBehaviour
                         textTwoActive = true;
                         textOneActive = false;
                         questGiver.questWindow.SetActive(false);
+                        
                     }
                     Conversation1.SetActive(false);
 
@@ -237,10 +277,22 @@ public class Conversation : MonoBehaviour
                         questOneComplete = true;
                         questGiver.questWindow.SetActive(false);
                         quest.goal.hasSpokenFinish = true;
+                        textThreeActive = false;
+                        textFourActive = false;
+                        
                     }
 
                 }
                 UpdateText(conversationTextComplete);
+            }
+            else if (textFourActive)
+            {
+                if(currentTextIndex >= conversationAlchemistFinalTexts.Length)
+                {
+                    Conversation1.SetActive(false);
+
+                }
+                UpdateText(conversationAlchemistFinalTexts);
             }
 
         }
@@ -292,6 +344,8 @@ public class Conversation : MonoBehaviour
             }
 
         }
+
+        potionDrank = uiInv.potionDrankStatus;
     }
 
     void UpdateText(string[] conversationTexts)

@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 using UnityEngine.UI;
 
 using CodeMonkey.Utils;
@@ -41,6 +42,8 @@ public class PlayerMovement : MonoBehaviour
     public Quest quest;
 
     public GameObject Conversation1;
+    public GameObject portal;
+
 
 
     public int mushroomCounter = 0;
@@ -62,6 +65,7 @@ public class PlayerMovement : MonoBehaviour
     public GameObject Alchemist;
     public GameObject[] itemSlot;
 
+    public GameObject alchemistSpeech;
 
     void Start()
     {
@@ -141,6 +145,7 @@ public class PlayerMovement : MonoBehaviour
     {
         
         ItemWorld itemWorld = collision.GetComponent<ItemWorld>();
+
        
         if(itemWorld != null)
         {
@@ -355,18 +360,18 @@ public class PlayerMovement : MonoBehaviour
             gameObject.GetComponent<Conversation>().questFinished = true;
 
             Debug.Log("in Player Movement quest one complete goal count 0");
-  
+
+            alchemistSpeech.SetActive(true);
+
             // remove mushroom, herb and flower
             if (collision.gameObject == Alchemist)
             {
+                alchemistSpeech.SetActive(false);
                 Debug.Log("hitting alchemist");
                 quest.goal.TalkingCounter();
                 
                 if (quest.goal.HasSpoken())
                 {
-
-                    Debug.Log("I HAVE MADE IT IN HERE WOOO " );
-
                     int count = 1;
                     foreach (Item item in inventory.itemList)
                     {
@@ -391,13 +396,25 @@ public class PlayerMovement : MonoBehaviour
                     inventory.itemList.Clear();
                     inventory.AddItem(new Item { itemType = Item.ItemType.Potion3, amount = 1 });
                 }
-               
+            }
+
+            if (collision.gameObject == portal)
+            {
+                StartCoroutine(PortalTransport());
+                
             }
         }
 
+        // Trigger Game Win when player 'enters' portal
         
     }
 
+    private IEnumerator PortalTransport()
+    {
+        yield return new WaitForSeconds(1f);
+
+        GameStateManager.Instance.LoadScene(GameStateManager.Scene.GameWin);
+    }
 
     private void UseItem(Item item)
     {
