@@ -233,12 +233,13 @@ public class PlayerMovement : MonoBehaviour
                                 if (woodCounter == 0)  // doing this so the ingredientsgathered is only ever called once
                                 {
                                     StartCoroutine(ChopWood(itemWorld));
-                                /*
-                                 *      ADD SOUND HERE!
-                                 */
+                                    quest.goal.IngredientGathered();
+                                    /*
+                                     *      ADD SOUND HERE!
+                                     */
 
-                                // Trigger pick up item audio
-                                AudioController.Instance.PlaySoundGameplayNoRepeat("chop-wood-1");
+                                    // Trigger pick up item audio
+                                    AudioController.Instance.PlaySoundGameplayNoRepeat("chop-wood-1");
                                 }
                             }
 
@@ -269,12 +270,13 @@ public class PlayerMovement : MonoBehaviour
                                 if (fishCounter == 0)  // doing this so the ingredientsgathered is only ever called once
                                 {
                                     StartCoroutine(Fishing());
-                                 /*
-                                 *      ADD SOUND HERE! 
-                                 */
+                                    quest.goal.IngredientGathered();
+                                    /*
+                                    *      ADD SOUND HERE! 
+                                    */
 
-                                     // Trigger pick up item audio
-                                     AudioController.Instance.PlaySoundGameplay("catch-fish-1");
+                                    // Trigger pick up item audio
+                                    AudioController.Instance.PlaySoundGameplay("catch-fish-1");
 
                                 }
                             }

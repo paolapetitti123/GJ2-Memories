@@ -21,8 +21,13 @@ public class QuestGoal
 
     public bool IsReached()
     {
+        requiredAmount = 7;
         if (currentAmount >= requiredAmount)
+        {
+            Debug.Log("Current amount >= requiredAmount");
             return itemsCollected = true;
+        }
+            
         else return itemsCollected= false;
     }
 

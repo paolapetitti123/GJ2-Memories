@@ -8323,7 +8323,7 @@ MonoBehaviour:
     potionReward: 1
     goal:
       goalType: 0
-      requiredAmount: 3
+      requiredAmount: 9
       currentAmount: 0
       itemsCollected: 0
       count: 0
@@ -12572,7 +12572,7 @@ MonoBehaviour:
     potionReward: 1
     goal:
       goalType: 0
-      requiredAmount: 3
+      requiredAmount: 9
       currentAmount: 0
       itemsCollected: 0
       count: 0
@@ -12748,7 +12748,7 @@ MonoBehaviour:
     potionReward: 1
     goal:
       goalType: 0
-      requiredAmount: 3
+      requiredAmount: 9
       currentAmount: 0
       itemsCollected: 0
       count: 0
