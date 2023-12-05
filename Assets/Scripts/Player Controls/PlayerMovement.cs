@@ -417,7 +417,7 @@ public class PlayerMovement : MonoBehaviour
             if (collision.gameObject == portal)
             {
                 // Azmat Here: I added a reference to the gameobject and then I make the sprite disappear.
-                //             I didnt remove any code just added this effect to make the character disapear
+                //             I didnt remove any code just added this effect to make the character
                 //             disappear when touching the portal.                
                 // Find the GameObject by name
                 GameObject characterObject = GameObject.Find("Main-Character");
