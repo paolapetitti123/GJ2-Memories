@@ -22,7 +22,6 @@ public class TimerGameOver : MonoBehaviour
     private void TimeCheck()
     {
      
-
         if(TimeManager.Hour == 16 && TimeManager.Minute == 59)
         {
             GameStateManager.Instance.LoadScene(GameStateManager.Scene.GameLose);
