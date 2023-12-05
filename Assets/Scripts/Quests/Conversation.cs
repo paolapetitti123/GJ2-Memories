@@ -95,6 +95,9 @@ public class Conversation : MonoBehaviour
                 textTwoActive = false;
                 textOneActive = false;
                 currentTextIndex = 0;
+
+                // Trigger convo audio
+                AudioController.Instance.PlaySoundGameplayNoRepeat("alchemist_convo_1");
             }
             else if(questFinished && potionDrank)
             {
@@ -102,7 +105,7 @@ public class Conversation : MonoBehaviour
                 // Alchemist last words pop up
                 Conversation1.SetActive(true);
                 alchemistBubble.SetActive(false);
-                AudioController.Instance.PlaySoundGameplayNoRepeat("alchemist_convo_1");
+
 
                 // conversation texts
                 conversationAlchemistFinalTexts = new string[]

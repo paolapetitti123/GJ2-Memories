@@ -87,6 +87,7 @@ public class PlayerMovement : MonoBehaviour
         }
 
         treeStump.SetActive(false);
+
     }
 
     /* Update is called once per frame so we need to check when the player hits certain keys
@@ -404,6 +405,8 @@ public class PlayerMovement : MonoBehaviour
                         inventory.AddItem(new Item { itemType = Item.ItemType.Potion3, amount = 1 });
 
                         potionCounter++;
+                        // Trigger item audio
+                        AudioController.Instance.PlaySoundGameplay("make-potion-1");
                     }
                     
                    
@@ -413,8 +416,23 @@ public class PlayerMovement : MonoBehaviour
 
             if (collision.gameObject == portal)
             {
+                // Azmat Here: I added a reference to the gameobject and then I make the sprite disappear.
+                //             I didnt remove any code just added this effect to make the character disapear
+                //             disappear when touching the portal.                
+                // Find the GameObject by name
+                GameObject characterObject = GameObject.Find("Main-Character");
+
                 alchemistSpeech.SetActive(false);
                 StartCoroutine(PortalTransport());
+                // Trigger portal transport audio
+                AudioController.Instance.PlayDelayedSoundGameplay("teleport-end-1", 0.2f);
+
+                // Azmat Here: This is where the sprite disappears.
+                // Get the SpriteRenderer component
+                SpriteRenderer characterRenderer = characterObject.GetComponent<SpriteRenderer>();
+                // Set the sprite renderer to be invisible
+                characterRenderer.enabled = false;
+
                 
             }
         }
@@ -436,8 +454,7 @@ public class PlayerMovement : MonoBehaviour
         {
             case Item.ItemType.Potion1:
                 inventory.RemoveItem(new Item { itemType = Item.ItemType.Potion3, amount = 1 });
-                // Trigger item audio
-                AudioController.Instance.PlaySoundGameplay("drink-potion-1");
+         
                 StartCoroutine(FlashColor(FlashOrangeColor));
                 break;
             case Item.ItemType.Potion2:
@@ -447,6 +464,8 @@ public class PlayerMovement : MonoBehaviour
             case Item.ItemType.Potion3:
                 inventory.RemoveItem(new Item { itemType = Item.ItemType.Potion3, amount = 1 });
                 StartCoroutine(FlashColor(FlashRedColor));
+                // Trigger item audio
+                AudioController.Instance.PlaySoundGameplay("potion_drink_1");
                 break;
             case Item.ItemType.Axe:
                 inventory.RemoveItem(new Item { itemType = Item.ItemType.Axe, amount = 1 });
@@ -479,6 +498,9 @@ public class PlayerMovement : MonoBehaviour
 
             yield return null;
         }
+
+        // Trigger item audio
+        AudioController.Instance.PlaySoundGameplay("portal-opening-1");
     }
 
     private void SetFlashAmount(float amount)
