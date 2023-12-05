@@ -136,6 +136,7 @@ GameObject:
   - component: {fileID: 43968220}
   - component: {fileID: 43968219}
   - component: {fileID: 43968222}
+  - component: {fileID: 43968223}
   m_Layer: 5
   m_Name: Button-Credits
   m_TagString: Untagged
@@ -354,6 +355,20 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &43968223
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 43968217}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6d9fe5c62e8aee044ad3c03d080b350c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  pointerCursor: {fileID: 2800000, guid: 34e451941ecbccd41b871668489cecbf, type: 3}
+  defaultCursor: {fileID: 2800000, guid: f75349a286817b6479976a10636d3b2c, type: 3}
 --- !u!1 &81365366
 GameObject:
   m_ObjectHideFlags: 0
@@ -1589,6 +1604,7 @@ GameObject:
   - component: {fileID: 1179863326}
   - component: {fileID: 1179863325}
   - component: {fileID: 1179863328}
+  - component: {fileID: 1179863329}
   m_Layer: 5
   m_Name: Button-Exit
   m_TagString: Untagged
@@ -1807,6 +1823,20 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &1179863329
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1179863323}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6d9fe5c62e8aee044ad3c03d080b350c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  pointerCursor: {fileID: 2800000, guid: 34e451941ecbccd41b871668489cecbf, type: 3}
+  defaultCursor: {fileID: 2800000, guid: f75349a286817b6479976a10636d3b2c, type: 3}
 --- !u!1 &1219965322
 GameObject:
   m_ObjectHideFlags: 0
@@ -1819,6 +1849,7 @@ GameObject:
   - component: {fileID: 1219965326}
   - component: {fileID: 1219965325}
   - component: {fileID: 1219965324}
+  - component: {fileID: 1219965327}
   m_Layer: 5
   m_Name: Button-Play
   m_TagString: Untagged
@@ -1941,6 +1972,20 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1219965322}
   m_CullTransparentMesh: 1
+--- !u!114 &1219965327
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1219965322}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6d9fe5c62e8aee044ad3c03d080b350c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  pointerCursor: {fileID: 2800000, guid: 34e451941ecbccd41b871668489cecbf, type: 3}
+  defaultCursor: {fileID: 2800000, guid: f75349a286817b6479976a10636d3b2c, type: 3}
 --- !u!1 &1340667697 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 7061849209988056838, guid: 5772acb30ba1aa14b9445a1ef8362b70, type: 3}
