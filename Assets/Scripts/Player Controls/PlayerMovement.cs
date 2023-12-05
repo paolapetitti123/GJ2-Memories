@@ -233,7 +233,7 @@ public class PlayerMovement : MonoBehaviour
                                 if (woodCounter == 0)  // doing this so the ingredientsgathered is only ever called once
                                 {
                                     StartCoroutine(ChopWood(itemWorld));
-                                    quest.goal.IngredientGathered();
+                                    
                                     /*
                                      *      ADD SOUND HERE!
                                      */
@@ -270,7 +270,7 @@ public class PlayerMovement : MonoBehaviour
                                 if (fishCounter == 0)  // doing this so the ingredientsgathered is only ever called once
                                 {
                                     StartCoroutine(Fishing());
-                                    quest.goal.IngredientGathered();
+                                    
                                     /*
                                     *      ADD SOUND HERE! 
                                     */
@@ -529,6 +529,7 @@ public class PlayerMovement : MonoBehaviour
         quest.goal.IngredientGathered();
 
         fishingRod.SetActive(false);
+        quest.goal.IngredientGathered();
         inventory.AddItem(new Item { itemType = Item.ItemType.Fish, amount = 1 });
         // inventory.AddItem(new Item { itemType = Item.ItemType.FishingRod, amount = 1 });
         fishCounter++;

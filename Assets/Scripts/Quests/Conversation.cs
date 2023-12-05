@@ -379,6 +379,7 @@ public class Conversation : MonoBehaviour
     void UpdateFinalText(string[] conversationFinalText)
     {
         Debug.Log("in UpdateFinalText :"+ conversationFinalText.Length);
+        Debug.Log("in UpdateFinalText index :"+ currentFinalTextIndex);
         if (currentFinalTextIndex < conversationFinalText.Length)
         {
             // Change the text of the Text element based on the current conversation text

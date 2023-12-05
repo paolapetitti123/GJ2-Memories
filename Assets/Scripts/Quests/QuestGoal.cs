@@ -8,7 +8,7 @@ public class QuestGoal
 {
     public GoalType goalType;
 
-    public int requiredAmount = 7;
+    public int requiredAmount = 8;
     public int currentAmount = 0;
 
 
@@ -21,7 +21,7 @@ public class QuestGoal
 
     public bool IsReached()
     {
-        requiredAmount = 7;
+        requiredAmount = 8;
         if (currentAmount >= requiredAmount)
         {
             Debug.Log("Current amount >= requiredAmount");
