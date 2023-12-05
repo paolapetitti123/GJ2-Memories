@@ -14,6 +14,7 @@ public class QuestGiver : MonoBehaviour
     //public TMP_Text descriptionText;
     //public TMP_Text rewardText;
     public Button exitButton;
+    public Texture2D defaultCursor;
 
     private void Start()
     {
@@ -50,6 +51,7 @@ public class QuestGiver : MonoBehaviour
         else if(quest.isActive)
         {
             questWindow.SetActive(false);
+            Cursor.SetCursor(defaultCursor, Vector2.zero, CursorMode.Auto);
         }
         
     }

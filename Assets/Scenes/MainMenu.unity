@@ -926,7 +926,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "POISONED \nINHERITENCE"
+  m_text: "POISONED \nINHERITANCE"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8d7324655a5324e9e93adeac3af221b6, type: 2}
   m_sharedMaterial: {fileID: -6989847003875474365, guid: 8d7324655a5324e9e93adeac3af221b6, type: 2}

@@ -63,6 +63,7 @@ public class Conversation : MonoBehaviour
     public GameObject alchemistBubble;
 
     public bool firstTalkAlchemist;
+    public Texture2D defaultCursor;
     void Start()
     {
         Conversation1.SetActive(false);
@@ -218,6 +219,7 @@ public class Conversation : MonoBehaviour
 
     public void OnButtonClick()
     {
+
         // when the button is clicked, it increments the index to display the next text
         if (guardConvoCount == 1 && Conversation1.activeInHierarchy)
         {
@@ -242,9 +244,11 @@ public class Conversation : MonoBehaviour
                         textTwoActive = true;
                         textOneActive = false;
                         questGiver.questWindow.SetActive(false);
-                        
+                        Cursor.SetCursor(defaultCursor, Vector2.zero, CursorMode.Auto);
+
                     }
                     Conversation1.SetActive(false);
+                    Cursor.SetCursor(defaultCursor, Vector2.zero, CursorMode.Auto);
 
                 }
                 UpdateText(conversationAlchemistTexts);
@@ -260,6 +264,7 @@ public class Conversation : MonoBehaviour
                         textThreeActive = true;
                         textTwoActive = false;
                         questGiver.questWindow.SetActive(false);
+                        Cursor.SetCursor(defaultCursor, Vector2.zero, CursorMode.Auto);
                     }
                     currentTextIndex = 0;
                 }
@@ -290,7 +295,7 @@ public class Conversation : MonoBehaviour
                 if(currentTextIndex >= conversationAlchemistFinalTexts.Length)
                 {
                     Conversation1.SetActive(false);
-
+                    Cursor.SetCursor(defaultCursor, Vector2.zero, CursorMode.Auto);
                 }
                 UpdateText(conversationAlchemistFinalTexts);
             }
@@ -304,6 +309,7 @@ public class Conversation : MonoBehaviour
             if (currentGuardTextIndex >= conversationGuardTexts.Length)
             {
                 ConversationGuard.SetActive(false);
+                Cursor.SetCursor(defaultCursor, Vector2.zero, CursorMode.Auto);
                 GuardConvoActive = false;
                 Animator guardWalk = Guard.GetComponent<Animator>();
                 guardConvoCount = 1;
@@ -319,6 +325,7 @@ public class Conversation : MonoBehaviour
             if(currentChefTextIndex >= conversationChefTexts.Length)
             {
                 ChefConversation.SetActive(false);
+                Cursor.SetCursor(defaultCursor, Vector2.zero, CursorMode.Auto);
                 ChefConvoCount = 1;
                 chefsTable.GetComponent<BoxCollider2D>().size = new Vector2(4.4f, 1.1f);
                 chefsTable.GetComponent<BoxCollider2D>().offset = new Vector2(0.04f, 0.96f);
