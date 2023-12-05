@@ -41,7 +41,6 @@ public class UI_Inventory : MonoBehaviour
 
     public bool potionDrankStatus = false;
     public GameObject portal;
-    public GameObject DoorThree;
 
     public Texture2D pointerCursor; // Assign your pointer cursor texture in the inspector
     public Texture2D defaultCursor; // Assign your default cursor texture in the inspector
@@ -362,9 +361,6 @@ public class UI_Inventory : MonoBehaviour
             portal.SetActive(true);
             portal.GetComponent<Animator>().Play("portal-open");
 
-
-            // Disable door to leave
-            DoorThree.SetActive(false);
         }
     }
 

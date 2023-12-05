@@ -12339,6 +12339,7 @@ MonoBehaviour:
   Alchemist: {fileID: 748405937}
   itemSlot: []
   alchemistSpeech: {fileID: 1046142594}
+  potionCounter: 0
 --- !u!50 &1070855185
 Rigidbody2D:
   serializedVersion: 4
@@ -17953,7 +17954,6 @@ MonoBehaviour:
   InventoryWarningMessage: {fileID: 1811855916}
   potionDrankStatus: 0
   portal: {fileID: 865554502}
-  DoorThree: {fileID: 1960431638}
   pointerCursor: {fileID: 2800000, guid: 34e451941ecbccd41b871668489cecbf, type: 3}
   defaultCursor: {fileID: 2800000, guid: f75349a286817b6479976a10636d3b2c, type: 3}
 --- !u!1 &1772004997
@@ -20361,7 +20361,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 10:00
+  m_text: 11:00
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8d7324655a5324e9e93adeac3af221b6, type: 2}
   m_sharedMaterial: {fileID: -6989847003875474365, guid: 8d7324655a5324e9e93adeac3af221b6, type: 2}

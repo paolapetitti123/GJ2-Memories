@@ -67,6 +67,10 @@ public class PlayerMovement : MonoBehaviour
 
     public GameObject alchemistSpeech;
 
+    public int potionCounter = 0;
+
+
+
     void Start()
     {
         inventory = new Inventory(UseItem);
@@ -372,6 +376,7 @@ public class PlayerMovement : MonoBehaviour
                 
                 if (quest.goal.HasSpoken())
                 {
+                    
                     int count = 1;
                     foreach (Item item in inventory.itemList)
                     {
@@ -393,13 +398,22 @@ public class PlayerMovement : MonoBehaviour
 
                         count++;
                     }
-                    inventory.itemList.Clear();
-                    inventory.AddItem(new Item { itemType = Item.ItemType.Potion3, amount = 1 });
+                    if(potionCounter == 0)
+                    {
+                        inventory.itemList.Clear();
+                        inventory.AddItem(new Item { itemType = Item.ItemType.Potion3, amount = 1 });
+
+                        potionCounter++;
+                    }
+                    
+                   
+                    
                 }
             }
 
             if (collision.gameObject == portal)
             {
+                alchemistSpeech.SetActive(false);
                 StartCoroutine(PortalTransport());
                 
             }
@@ -412,7 +426,7 @@ public class PlayerMovement : MonoBehaviour
     private IEnumerator PortalTransport()
     {
         yield return new WaitForSeconds(1f);
-
+        alchemistSpeech.SetActive(false);
         GameStateManager.Instance.LoadScene(GameStateManager.Scene.GameWin);
     }
 
@@ -449,7 +463,7 @@ public class PlayerMovement : MonoBehaviour
         // set the color
         characterMat.SetColor("_FlashColor", color);
 
-
+        alchemistSpeech.SetActive(true);
         // lerp the flash amount
         float currentFlashAmount = 0f;
         float elapsedTime = 0f;
